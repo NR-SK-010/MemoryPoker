@@ -13,7 +13,7 @@ void Main()
 	FontAsset::Register(U"Title", 70, Typeface::Regular);
 	FontAsset::Register(U"Text", 30);
 
-	AudioAsset::Register(U"BGM", U"Sounds/Night_View.mp3");
+	AudioAsset::Register(U"BGM", U"Sounds/Night_View.mp3", Loop::Yes);
 	AudioAsset::Register(U"button", U"Sounds/button.mp3");
 	AudioAsset::Register(U"cancel", U"Sounds/cancel.mp3");
 	AudioAsset::Register(U"flip", U"Sounds/cardflip.mp3");
@@ -32,9 +32,15 @@ void Main()
 	//シーン管理用
 	App manager;
 
+	//BGM再生
+	AudioAsset(U"BGM").play();
 
 	while (System::Update())
 	{
+		if (KeyLeft.pressed())
+		{
+			AudioPlay(U"button");
+		}
 		if (not manager.update())
 		{
 			break;

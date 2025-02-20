@@ -1,6 +1,9 @@
 ﻿#pragma once
 #include <Siv3D.hpp>
 
+//関数
+void AudioPlay(String name);
+
 //シーン名
 enum class State
 {
