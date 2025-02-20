@@ -1,5 +1,6 @@
 ﻿#include <Siv3D.hpp> // Siv3D v0.6.14
 #include "Common.hpp"
+#include "Title.hpp"
 
 void Main()
 {
@@ -11,6 +12,7 @@ void Main()
 
 	//アセット登録
 	FontAsset::Register(U"Title", 70, Typeface::Regular);
+	FontAsset::Register(U"Button", FontMethod::MSDF, 48, Typeface::Bold);
 	FontAsset::Register(U"Text", 30);
 
 	AudioAsset::Register(U"BGM", U"Sounds/Night_View.mp3", Loop::Yes);
@@ -21,6 +23,7 @@ void Main()
 
 	//アセット事前ロード
 	FontAsset::Load(U"Title");
+	FontAsset::Load(U"Button");
 	FontAsset::Load(U"Text");
 
 	AudioAsset::Load(U"BGM");
@@ -31,16 +34,13 @@ void Main()
 
 	//シーン管理用
 	App manager;
+	manager.add<Title>(State::Title);
 
 	//BGM再生
 	AudioAsset(U"BGM").play();
 
 	while (System::Update())
 	{
-		if (KeyLeft.pressed())
-		{
-			AudioPlay(U"button");
-		}
 		if (not manager.update())
 		{
 			break;
