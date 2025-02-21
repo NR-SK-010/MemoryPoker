@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Common.cpp" />
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -330,6 +331,7 @@
   <ItemGroup>
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Common.hpp" />
+    <ClInclude Include="Config.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.hpp" />
   </ItemGroup>

@@ -21,4 +21,7 @@ private:
 
 	//ボタンに表示するテキストのサイズ
 	int32 buttonTextSize = 40;
+
+	//設定画面用
+	Config config = Config(U"Title", getData().BGMVolume, getData().SoundVolume);
 };

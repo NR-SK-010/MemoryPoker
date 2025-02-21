@@ -10,6 +10,8 @@ void Main()
 	Window::Resize(800, 600);
 	Scene::Resize(1600, 1200);
 
+
+
 	//アセット登録
 	FontAsset::Register(U"Title", 70, Typeface::Regular);
 	FontAsset::Register(U"Button", FontMethod::MSDF, 48, Typeface::Bold);

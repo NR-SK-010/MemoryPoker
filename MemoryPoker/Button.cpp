@@ -2,7 +2,7 @@
 //enable(そのボタンが押せるか)は基本true
 
 //普通のボタン(描画するだけ)
-void Button(const Rect& rect, const Font& font, const String& text, ColorF color, const bool enabled)
+void Button(const Rect& rect, const Font& font, const String& text, const ColorF color, const bool enabled)
 {
 	if (enabled)
 	{

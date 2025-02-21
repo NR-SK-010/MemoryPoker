@@ -13,32 +13,42 @@ Title::Title(const InitData& init)
 //更新関数
 void Title::update()
 {
-	if (startButton.mouseOver() || ruleButton.mouseOver() || configButton.mouseOver() || exitButton.mouseOver())
+	if (!config.getFlg())
 	{
-		Cursor::RequestStyle(CursorStyle::Hand);
-	}
+		if (startButton.mouseOver() || ruleButton.mouseOver() || configButton.mouseOver() || exitButton.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
 
-	if (startButton.leftClicked())
-	{
-		AudioPlay(U"button");
-		//ゲーム画面(Memory)へ
+		if (startButton.leftClicked())
+		{
+			AudioPlay(U"button");
+			//ゲーム画面(Memory)へ
+		}
+		else if (ruleButton.leftClicked())
+		{
+			AudioPlay(U"button");
+			//ルール説明へ
+		}
+		else if (configButton.leftClicked())
+		{
+			AudioPlay(U"button");
+			//設定画面へ
+			config.setFlg(true);
+		}
+		else if (exitButton.leftClicked())
+		{
+			AudioPlay(U"button");
+			//終了
+			System::Exit();
+		}
 	}
-	else if (ruleButton.leftClicked())
+	else
 	{
-		AudioPlay(U"button");
-		//ルール説明へ
+		//設定画面処理
+		config.update();
 	}
-	else if (configButton.leftClicked())
-	{
-		AudioPlay(U"button");
-		//設定画面へ
-	}
-	else if (exitButton.leftClicked())
-	{
-		AudioPlay(U"button");
-		//終了
-		System::Exit();
-	}
+	
 }
 
 //描画関数
@@ -55,4 +65,10 @@ void Title::draw() const
 	Button(ruleButton, FontAsset(U"Button"), U"遊び方", Palette::Black);
 	Button(configButton, FontAsset(U"Button"), U"設定", Palette::Black);
 	Button(exitButton, FontAsset(U"Button"), U"終了する", Palette::Black);
+
+	//設定画面表示
+	if (config.getFlg())
+	{
+		config.draw();
+	}
 }
