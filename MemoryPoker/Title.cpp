@@ -47,6 +47,14 @@ void Title::update()
 	{
 		//設定画面処理
 		config.update();
+		getData().BGMVolume = config.getBGMVolume(); //BGM音量更新
+		getData().SoundVolume = config.getSoundVolume(); //効果音音量更新
+
+		//効果音はこっちで調整しないと効かない(なぜ？)
+		AudioAsset(U"button").setVolume(getData().SoundVolume);
+		AudioAsset(U"cancel").setVolume(getData().SoundVolume);
+		AudioAsset(U"flip").setVolume(getData().SoundVolume);
+		AudioAsset(U"coin").setVolume(getData().SoundVolume);
 	}
 	
 }
@@ -71,4 +79,5 @@ void Title::draw() const
 	{
 		config.draw();
 	}
+
 }

@@ -23,5 +23,5 @@ private:
 	int32 buttonTextSize = 40;
 
 	//設定画面用
-	Config config = Config(U"Title", getData().BGMVolume, getData().SoundVolume);
+	Config config = Config(getData().BGMVolume, getData().SoundVolume);
 };
