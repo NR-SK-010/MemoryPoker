@@ -1,28 +1,14 @@
 ﻿#pragma once
 #include "Common.hpp"
 
-//設定画面描画用クラス
-
-class Config
+class Config : public App::Scene
 {
 public:
-	//コンストラクタ
-	Config(double& BGMVolume, double& SoundVolume);
+	Config(const InitData& init);
 
-	//更新関数
-	//スライダーは関数の関係上更新関数側に
-	void update();
+	void update() override;
 
-	//描画関数
-	void draw() const;
-
-	//flg用プロパティ
-	bool getFlg() const;
-	void setFlg(const bool& configflg);
-
-	//BGM,SoundVolumeゲッター
-	double getBGMVolume();
-	double getSoundVolume();
+	void draw() const override;
 
 private:
 	RoundRect Frame{ 500, 250, 600, 600, 7 }; //外枠
@@ -42,19 +28,16 @@ private:
 							   Rect{ Arg::center(840, 415), 25, 50 },
 							   Rect{ Arg::center(880, 415), 25, 60 },
 							   Rect{ Arg::center(920, 415), 25, 70 },
-							 };
+	};
 
 	//効果音調整用のボタン
 	Array<Rect> SoundButtons = {
-							    Rect{ Arg::center(760, 515), 25, 30 },
-							    Rect{ Arg::center(800, 515), 25, 40 },
-							    Rect{ Arg::center(840, 515), 25, 50 },
-							    Rect{ Arg::center(880, 515), 25, 60 },
-							    Rect{ Arg::center(920, 515), 25, 70 },
-							   };
+								Rect{ Arg::center(760, 515), 25, 30 },
+								Rect{ Arg::center(800, 515), 25, 40 },
+								Rect{ Arg::center(840, 515), 25, 50 },
+								Rect{ Arg::center(880, 515), 25, 60 },
+								Rect{ Arg::center(920, 515), 25, 70 },
+	};
 
-	bool flg = false; //設定画面が開かれているか
 	bool ExitMenu = false; //「タイトルに戻りますか」画面
-	double BGMVolume;
-	double SoundVolume;
 };

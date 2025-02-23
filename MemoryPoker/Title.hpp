@@ -18,10 +18,4 @@ private:
 	Rect ruleButton{ 650, 650, 300, 80 };
 	Rect configButton{ 650, 750, 300, 80 };
 	Rect exitButton{ 650, 850, 300, 80 };
-
-	//ボタンに表示するテキストのサイズ
-	int32 buttonTextSize = 40;
-
-	//設定画面用
-	Config config = Config(getData().BGMVolume, getData().SoundVolume);
 };

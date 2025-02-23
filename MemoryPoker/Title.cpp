@@ -13,50 +13,34 @@ Title::Title(const InitData& init)
 //更新関数
 void Title::update()
 {
-	if (!config.getFlg())
+	if (startButton.mouseOver() || ruleButton.mouseOver() || configButton.mouseOver() || exitButton.mouseOver())
 	{
-		if (startButton.mouseOver() || ruleButton.mouseOver() || configButton.mouseOver() || exitButton.mouseOver())
-		{
-			Cursor::RequestStyle(CursorStyle::Hand);
-		}
-
-		if (startButton.leftClicked())
-		{
-			AudioPlay(U"button");
-			//ゲーム画面(Memory)へ
-		}
-		else if (ruleButton.leftClicked())
-		{
-			AudioPlay(U"button");
-			//ルール説明へ
-		}
-		else if (configButton.leftClicked())
-		{
-			AudioPlay(U"button");
-			//設定画面へ
-			config.setFlg(true);
-		}
-		else if (exitButton.leftClicked())
-		{
-			AudioPlay(U"button");
-			//終了
-			System::Exit();
-		}
+		Cursor::RequestStyle(CursorStyle::Hand);
 	}
-	else
+
+	if (startButton.leftClicked())
 	{
-		//設定画面処理
-		config.update();
-		getData().BGMVolume = config.getBGMVolume(); //BGM音量更新
-		getData().SoundVolume = config.getSoundVolume(); //効果音音量更新
-
-		//効果音はこっちで調整しないと効かない(なぜ？)
-		AudioAsset(U"button").setVolume(getData().SoundVolume);
-		AudioAsset(U"cancel").setVolume(getData().SoundVolume);
-		AudioAsset(U"flip").setVolume(getData().SoundVolume);
-		AudioAsset(U"coin").setVolume(getData().SoundVolume);
+		AudioPlay(U"button");
+		//ゲーム画面(Memory)へ
 	}
-	
+	else if (ruleButton.leftClicked())
+	{
+		AudioPlay(U"button");
+		//ルール説明へ
+	}
+	else if (configButton.leftClicked())
+	{
+		AudioPlay(U"button");
+		//設定画面へ
+		getData().NowScene = U"Title";
+		changeScene(State::Config, 0);
+	}
+	else if (exitButton.leftClicked())
+	{
+		AudioPlay(U"button");
+		//終了
+		System::Exit();
+	}
 }
 
 //描画関数
@@ -74,10 +58,5 @@ void Title::draw() const
 	Button(configButton, FontAsset(U"Button"), U"設定", Palette::Black);
 	Button(exitButton, FontAsset(U"Button"), U"終了する", Palette::Black);
 
-	//設定画面表示
-	if (config.getFlg())
-	{
-		config.draw();
-	}
 
 }

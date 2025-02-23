@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <Siv3D.hpp>
-#include "Config.hpp"
 
 //関数
 void AudioPlay(String name);
@@ -9,7 +8,7 @@ void AudioPlay(String name);
 enum class State
 {
 	Title,
-	Rule,
+	Config,
 	Memory,
 	Select,
 	Bet,
@@ -20,9 +19,9 @@ enum class State
 //共有データ
 struct GameData
 {
-	double BGMVolume = 1.0;  //BGM音量
-	double SoundVolume = 1.0; //効果音音量
-	String NowScene = U""; //現在のシーン名を格納(Ruleから戻る際に使用)
+	double BGMVolume = 0.2;  //BGM音量
+	double SoundVolume = 0.2; //効果音音量
+	String NowScene = U""; //現在のシーン名を格納(Rule,Configから戻る際に使用)
 	Stopwatch stopwatch; //ストップウォッチ
 };
 

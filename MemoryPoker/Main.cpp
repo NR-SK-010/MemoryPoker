@@ -1,6 +1,7 @@
 ﻿#include <Siv3D.hpp> // Siv3D v0.6.14
 #include "Common.hpp"
 #include "Title.hpp"
+#include "Config.hpp"
 
 void Main()
 {
@@ -37,6 +38,13 @@ void Main()
 	//シーン管理用
 	App manager;
 	manager.add<Title>(State::Title);
+	manager.add<Config>(State::Config);
+
+	AudioAsset(U"BGM").setVolume(0.2);
+	AudioAsset(U"button").setVolume(0.2);
+	AudioAsset(U"cancel").setVolume(0.2);
+	AudioAsset(U"flip").setVolume(0.2);
+	AudioAsset(U"coin").setVolume(0.2);
 
 	//BGM再生
 	AudioAsset(U"BGM").play();

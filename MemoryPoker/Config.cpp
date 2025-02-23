@@ -1,21 +1,17 @@
-﻿#include <Siv3D.hpp>
+﻿#include "Config.hpp"
 #include "Button.hpp"
-#include "Config.hpp"
 
 //コンストラクタ
-Config::Config(double& BGMVolume, double& SoundVolume)
-{
-	this->BGMVolume = BGMVolume;
-	this->SoundVolume = SoundVolume;
-	flg = false;
-}
+//メンバ初期化リストを使用
+Config::Config(const InitData& init)
+	: IScene{ init } { }
 
 //更新関数
 void Config::update()
 {
 	if (ExitMenu)
 	{
-		//「ゲームを終了しますか？」画面
+		//「タイトルに戻りますか？」画面
 		if (ExitButton.mouseOver() || ExitCancel.mouseOver())
 		{
 			Cursor::RequestStyle(CursorStyle::Hand);
@@ -23,7 +19,7 @@ void Config::update()
 
 		if (ExitButton.leftClicked())
 		{
-			System::Exit();
+			changeScene(State::Title);
 		}
 
 		if (ExitCancel.leftClicked())
@@ -48,16 +44,16 @@ void Config::update()
 
 			if (BGMButtons[i].leftClicked())
 			{
-				if (BGMVolume != 0.2 * (i + 1))
+				if (getData().BGMVolume != 0.2 * (i + 1))
 				{
-					BGMVolume = 0.2 * (i + 1);
+					getData().BGMVolume = 0.2 * (i + 1);
 				}
 				else
 				{
-					BGMVolume = 0.2 * i;
+					getData().BGMVolume = 0.2 * i;
 				}
 
-				AudioAsset(U"BGM").setVolume(BGMVolume);
+				AudioAsset(U"BGM").setVolume(getData().BGMVolume);
 				AudioPlay(U"button");
 			}
 		}
@@ -71,23 +67,30 @@ void Config::update()
 
 			if (SoundButtons[i].leftClicked())
 			{
-				if (SoundVolume != 0.2 * (i + 1))
+				if (getData().SoundVolume != 0.2 * (i + 1))
 				{
-					SoundVolume = 0.2 * (i + 1);
+					getData().SoundVolume = 0.2 * (i + 1);
 				}
 				else
 				{
-					SoundVolume = 0.2 * i;
+					getData().SoundVolume = 0.2 * i;
 				}
 
+				AudioAsset(U"button").setVolume(getData().SoundVolume);
+				AudioAsset(U"cancel").setVolume(getData().SoundVolume);
+				AudioAsset(U"flip").setVolume(getData().SoundVolume);
+				AudioAsset(U"coin").setVolume(getData().SoundVolume);
 				AudioPlay(U"button");
 			}
 		}
 
 		if (CancelButton.leftClicked())
 		{
+			if (getData().NowScene == U"Title")
+			{
+				changeScene(State::Title, 0);
+			}
 			AudioPlay(U"cancel");
-			flg = false;
 		}
 		else if (SoundTestButton.leftClicked())
 		{
@@ -114,8 +117,8 @@ void Config::draw() const
 
 	if (ExitMenu)
 	{
-		//「ゲームを終了しますか？」画面
-		FontAsset(U"Text")(U"ゲームを終了しますか？").drawAt(800, 500, Palette::Black);
+		//「タイトルに戻りますか？」画面
+		FontAsset(U"Text")(U"タイトルに戻りますか？").drawAt(800, 500, Palette::Black);
 		Button(ExitButton, FontAsset(U"Button"), U"終了する", Palette::Black);
 		Button(ExitCancel, FontAsset(U"Button"), U"キャンセル", Palette::Black);
 	}
@@ -131,36 +134,14 @@ void Config::draw() const
 		//BGM音量調整ボタン
 		for (int i = 0; i < BGMButtons.size(); i++)
 		{
-			Button(BGMButtons[i], FontAsset(U"Button"), U"", Palette::Skyblue, BGMVolume >= 0.2 * (i + 1));
+			Button(BGMButtons[i], FontAsset(U"Button"), U"", Palette::Skyblue, getData().BGMVolume >= 0.2 * (i + 1));
 		}
 
 		//効果音音量調整ボタン
 		FontAsset(U"Text")(U"効果音").drawAt(650, 515, Palette::Black);
 		for (int i = 0; i < SoundButtons.size(); i++)
 		{
-			Button(SoundButtons[i], FontAsset(U"Button"), U"", Palette::Skyblue, SoundVolume >= 0.2 * (i + 1));
+			Button(SoundButtons[i], FontAsset(U"Button"), U"", Palette::Skyblue, getData().SoundVolume >= 0.2 * (i + 1));
 		}
 	}
-}
-
-//flg用プロパティ
-bool Config::getFlg() const
-{
-	return flg;
-}
-
-void Config::setFlg(const bool& configflg)
-{
-	this->flg = configflg;
-}
-
-//BGM,SoundVolumeゲッター
-double Config::getBGMVolume()
-{
-	return BGMVolume;
-}
-
-double Config::getSoundVolume()
-{
-	return SoundVolume;
 }
