@@ -86,11 +86,13 @@ void Config::update()
 
 		if (CancelButton.leftClicked())
 		{
+			AudioPlay(U"cancel");
+			getData().ConfigFlg = false;
 			if (getData().NowScene == U"Title")
 			{
 				changeScene(State::Title, 0);
 			}
-			AudioPlay(U"cancel");
+			
 		}
 		else if (SoundTestButton.leftClicked())
 		{
@@ -99,6 +101,8 @@ void Config::update()
 		else if (RuleButton.leftClicked())
 		{
 			AudioPlay(U"button");
+			getData().ConfigFlg = true;
+			changeScene(State::Rule, 0);
 		}
 		else if (ToExitButton.leftClicked())
 		{
@@ -111,6 +115,9 @@ void Config::update()
 //描画関数
 void Config::draw() const
 {
+	//背景色
+	Scene::SetBackground(Palette::Green);
+
 	//外枠
 	Frame.draw(Palette::White);
 	Frame.drawFrame(3, 3, Palette::Black);
@@ -145,3 +152,4 @@ void Config::draw() const
 		}
 	}
 }
+

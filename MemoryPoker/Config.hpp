@@ -10,6 +10,8 @@ public:
 
 	void draw() const override;
 
+	bool getFlg();
+
 private:
 	RoundRect Frame{ 500, 250, 600, 600, 7 }; //外枠
 	Rect CancelButton{ Arg::center(1060, 290), 50, 50 }; //キャンセルボタン
@@ -40,4 +42,5 @@ private:
 	};
 
 	bool ExitMenu = false; //「タイトルに戻りますか」画面
+	
 };

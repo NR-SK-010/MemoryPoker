@@ -27,6 +27,8 @@ void Title::update()
 	{
 		AudioPlay(U"button");
 		//ルール説明へ
+		getData().NowScene = U"Title";
+		changeScene(State::Rule, 0);
 	}
 	else if (configButton.leftClicked())
 	{
@@ -57,6 +59,4 @@ void Title::draw() const
 	Button(ruleButton, FontAsset(U"Button"), U"遊び方", Palette::Black);
 	Button(configButton, FontAsset(U"Button"), U"設定", Palette::Black);
 	Button(exitButton, FontAsset(U"Button"), U"終了する", Palette::Black);
-
-
 }

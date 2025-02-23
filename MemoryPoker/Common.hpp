@@ -9,6 +9,7 @@ enum class State
 {
 	Title,
 	Config,
+	Rule,
 	Memory,
 	Select,
 	Bet,
@@ -23,6 +24,7 @@ struct GameData
 	double SoundVolume = 0.2; //効果音音量
 	String NowScene = U""; //現在のシーン名を格納(Rule,Configから戻る際に使用)
 	Stopwatch stopwatch; //ストップウォッチ
+	bool ConfigFlg = false; //設定画面からルール説明に行くときのみtrue
 };
 
 using App = SceneManager<State, GameData>;

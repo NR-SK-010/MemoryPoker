@@ -2,6 +2,7 @@
 #include "Common.hpp"
 #include "Title.hpp"
 #include "Config.hpp"
+#include "Rule.hpp"
 
 void Main()
 {
@@ -24,6 +25,14 @@ void Main()
 	AudioAsset::Register(U"flip", U"Sounds/cardflip.mp3");
 	AudioAsset::Register(U"coin", U"Sounds/coin.mp3");
 
+	TextureAsset::Register(U"Start", U"Images/Start.png");
+	TextureAsset::Register(U"MemoryGame", U"Images/MemoryGame.png");
+	TextureAsset::Register(U"Select", U"Images/Select.png");
+	TextureAsset::Register(U"Bet", U"Images/Bet.png");
+	TextureAsset::Register(U"CallRaise", U"Images/CallRaise.png");
+	TextureAsset::Register(U"ShowDown", U"Images/ShowDown.png");
+	TextureAsset::Register(U"Config", U"Images/Config.png");
+
 	//アセット事前ロード
 	FontAsset::Load(U"Title");
 	FontAsset::Load(U"Button");
@@ -35,10 +44,20 @@ void Main()
 	AudioAsset::Load(U"flip");
 	AudioAsset::Load(U"coin");
 
+	TextureAsset::Load(U"Start");
+	TextureAsset::Load(U"MemoryGame");
+	TextureAsset::Load(U"Select");
+	TextureAsset::Load(U"Bet");
+	TextureAsset::Load(U"CallRaise");
+	TextureAsset::Load(U"ShowDown");
+	TextureAsset::Load(U"Config");
+
 	//シーン管理用
 	App manager;
 	manager.add<Title>(State::Title);
 	manager.add<Config>(State::Config);
+	manager.add<Rule>(State::Rule);
+	
 
 	AudioAsset(U"BGM").setVolume(0.2);
 	AudioAsset(U"button").setVolume(0.2);
