@@ -3,6 +3,7 @@
 #include "Title.hpp"
 #include "Config.hpp"
 #include "Rule.hpp"
+#include "Memory.hpp"
 
 void Main()
 {
@@ -57,6 +58,7 @@ void Main()
 	manager.add<Title>(State::Title);
 	manager.add<Config>(State::Config);
 	manager.add<Rule>(State::Rule);
+	manager.add<Memory>(State::Memory);
 	
 
 	AudioAsset(U"BGM").setVolume(0.2);

@@ -19,6 +19,7 @@ void Config::update()
 
 		if (ExitButton.leftClicked())
 		{
+			AudioPlay(U"button");
 			changeScene(State::Title, getData().changeSec);
 		}
 
@@ -92,6 +93,10 @@ void Config::update()
 			{
 				changeScene(State::Title, getData().changeSec);
 			}
+			else if (getData().NowScene == U"Memory")
+			{
+				changeScene(State::Memory, getData().changeSec);
+			}
 			
 		}
 		else if (SoundTestButton.leftClicked())
@@ -126,7 +131,7 @@ void Config::draw() const
 	{
 		//「タイトルに戻りますか？」画面
 		FontAsset(U"Text")(U"タイトルに戻りますか？").drawAt(800, 500, Palette::Black);
-		Button(ExitButton, FontAsset(U"Button"), U"終了する", Palette::Black);
+		Button(ExitButton, FontAsset(U"Button"), U"戻る", Palette::Black);
 		Button(ExitCancel, FontAsset(U"Button"), U"キャンセル", Palette::Black);
 	}
 	else

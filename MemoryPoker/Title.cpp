@@ -13,36 +13,81 @@ Title::Title(const InitData& init)
 //更新関数
 void Title::update()
 {
-	if (startButton.mouseOver() || ruleButton.mouseOver() || configButton.mouseOver() || exitButton.mouseOver())
+	if (SelectFlg)
 	{
-		Cursor::RequestStyle(CursorStyle::Hand);
+		//先攻後攻選択画面
+		if (firstButton.mouseOver() || lastbutton.mouseOver() || cancelButton.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+
+		if (firstButton.leftClicked())
+		{
+			//先攻
+			AudioPlay(U"button");
+			SelectFlg = false;
+
+			//アニメーション用ストップウォッチ
+			getData().stopwatch.restart();
+
+			//神経衰弱画面(Memory)へ
+			changeScene(State::Memory, getData().changeSec);
+		}
+		else if(lastbutton.leftClicked())
+		{
+			//後攻
+			AudioPlay(U"button");
+			SelectFlg = false;
+
+			//アニメーション用ストップウォッチ
+			getData().stopwatch.restart();
+
+			//神経衰弱画面(Memory)へ
+			changeScene(State::Memory, getData().changeSec);
+		}
+		else if (cancelButton.leftClicked())
+		{
+			//キャンセル
+			AudioPlay(U"cancel");
+			SelectFlg = false;
+		}
+	}
+	else
+	{
+		//通常のタイトル画面
+		if (startButton.mouseOver() || ruleButton.mouseOver() || configButton.mouseOver() || exitButton.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+
+		if (startButton.leftClicked())
+		{
+			AudioPlay(U"button");
+			//先攻後攻選択画面へ
+			SelectFlg = true;
+		}
+		else if (ruleButton.leftClicked())
+		{
+			AudioPlay(U"button");
+			//ルール説明へ
+			getData().NowScene = U"Title";
+			changeScene(State::Rule, getData().changeSec);
+		}
+		else if (configButton.leftClicked())
+		{
+			AudioPlay(U"button");
+			//設定画面へ
+			getData().NowScene = U"Title";
+			changeScene(State::Config, getData().changeSec);
+		}
+		else if (exitButton.leftClicked())
+		{
+			AudioPlay(U"button");
+			//終了
+			System::Exit();
+		}
 	}
 
-	if (startButton.leftClicked())
-	{
-		AudioPlay(U"button");
-		//ゲーム画面(Memory)へ
-	}
-	else if (ruleButton.leftClicked())
-	{
-		AudioPlay(U"button");
-		//ルール説明へ
-		getData().NowScene = U"Title";
-		changeScene(State::Rule, getData().changeSec);
-	}
-	else if (configButton.leftClicked())
-	{
-		AudioPlay(U"button");
-		//設定画面へ
-		getData().NowScene = U"Title";
-		changeScene(State::Config, getData().changeSec);
-	}
-	else if (exitButton.leftClicked())
-	{
-		AudioPlay(U"button");
-		//終了
-		System::Exit();
-	}
 }
 
 //描画関数
@@ -55,8 +100,21 @@ void Title::draw() const
 	FontAsset(U"Title")(U"神経衰弱ポーカー").drawAt(TextStyle::Outline(10, ColorF{ 0 }), 800, 300);
 
 	//ボタン表示
-	Button(startButton, FontAsset(U"Button"), U"スタート", Palette::Black);
-	Button(ruleButton, FontAsset(U"Button"), U"遊び方", Palette::Black);
-	Button(configButton, FontAsset(U"Button"), U"設定", Palette::Black);
-	Button(exitButton, FontAsset(U"Button"), U"終了する", Palette::Black);
+	Button(startButton, FontAsset(U"Button"), U"スタート", Palette::Black, !SelectFlg);
+	Button(ruleButton, FontAsset(U"Button"), U"遊び方", Palette::Black, !SelectFlg);
+	Button(configButton, FontAsset(U"Button"), U"設定", Palette::Black, !SelectFlg);
+	Button(exitButton, FontAsset(U"Button"), U"終了する", Palette::Black, !SelectFlg);
+
+	if (SelectFlg)
+	{
+		//先攻後攻選択画面
+		selectFrame.draw(Palette::White);
+		selectFrame.drawFrame(2, 2, Palette::Black);
+
+		FontAsset(U"Text")(U"先攻/後攻の選択").drawAt(800, 450, Palette::Black);
+
+		Button(firstButton, FontAsset(U"Button"), U"先攻", Palette::Black);
+		Button(lastbutton, FontAsset(U"Button"), U"後攻", Palette::Black);
+		Button(cancelButton, FontAsset(U"Button"), U"キャンセル", Palette::Black);
+	}
 }

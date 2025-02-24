@@ -11,7 +11,7 @@ enum class State
 	Config,
 	Rule,
 	Memory,
-	Select,
+	SelectCard,
 	Bet,
 	ShowDown,
 	Result

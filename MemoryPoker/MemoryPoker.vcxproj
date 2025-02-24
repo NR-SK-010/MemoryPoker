@@ -119,6 +119,7 @@
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Rule.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -333,6 +334,7 @@
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Common.hpp" />
     <ClInclude Include="Config.hpp" />
+    <ClInclude Include="Memory.hpp" />
     <ClInclude Include="Rule.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Title.hpp" />
