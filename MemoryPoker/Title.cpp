@@ -28,14 +28,14 @@ void Title::update()
 		AudioPlay(U"button");
 		//ルール説明へ
 		getData().NowScene = U"Title";
-		changeScene(State::Rule, 0);
+		changeScene(State::Rule, getData().changeSec);
 	}
 	else if (configButton.leftClicked())
 	{
 		AudioPlay(U"button");
 		//設定画面へ
 		getData().NowScene = U"Title";
-		changeScene(State::Config, 0);
+		changeScene(State::Config, getData().changeSec);
 	}
 	else if (exitButton.leftClicked())
 	{

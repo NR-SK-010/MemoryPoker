@@ -18,13 +18,13 @@ void Rule::update()
 		if (getData().ConfigFlg)
 		{
 			getData().ConfigFlg = false;
-			changeScene(State::Config, 0);
+			changeScene(State::Config, getData().changeSec);
 		}
 		else
 		{
 			if (getData().NowScene == U"Title")
 			{
-				changeScene(State::Title, 0);
+				changeScene(State::Title, getData().changeSec);
 			}
 		}
 		

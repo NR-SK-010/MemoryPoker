@@ -19,7 +19,7 @@ void Config::update()
 
 		if (ExitButton.leftClicked())
 		{
-			changeScene(State::Title);
+			changeScene(State::Title, getData().changeSec);
 		}
 
 		if (ExitCancel.leftClicked())
@@ -90,7 +90,7 @@ void Config::update()
 			getData().ConfigFlg = false;
 			if (getData().NowScene == U"Title")
 			{
-				changeScene(State::Title, 0);
+				changeScene(State::Title, getData().changeSec);
 			}
 			
 		}
@@ -102,7 +102,7 @@ void Config::update()
 		{
 			AudioPlay(U"button");
 			getData().ConfigFlg = true;
-			changeScene(State::Rule, 0);
+			changeScene(State::Rule, getData().changeSec);
 		}
 		else if (ToExitButton.leftClicked())
 		{

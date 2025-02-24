@@ -25,6 +25,7 @@ struct GameData
 	String NowScene = U""; //現在のシーン名を格納(Rule,Configから戻る際に使用)
 	Stopwatch stopwatch; //ストップウォッチ
 	bool ConfigFlg = false; //設定画面からルール説明に行くときのみtrue
+	s3d::SecondsF changeSec = 0.5s; //画面切り替えにかかる時間
 };
 
 using App = SceneManager<State, GameData>;
