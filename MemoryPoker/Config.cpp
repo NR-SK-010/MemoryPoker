@@ -19,13 +19,13 @@ void Config::update()
 
 		if (ExitButton.leftClicked())
 		{
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			changeScene(State::Title, getData().changeSec);
 		}
 
 		if (ExitCancel.leftClicked())
 		{
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			ExitMenu = false;
 		}
 	}
@@ -55,7 +55,7 @@ void Config::update()
 				}
 
 				AudioAsset(U"BGM").setVolume(getData().BGMVolume);
-				AudioPlay(U"button");
+				AudioPlay(U"Button");
 			}
 		}
 
@@ -77,17 +77,17 @@ void Config::update()
 					getData().SoundVolume = 0.2 * i;
 				}
 
-				AudioAsset(U"button").setVolume(getData().SoundVolume);
-				AudioAsset(U"cancel").setVolume(getData().SoundVolume);
-				AudioAsset(U"flip").setVolume(getData().SoundVolume);
-				AudioAsset(U"coin").setVolume(getData().SoundVolume);
-				AudioPlay(U"button");
+				AudioAsset(U"Button").setVolume(getData().SoundVolume);
+				AudioAsset(U"Cancel").setVolume(getData().SoundVolume);
+				AudioAsset(U"Flip").setVolume(getData().SoundVolume);
+				AudioAsset(U"Coin").setVolume(getData().SoundVolume);
+				AudioPlay(U"Button");
 			}
 		}
 
 		if (CancelButton.leftClicked())
 		{
-			AudioPlay(U"cancel");
+			AudioPlay(U"Cancel");
 			getData().ConfigFlg = false;
 			if (getData().NowScene == U"Title")
 			{
@@ -101,17 +101,17 @@ void Config::update()
 		}
 		else if (SoundTestButton.leftClicked())
 		{
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 		}
 		else if (RuleButton.leftClicked())
 		{
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			getData().ConfigFlg = true;
 			changeScene(State::Rule, getData().changeSec);
 		}
 		else if (ToExitButton.leftClicked())
 		{
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			ExitMenu = true;
 		}
 	}

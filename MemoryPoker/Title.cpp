@@ -24,7 +24,7 @@ void Title::update()
 		if (firstButton.leftClicked())
 		{
 			//先攻
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			SelectFlg = false;
 
 			//アニメーション用ストップウォッチ
@@ -36,7 +36,7 @@ void Title::update()
 		else if(lastbutton.leftClicked())
 		{
 			//後攻
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			SelectFlg = false;
 
 			//アニメーション用ストップウォッチ
@@ -48,7 +48,7 @@ void Title::update()
 		else if (cancelButton.leftClicked())
 		{
 			//キャンセル
-			AudioPlay(U"cancel");
+			AudioPlay(U"Cancel");
 			SelectFlg = false;
 		}
 	}
@@ -62,27 +62,27 @@ void Title::update()
 
 		if (startButton.leftClicked())
 		{
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			//先攻後攻選択画面へ
 			SelectFlg = true;
 		}
 		else if (ruleButton.leftClicked())
 		{
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			//ルール説明へ
 			getData().NowScene = U"Title";
 			changeScene(State::Rule, getData().changeSec);
 		}
 		else if (configButton.leftClicked())
 		{
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			//設定画面へ
 			getData().NowScene = U"Title";
 			changeScene(State::Config, getData().changeSec);
 		}
 		else if (exitButton.leftClicked())
 		{
-			AudioPlay(U"button");
+			AudioPlay(U"Button");
 			//終了
 			System::Exit();
 		}

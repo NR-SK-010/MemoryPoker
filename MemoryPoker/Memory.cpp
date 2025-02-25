@@ -17,7 +17,7 @@ void Memory::update()
 
 	if (MenuButton.leftClicked())
 	{
-		AudioPlay(U"button");
+		AudioPlay(U"Button");
 		getData().NowScene = U"Memory";
 		changeScene(State::Config, getData().changeSec);
 	}

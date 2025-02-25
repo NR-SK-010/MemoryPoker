@@ -21,10 +21,10 @@ void Main()
 	FontAsset::Register(U"Text", 30);
 
 	AudioAsset::Register(U"BGM", U"Sounds/Night_View.mp3", Loop::Yes);
-	AudioAsset::Register(U"button", U"Sounds/button.mp3");
-	AudioAsset::Register(U"cancel", U"Sounds/cancel.mp3");
-	AudioAsset::Register(U"flip", U"Sounds/cardflip.mp3");
-	AudioAsset::Register(U"coin", U"Sounds/coin.mp3");
+	AudioAsset::Register(U"Button", U"Sounds/button.mp3");
+	AudioAsset::Register(U"Cancel", U"Sounds/cancel.mp3");
+	AudioAsset::Register(U"Flip", U"Sounds/cardflip.mp3");
+	AudioAsset::Register(U"Coin", U"Sounds/coin.mp3");
 
 	TextureAsset::Register(U"Start", U"Images/Start.png");
 	TextureAsset::Register(U"MemoryGame", U"Images/MemoryGame.png");
@@ -40,10 +40,10 @@ void Main()
 	FontAsset::Load(U"Text");
 
 	AudioAsset::Load(U"BGM");
-	AudioAsset::Load(U"button");
-	AudioAsset::Load(U"cancel");
-	AudioAsset::Load(U"flip");
-	AudioAsset::Load(U"coin");
+	AudioAsset::Load(U"Button");
+	AudioAsset::Load(U"Cancel");
+	AudioAsset::Load(U"Flip");
+	AudioAsset::Load(U"Coin");
 
 	TextureAsset::Load(U"Start");
 	TextureAsset::Load(U"MemoryGame");
@@ -62,10 +62,10 @@ void Main()
 	
 
 	AudioAsset(U"BGM").setVolume(0.2);
-	AudioAsset(U"button").setVolume(0.2);
-	AudioAsset(U"cancel").setVolume(0.2);
-	AudioAsset(U"flip").setVolume(0.2);
-	AudioAsset(U"coin").setVolume(0.2);
+	AudioAsset(U"Button").setVolume(0.2);
+	AudioAsset(U"Cancel").setVolume(0.2);
+	AudioAsset(U"Flip").setVolume(0.2);
+	AudioAsset(U"Coin").setVolume(0.2);
 
 	//BGM再生
 	AudioAsset(U"BGM").play();

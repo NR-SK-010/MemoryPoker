@@ -14,7 +14,7 @@ void Rule::update()
 	if (ExitButton.leftClicked())
 	{
 		//「戻る」
-		AudioAsset(U"cancel").play();
+		AudioAsset(U"Cancel").play();
 		if (getData().ConfigFlg)
 		{
 			getData().ConfigFlg = false;
@@ -37,13 +37,13 @@ void Rule::update()
 
 	if (ToNextPageButton.leftClicked() && page + 1 <= 7)
 	{
-		AudioPlay(U"flip");
+		AudioPlay(U"Flip");
 		page++;
 	}
 
 	if (ToPrePageButton.leftClicked() && page - 1 >= 1)
 	{
-		AudioPlay(U"flip");
+		AudioPlay(U"Flip");
 		page--;
 	}
 
