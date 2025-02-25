@@ -26,6 +26,8 @@ struct GameData
 	Stopwatch stopwatch; //ストップウォッチ
 	bool ConfigFlg = false; //設定画面からルール説明に行くときのみtrue
 	s3d::SecondsF changeSec = 0.5s; //画面切り替えにかかる時間
+	const PlayingCard::Pack pack{ 75, Palette::Red }; //幅75ピクセル、背面が赤色のカードパック
+	Array<PlayingCard::Card> cards = PlayingCard::CreateDeck(0, false); //デッキ作成、背面の状態で
 };
 
 using App = SceneManager<State, GameData>;

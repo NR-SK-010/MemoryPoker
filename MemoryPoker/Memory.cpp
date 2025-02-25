@@ -56,5 +56,16 @@ void Memory::draw() const
 
 	CpuChipFrame.draw(Palette::White);
 	CpuChipFrame.drawFrame(2, 2, Palette::Black);
-	FontAsset(U"Text")(U"CHIP").drawAt(150, 195);
+	FontAsset(U"Text")(U"CHIP").drawAt(150, 195, Palette::Black);
+
+
+	//場に残っているカードの描画
+	for (int i : step(13 * 4))
+	{
+		//カードの座標
+		const Vec2 center{ 260 + i % 13 * 90, 405 + (i / 13) * 130 };
+
+		//カード描画
+		getData().pack(getData().cards[i]).drawAt(center);
+	}
 }
