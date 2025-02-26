@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include <Siv3D.hpp>
+#include "Player.hpp"
+#include "Cpu.hpp"
 
 //関数
 void AudioPlay(String name);
@@ -28,6 +30,7 @@ struct GameData
 	s3d::SecondsF changeSec = 0.5s; //画面切り替えにかかる時間
 	const PlayingCard::Pack pack{ 75, Palette::Red }; //幅75ピクセル、背面が赤色のカードパック
 	Array<PlayingCard::Card> cards = PlayingCard::CreateDeck(0, false); //デッキ作成、背面の状態で
+	Player player = Player();
 };
 
 using App = SceneManager<State, GameData>;
