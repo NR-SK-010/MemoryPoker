@@ -26,16 +26,59 @@ void Memory::update()
 	{
 		//カードの座標
 		const Vec2 center{ 260 + i % 13 * 90, 405 + (i / 13) * 130 };
-		if (getData().pack.regionAt(center).mouseOver())
+		if (getData().player.getFlipPair().first == -1 || getData().player.getFlipPair().second == -1)
 		{
-			Cursor::RequestStyle(CursorStyle::Hand);
+			//二枚めくってない状態
+			if (getData().pack.regionAt(center).mouseOver())
+			{
+				Cursor::RequestStyle(CursorStyle::Hand);
+			}
+
+			if (getData().pack.regionAt(center).leftClicked())
+			{
+				getData().cards[i].flip();
+				AudioPlay(U"Flip");
+
+				if (getData().player.getFlipPair().first == -1)
+				{
+					//1枚目
+					getData().player.setFlipPair(i, -1);
+				}
+				else
+				{
+					//2枚目
+					getData().player.setFlipPair(getData().player.getFlipPair().first, i);
+
+					//時間計測
+					getData().stopwatch.restart();
+				}
+			}
+		}
+		else
+		{
+			//2枚めくった->そろっているかの判定
+			if (getData().cards[getData().player.getFlipPair().first].rank == getData().cards[getData().player.getFlipPair().second].rank)
+			{
+				//揃っている場合
+				getData().player.setFlipPair(-1, -1);
+				
+			}
+			else
+			{
+				//揃っていない場合
+				if (getData().stopwatch.sF() > 0.5)
+				{
+					AudioPlay(U"Flip");
+					getData().cards[getData().player.getFlipPair().first].flip();
+					getData().cards[getData().player.getFlipPair().second].flip();
+
+					getData().player.setFlipPair(-1, -1);
+				}
+				
+			}
+			
 		}
 
-		if (getData().pack.regionAt(center).leftClicked())
-		{
-			getData().cards[i].flip();
-			AudioPlay(U"Flip");
-		}
 	}
 }
 
@@ -76,7 +119,6 @@ void Memory::draw() const
 	FontAsset(U"Text")(U"CHIP").drawAt(150, 195, Palette::Black);
 	FontAsset(U"Text")(getData().cpu.getChip()).drawAt(350, 195, Palette::Black);
 
-
 	//場に残っているカードの描画
 	for (int i : step(13 * 4))
 	{
@@ -86,4 +128,6 @@ void Memory::draw() const
 		//カード描画
 		getData().pack(getData().cards[i]).drawAt(center);
 	}
+
+	
 }

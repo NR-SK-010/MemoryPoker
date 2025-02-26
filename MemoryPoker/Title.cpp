@@ -30,6 +30,10 @@ void Title::update()
 			//アニメーション用ストップウォッチ
 			getData().stopwatch.restart();
 
+			//カードシャッフル
+			getData().cards.shuffle();
+
+
 			//神経衰弱画面(Memory)へ
 			changeScene(State::Memory, getData().changeSec);
 		}
@@ -41,6 +45,9 @@ void Title::update()
 
 			//アニメーション用ストップウォッチ
 			getData().stopwatch.restart();
+
+			//カードシャッフル
+			getData().cards.shuffle();
 
 			//神経衰弱画面(Memory)へ
 			changeScene(State::Memory, getData().changeSec);

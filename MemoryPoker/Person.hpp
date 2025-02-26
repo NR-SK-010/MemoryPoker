@@ -27,6 +27,8 @@ public:
 	void setMaxSuit(int32 suit);
 	String getName();
 	int32 getChip();
+	std::pair<int32, int32> getFlipPair();
+	void setFlipPair(int32 first, int32 second);
 
 protected:
 	//intN -> Nbit符号付き整数

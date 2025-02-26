@@ -70,6 +70,7 @@ void Main()
 	//BGM再生
 	AudioAsset(U"BGM").play();
 
+
 	while (System::Update())
 	{
 		if (not manager.update())

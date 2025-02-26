@@ -72,3 +72,14 @@ int32 Person::getChip()
 {
 	return Chip;
 }
+
+std::pair<int32, int32> Person::getFlipPair()
+{
+	return FlipPair;
+}
+
+void Person::setFlipPair(int32 first, int32 second)
+{
+	FlipPair.first = first;
+	FlipPair.second = second;
+}
