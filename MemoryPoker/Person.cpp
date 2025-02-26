@@ -62,3 +62,13 @@ void Person::setMaxSuit(int32 suit)
 {
 	MaxSuit = suit;
 }
+
+String Person::getName()
+{
+	return Name;
+}
+
+int32 Person::getChip()
+{
+	return Chip;
+}

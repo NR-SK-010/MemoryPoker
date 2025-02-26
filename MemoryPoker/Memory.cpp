@@ -38,11 +38,12 @@ void Memory::draw() const
 
 	PlayerNameFrame.draw(Palette::White);
 	PlayerNameFrame.drawFrame(2, 2, Palette::Black);
-	FontAsset(U"Text")(U"Player").drawAt(1250, 995, Palette::Black);
+	FontAsset(U"Text")(getData().player.getName()).drawAt(1250, 995, Palette::Black);
 
 	PlayerChipFrame.draw(Palette::White);
 	PlayerChipFrame.drawFrame(2, 2, Palette::Black);
 	FontAsset(U"Text")(U"CHIP").drawAt(1250, 1100, Palette::Black);
+	FontAsset(U"Text")(getData().player.getChip()).drawAt(1450, 1100, Palette::Black);
 
 
 
@@ -52,11 +53,12 @@ void Memory::draw() const
 
 	CpuNameFrame.draw(Palette::White);
 	CpuNameFrame.drawFrame(2, 2, Palette::Black);
-	FontAsset(U"Text")(U"CPU").drawAt(150, 90, Palette::Black);
+	FontAsset(U"Text")(getData().cpu.getName()).drawAt(150, 90, Palette::Black);
 
 	CpuChipFrame.draw(Palette::White);
 	CpuChipFrame.drawFrame(2, 2, Palette::Black);
 	FontAsset(U"Text")(U"CHIP").drawAt(150, 195, Palette::Black);
+	FontAsset(U"Text")(getData().cpu.getChip()).drawAt(350, 195, Palette::Black);
 
 
 	//場に残っているカードの描画

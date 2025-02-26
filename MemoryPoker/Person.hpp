@@ -25,6 +25,8 @@ public:
 	void setMaxNumber(int32 number);
 	int32 getMaxSuit();
 	void setMaxSuit(int32 suit);
+	String getName();
+	int32 getChip();
 
 protected:
 	//intN -> Nbit符号付き整数
