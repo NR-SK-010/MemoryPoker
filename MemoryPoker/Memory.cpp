@@ -21,6 +21,22 @@ void Memory::update()
 		getData().NowScene = U"Memory";
 		changeScene(State::Config, getData().changeSec);
 	}
+
+	for (int i : step(13 * 4))
+	{
+		//カードの座標
+		const Vec2 center{ 260 + i % 13 * 90, 405 + (i / 13) * 130 };
+		if (getData().pack.regionAt(center).mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+
+		if (getData().pack.regionAt(center).leftClicked())
+		{
+			getData().cards[i].flip();
+			AudioPlay(U"Flip");
+		}
+	}
 }
 
 //描画関数
