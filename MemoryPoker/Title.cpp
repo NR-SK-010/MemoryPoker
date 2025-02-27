@@ -33,6 +33,10 @@ void Title::update()
 			//カードシャッフル
 			getData().cards.shuffle();
 
+			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
+			getData().Memory_PlayerTurn = true;
+			getData().Bet_PlayerFirst = true;
+
 
 			//神経衰弱画面(Memory)へ
 			changeScene(State::Memory, getData().changeSec);
@@ -48,6 +52,10 @@ void Title::update()
 
 			//カードシャッフル
 			getData().cards.shuffle();
+
+			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
+			getData().Memory_PlayerTurn = false;
+			getData().Bet_PlayerFirst = false;
 
 			//神経衰弱画面(Memory)へ
 			changeScene(State::Memory, getData().changeSec);

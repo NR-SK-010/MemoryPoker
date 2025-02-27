@@ -34,7 +34,8 @@ struct GameData
 	Player player = Player(U"Player"); //プレイヤー
 	Cpu cpu = Cpu(U"CPU"); //CPU
 	HashSet<int32> UsedCards = {}; //ゲーム内で使用したカード(揃えられたカード)のインデックス保管
-
+	bool Memory_PlayerTurn; //Memoryシーン内でプレイヤーの手番かどうか
+	bool Bet_PlayerFirst; //Betシーン内において、プレイヤーがファーストベットを行うか否か(神経衰弱の先攻/後攻と一致する)
 };
 
 using App = SceneManager<State, GameData>;

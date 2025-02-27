@@ -10,6 +10,7 @@ Memory::Memory(const InitData& init)
 //更新関数
 void Memory::update()
 {
+	//メニューボタン処理
 	if (MenuButton.mouseOver())
 	{
 		Cursor::RequestStyle(CursorStyle::Hand);
@@ -22,103 +23,119 @@ void Memory::update()
 		changeScene(State::Config, getData().changeSec);
 	}
 
-	for (int i : step(13 * 4))
+	if (getData().Memory_PlayerTurn)
 	{
+		//Playerの手番
 
-		//UsedCards(使用済み)に含まれている場合は無視
-		if (getData().UsedCards.contains(i)) continue;
-
-		//すでにめくられているカードは無視(FlipPair1枚目はまだUsedCardsに入っていない状態)
-		if (getData().player.getFlipPair().first == i) continue;
-
-		//カードの座標
-		const Vec2 center{ 260 + i % 13 * 90, 405 + (i / 13) * 130 };
-		if (getData().player.getFlipPair().first == -1 || getData().player.getFlipPair().second == -1)
+		for (int i : step(13 * 4))
 		{
-			//二枚めくってない状態
-			if (getData().pack.regionAt(center).mouseOver())
+			//UsedCards(使用済み)に含まれている場合は無視
+			if (getData().UsedCards.contains(i)) continue;
+
+			//すでにめくられているカードは無視(FlipPair1枚目はまだUsedCardsに入っていない状態)
+			if (getData().player.getFlipPair().first == i) continue;
+
+			//カードの座標
+			const Vec2 center{ 260 + i % 13 * 90, 405 + (i / 13) * 130 };
+			if (getData().player.getFlipPair().first == -1 || getData().player.getFlipPair().second == -1)
 			{
-				Cursor::RequestStyle(CursorStyle::Hand);
-			}
-
-			if (getData().pack.regionAt(center).leftClicked())
-			{
-				getData().cards[i].flip();
-				AudioPlay(U"Flip");
-
-				if (getData().player.getFlipPair().first == -1)
+				//二枚めくってない状態
+				if (getData().pack.regionAt(center).mouseOver())
 				{
-					//1枚目
-					getData().player.setFlipPair(i, -1);
+					Cursor::RequestStyle(CursorStyle::Hand);
 				}
-				//同じカードのクリックを防ぐ
-				else if(getData().player.getFlipPair().first != i)
-				{
-					//2枚目
-					getData().player.setFlipPair(getData().player.getFlipPair().first, i);
 
-					//時間計測開始
-					getData().stopwatch.restart();
-				}
-			}
-		}
-		else
-		{
-			//2枚めくられている状態
-			//この状態を0.5s維持
-			if (getData().stopwatch.sF() < 0.5) continue;
-
-			//2枚めくった->そろっているかの判定
-			if (getData().cards[getData().player.getFlipPair().first].rank == getData().cards[getData().player.getFlipPair().second].rank)
-			{
-				//揃っている場合
-
-				if (!getData().UsedCards.contains(getData().player.getFlipPair().first))
+				if (getData().pack.regionAt(center).leftClicked())
 				{
-					//UsedCardsに情報を保存
-					getData().UsedCards.insert(getData().player.getFlipPair().first);
-					getData().UsedCards.insert(getData().player.getFlipPair().second);
-				}
-				else
-				{
-					if (getData().stopwatch.sF() > 2.0)
+					getData().cards[i].flip();
+					AudioPlay(U"Flip");
+
+					if (getData().player.getFlipPair().first == -1)
 					{
-						//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
+						//1枚目
+						getData().player.setFlipPair(i, -1);
+					}
+					//同じカードのクリックを防ぐ
+					else if (getData().player.getFlipPair().first != i)
+					{
+						//2枚目
+						getData().player.setFlipPair(getData().player.getFlipPair().first, i);
 
-						//手札に揃えた2枚を追加
-						getData().player.push_back_Hands(getData().player.getFlipPair().first);
-						getData().player.push_back_Hands(getData().player.getFlipPair().second);
-
-						//めくったカードの情報をリセット
-						getData().player.setFlipPair(-1, -1);
-
-						//ストップウォッチ停止
-						getData().stopwatch.pause();
+						//時間計測開始
+						getData().stopwatch.restart();
 					}
 				}
-				
 			}
 			else
 			{
-				//揃っていない場合
+				//2枚めくられている状態
+				//この状態を0.5s維持
+				if (getData().stopwatch.sF() < 0.5) continue;
 
-				//元に戻す
-				AudioPlay(U"Flip");
-				getData().cards[getData().player.getFlipPair().first].flip();
-				getData().cards[getData().player.getFlipPair().second].flip();
+				//2枚めくった->そろっているかの判定
+				if (getData().cards[getData().player.getFlipPair().first].rank == getData().cards[getData().player.getFlipPair().second].rank)
+				{
+					//揃っている場合
 
-				//めくったカードの情報をリセット
-				getData().player.setFlipPair(-1, -1);
+					if (!getData().UsedCards.contains(getData().player.getFlipPair().first))
+					{
+						//UsedCardsに情報を保存
+						getData().UsedCards.insert(getData().player.getFlipPair().first);
+						getData().UsedCards.insert(getData().player.getFlipPair().second);
+					}
+					else
+					{
+						if (getData().stopwatch.sF() > 2.0)
+						{
+							//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
 
-				//揃っていない場合はそのままストップウォッチ停止
-				getData().stopwatch.pause();
+							//手札に揃えた2枚を追加
+							getData().player.push_back_Hands(getData().player.getFlipPair().first);
+							getData().player.push_back_Hands(getData().player.getFlipPair().second);
+
+							//めくったカードの情報をリセット
+							getData().player.setFlipPair(-1, -1);
+
+							//ストップウォッチ停止
+							getData().stopwatch.pause();
+
+							//CPUのターンに回す
+							getData().Memory_PlayerTurn = false;
+						}
+					}
+
+				}
+				else
+				{
+					//揃っていない場合
+
+					//元に戻す
+					AudioPlay(U"Flip");
+					getData().cards[getData().player.getFlipPair().first].flip();
+					getData().cards[getData().player.getFlipPair().second].flip();
+
+					//めくったカードの情報をリセット
+					getData().player.setFlipPair(-1, -1);
+
+					//揃っていない場合はそのままストップウォッチ停止
+					getData().stopwatch.pause();
+
+					//CPUのターンに回す
+					getData().Memory_PlayerTurn = false;
+				}
+
 			}
 
-
-			
 		}
+	}
+	else
+	{
+		//CPUの手番
+
 
 	}
+
+
 }
 
 //描画関数
