@@ -283,6 +283,12 @@ void Memory::update()
 				}
 			}
 		}
+
+		if (getData().player.getHands().size() == 6 && getData().cpu.getHands().size() == 6 && getData().stopwatch.sF() > 0.5)
+		{
+			//次のシーン(SelectCard)へ
+			changeScene(State::SelectCard, getData().changeSec);
+		}
 	}
 
 }

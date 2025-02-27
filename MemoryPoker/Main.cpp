@@ -4,6 +4,7 @@
 #include "Config.hpp"
 #include "Rule.hpp"
 #include "Memory.hpp"
+#include "SelectCard.hpp"
 
 void Main()
 {
@@ -59,6 +60,7 @@ void Main()
 	manager.add<Config>(State::Config);
 	manager.add<Rule>(State::Rule);
 	manager.add<Memory>(State::Memory);
+	manager.add<SelectCard>(State::SelectCard);
 	
 
 	AudioAsset(U"BGM").setVolume(0.2);
