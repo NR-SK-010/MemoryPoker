@@ -23,8 +23,7 @@ void Person::SelectRandomPair(HashSet<int32> usedCards, Array<PlayingCard::Card>
 		std::swap(first, second);
 	}
 
-	FlipPair.first = first;
-	FlipPair.second = second;
+	this->setFlipPair(first, second);
 }
 
 //初期状態に戻す(再スタート時など)

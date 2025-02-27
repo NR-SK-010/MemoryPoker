@@ -210,6 +210,79 @@ void Memory::update()
 	else
 	{
 		//どちらかが6枚(3ペア)揃えた
+		if (getData().player.getHands().size() < 6 && getData().stopwatch.sF() > 0.5)
+		{
+			//Player側が6枚未満(CPUが6枚揃えた)場合
+			if (getData().player.getFlipPair().first == -1 || getData().player.getFlipPair().second == -1)
+			{
+				getData().player.SelectRandomPair(getData().UsedCards, getData().cards);
+
+				getData().cards[getData().player.getFlipPair().first].flip();
+				getData().cards[getData().player.getFlipPair().second].flip();
+			}
+		
+			if (!getData().UsedCards.contains(getData().cpu.getFlipPair().first))
+			{
+				//UsedCardsに情報を保存
+				getData().UsedCards.insert(getData().cpu.getFlipPair().first);
+				getData().UsedCards.insert(getData().cpu.getFlipPair().second);
+			}
+			else
+			{
+				if (getData().stopwatch.sF() >= 2.0)
+				{
+					//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
+
+					//手札に揃えた2枚を追加
+					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().first);
+					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().second);
+
+					//めくったカードの情報をリセット
+					getData().cpu.setFlipPair(-1, -1);
+
+					//ストップウォッチリスタート
+					getData().stopwatch.restart();
+				}
+			}
+
+		}
+		else if (getData().cpu.getHands().size() < 6 && getData().stopwatch.sF() > 0.5)
+		{
+			//CPU側が6枚未満(Playerが6枚揃えた)場合
+			if (getData().cpu.getFlipPair().first == -1 || getData().cpu.getFlipPair().second == -1)
+			{
+				getData().cpu.SelectRandomPair(getData().UsedCards, getData().cards);
+
+				//ランダムに追加されたペアはcpu側のものでも確認できる
+				getData().cards[getData().cpu.getFlipPair().first].flip();
+				getData().cards[getData().cpu.getFlipPair().second].flip();
+			}
+			
+
+			if (!getData().UsedCards.contains(getData().cpu.getFlipPair().first))
+			{
+				//UsedCardsに情報を保存
+				getData().UsedCards.insert(getData().cpu.getFlipPair().first);
+				getData().UsedCards.insert(getData().cpu.getFlipPair().second);
+			}
+			else
+			{
+				if (getData().stopwatch.sF() >= 2.0)
+				{
+					//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
+
+					//手札に揃えた2枚を追加
+					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().first);
+					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().second);
+
+					//めくったカードの情報をリセット
+					getData().cpu.setFlipPair(-1, -1);
+
+					//ストップウォッチリスタート
+					getData().stopwatch.restart();
+				}
+			}
+		}
 	}
 
 }

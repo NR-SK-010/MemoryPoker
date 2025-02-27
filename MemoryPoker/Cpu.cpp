@@ -21,7 +21,7 @@ int32 Cpu::SelectSecondCard(const Array<PlayingCard::Card> cards, const HashSet<
 	//いったん完全ランダム選択とする(ゲームの処理が完成後行動パターンは作成)
 	int32 selectcard = Random<int32>(0, 51);
 
-	while (UsedCards.contains(selectcard) && selectcard == firstcard)
+	while (UsedCards.contains(selectcard) || selectcard == firstcard)
 	{
 		selectcard = Random<int32>(0, 51);
 	}
