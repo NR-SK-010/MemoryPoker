@@ -83,3 +83,13 @@ void Person::setFlipPair(int32 first, int32 second)
 	FlipPair.first = first;
 	FlipPair.second = second;
 }
+
+Array<int32> Person::getHands()
+{
+	return Hands;
+}
+
+void Person::push_back_Hands(int32 card)
+{
+	Hands.push_back(card);
+}

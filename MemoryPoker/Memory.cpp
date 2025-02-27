@@ -24,6 +24,10 @@ void Memory::update()
 
 	for (int i : step(13 * 4))
 	{
+
+		//UsedCards(使用済み)に含まれている場合は無視
+		if (getData().UsedCards.contains(i)) continue;
+
 		//カードの座標
 		const Vec2 center{ 260 + i % 13 * 90, 405 + (i / 13) * 130 };
 		if (getData().player.getFlipPair().first == -1 || getData().player.getFlipPair().second == -1)
@@ -49,34 +53,46 @@ void Memory::update()
 					//2枚目
 					getData().player.setFlipPair(getData().player.getFlipPair().first, i);
 
-					//時間計測
+					//時間計測開始
 					getData().stopwatch.restart();
 				}
 			}
 		}
 		else
 		{
+			//2枚めくられた状態を0.5s維持
+			if (getData().stopwatch.sF() < 0.5) continue;
+
 			//2枚めくった->そろっているかの判定
 			if (getData().cards[getData().player.getFlipPair().first].rank == getData().cards[getData().player.getFlipPair().second].rank)
 			{
 				//揃っている場合
+
+				//UsedCardsに情報を保存
+				getData().UsedCards.insert(getData().player.getFlipPair().first);
+				getData().UsedCards.insert(getData().player.getFlipPair().second);
+
+				//手札に揃えた2枚を追加
+				getData().player.push_back_Hands(getData().player.getFlipPair().first);
+				getData().player.push_back_Hands(getData().player.getFlipPair().second);
+
 				getData().player.setFlipPair(-1, -1);
 				
 			}
 			else
 			{
 				//揃っていない場合
-				if (getData().stopwatch.sF() > 0.5)
-				{
-					AudioPlay(U"Flip");
-					getData().cards[getData().player.getFlipPair().first].flip();
-					getData().cards[getData().player.getFlipPair().second].flip();
+				//2枚めくられた状態を0.5s維持
+				AudioPlay(U"Flip");
+				getData().cards[getData().player.getFlipPair().first].flip();
+				getData().cards[getData().player.getFlipPair().second].flip();
 
-					getData().player.setFlipPair(-1, -1);
-				}
-				
+				//めくったカードの情報をリセット
+				getData().player.setFlipPair(-1, -1);
 			}
-			
+
+			//ストップウォッチを停止
+			getData().stopwatch.pause();
 		}
 
 	}
@@ -125,8 +141,20 @@ void Memory::draw() const
 		//カードの座標
 		const Vec2 center{ 260 + i % 13 * 90, 405 + (i / 13) * 130 };
 
-		//カード描画
-		getData().pack(getData().cards[i]).drawAt(center);
+		//UsedCardsに含まれていないかチェック
+		if (!getData().UsedCards.contains(i))
+		{
+			//場にカードを描画
+			getData().pack(getData().cards[i]).drawAt(center);
+		}
+		
+	}
+
+	//PlayerのHandsカード描画
+	for (int32 i = 0; i < getData().player.getHands().size(); i++)
+	{
+		const Vec2 center{ 575 + i * 90, 1050 };
+		getData().pack(getData().cards[getData().player.getHands()[i]]).drawAt(center);
 	}
 
 	

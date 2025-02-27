@@ -29,6 +29,8 @@ public:
 	int32 getChip();
 	std::pair<int32, int32> getFlipPair();
 	void setFlipPair(int32 first, int32 second);
+	Array<int32> getHands();
+	void push_back_Hands(int32 card);
 
 protected:
 	//intN -> Nbit符号付き整数

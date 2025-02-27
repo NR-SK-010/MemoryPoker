@@ -33,6 +33,8 @@ struct GameData
 	Array<PlayingCard::Card> cards = PlayingCard::CreateDeck(0, false); //デッキ作成、背面の状態で
 	Player player = Player(U"Player"); //プレイヤー
 	Cpu cpu = Cpu(U"CPU"); //CPU
+	HashSet<int32> UsedCards = {}; //ゲーム内で使用したカード(揃えられたカード)のインデックス保管
+
 };
 
 using App = SceneManager<State, GameData>;
