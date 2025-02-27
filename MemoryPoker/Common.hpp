@@ -5,6 +5,7 @@
 
 //関数
 void AudioPlay(String name);
+void CardsReset(Array<PlayingCard::Card>& cards);
 
 //シーン名
 enum class State

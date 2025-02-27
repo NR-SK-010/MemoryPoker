@@ -15,3 +15,14 @@ void AudioPlay(String name)
 		AudioAsset(name).play();
 	}
 }
+
+void CardsReset(Array<PlayingCard::Card>& cards)
+{
+	for (int i : step(13 * 4))
+	{
+		if (cards[i].isFaceSide)
+		{
+			cards[i].flip();
+		}
+	}
+}

@@ -20,6 +20,7 @@ void Config::update()
 		if (ExitButton.leftClicked())
 		{
 			AudioPlay(U"Button");
+			CardsReset(getData().cards);
 			changeScene(State::Title, getData().changeSec);
 		}
 
