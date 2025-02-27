@@ -20,7 +20,15 @@ void Config::update()
 		if (ExitButton.leftClicked())
 		{
 			AudioPlay(U"Button");
+
+			//カード情報リセット
 			CardsReset(getData().cards);
+			getData().UsedCards.clear();
+
+			//Player,CPU情報リセット
+			getData().player.AllClear();
+			getData().cpu.AllClear();
+
 			changeScene(State::Title, getData().changeSec);
 		}
 
