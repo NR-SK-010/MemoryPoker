@@ -8,8 +8,8 @@ public:
 	Cpu(String name);
 
 	//Memoryシーン内でのカード選択
-	int32 SelectFirstCard(const Array<PlayingCard::Card> cards);
-	int32 SelectSecondCard(const Array<PlayingCard::Card> cards);
+	int32 SelectFirstCard(const Array<PlayingCard::Card> cards, HashSet<int32> UsedCards);
+	int32 SelectSecondCard(const Array<PlayingCard::Card> cards, HashSet<int32> UsedCards, const int32 firstcard);
 
 	//揃ったペアを記憶から削除
 	void DeleteMemory(int32 first, int32 second);

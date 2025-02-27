@@ -96,8 +96,8 @@ void Memory::update()
 							//めくったカードの情報をリセット
 							getData().player.setFlipPair(-1, -1);
 
-							//ストップウォッチ停止
-							getData().stopwatch.pause();
+							//ストップウォッチリスタート
+							getData().stopwatch.restart();
 
 							//CPUのターンに回す
 							getData().Memory_PlayerTurn = false;
@@ -110,15 +110,14 @@ void Memory::update()
 					//揃っていない場合
 
 					//元に戻す
-					AudioPlay(U"Flip");
 					getData().cards[getData().player.getFlipPair().first].flip();
 					getData().cards[getData().player.getFlipPair().second].flip();
 
 					//めくったカードの情報をリセット
 					getData().player.setFlipPair(-1, -1);
 
-					//揃っていない場合はそのままストップウォッチ停止
-					getData().stopwatch.pause();
+					//ストップウォッチリスタート
+					getData().stopwatch.restart();
 
 					//CPUのターンに回す
 					getData().Memory_PlayerTurn = false;
@@ -132,6 +131,84 @@ void Memory::update()
 	{
 		//CPUの手番
 
+		for (int i : step(13 * 4))
+		{
+			//次の行動まで0.5s待機
+			if (getData().stopwatch.sF() < 0.5) continue;
+
+			if (getData().cpu.getFlipPair().first == -1)
+			{
+				//1枚目
+				getData().cpu.setFlipPair(getData().cpu.SelectFirstCard(getData().cards, getData().UsedCards), -1);
+
+				AudioPlay(U"Flip");
+
+				//ストップウォッチリスタート
+				getData().stopwatch.restart();
+			}
+			else if(getData().cpu.getFlipPair().second == -1)
+			{
+				//2枚目
+				getData().cpu.setFlipPair(getData().cpu.getFlipPair().first, getData().cpu.SelectSecondCard(getData().cards, getData().UsedCards, getData().cpu.getFlipPair().first));
+
+				AudioPlay(U"Flip");
+
+				//ストップウォッチリスタート
+				getData().stopwatch.restart();
+			}
+			else
+			{
+				//2枚選択後
+				
+				//2枚めくった->そろっているかの判定
+				if (getData().cards[getData().cpu.getFlipPair().first].rank == getData().cards[getData().cpu.getFlipPair().second].rank)
+				{
+					//揃っている場合
+
+					if (!getData().UsedCards.contains(getData().cpu.getFlipPair().first))
+					{
+						//UsedCardsに情報を保存
+						getData().UsedCards.insert(getData().cpu.getFlipPair().first);
+						getData().UsedCards.insert(getData().cpu.getFlipPair().second);
+					}
+					else
+					{
+						if (getData().stopwatch.sF() > 2.0)
+						{
+							//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
+
+							//手札に揃えた2枚を追加
+							getData().cpu.push_back_Hands(getData().cpu.getFlipPair().first);
+							getData().cpu.push_back_Hands(getData().cpu.getFlipPair().second);
+
+							//めくったカードの情報をリセット
+							getData().cpu.setFlipPair(-1, -1);
+
+							//ストップウォッチリスタート
+							getData().stopwatch.restart();
+
+							//Playerのターンに回す
+							getData().Memory_PlayerTurn = true;
+						}
+					}
+
+				}
+				else
+				{
+					//揃っていない場合
+
+					//めくったカードの情報をリセット
+					getData().cpu.setFlipPair(-1, -1);
+
+					//ストップウォッチリスタート
+					getData().stopwatch.restart();
+
+					//Playerのターンに回す
+					getData().Memory_PlayerTurn = true;
+				}
+
+			}
+		}
 
 	}
 
@@ -186,6 +263,12 @@ void Memory::draw() const
 		{
 			//場にカードを描画
 			getData().pack(getData().cards[i]).drawAt(center);
+
+			//cpuの選択カードを可視化
+			if (getData().cpu.getFlipPair().first == i || getData().cpu.getFlipPair().second == i)
+			{
+				Rect{ 215 + i % 13 * 90, 340 + (i / 13) * 130, 90, 130 }.drawFrame(5, Palette::Yellow);
+			}
 		}
 		
 	}
@@ -208,11 +291,36 @@ void Memory::draw() const
 		getData().pack(getData().cards[getData().player.getFlipPair().second]).drawAt(pos);
 	}
 
+	//揃えたカードの移動(CPU側)
+	if (getData().UsedCards.contains(getData().cpu.getFlipPair().first) && getData().stopwatch.sF() < 2.0)
+	{
+		//イージング
+
+		//UsedCardsに追加されるのは0.5s後(update()側で記述)
+		const double t = Min(getData().stopwatch.sF() - 0.5, 1.0);
+		const double e = EaseInOutExpo(t);
+
+		//1枚目
+		Vec2 pos = CardMove(Vec2{ 260 + getData().cpu.getFlipPair().first % 13 * 90, 405 + (getData().cpu.getFlipPair().first / 13) * 130 }, Vec2{ 575 + (getData().cpu.getHands().size()) * 90, 150 }, e);
+		getData().pack(getData().cards[getData().cpu.getFlipPair().first]).drawAt(pos);
+
+		//2枚目
+		pos = CardMove(Vec2{ 260 + getData().cpu.getFlipPair().second % 13 * 90, 405 + (getData().cpu.getFlipPair().second / 13) * 130 }, Vec2{ 575 + (getData().cpu.getHands().size() + 1) * 90, 150 }, e);
+		getData().pack(getData().cards[getData().cpu.getFlipPair().second]).drawAt(pos);
+	}
+
 	//PlayerのHandsカード描画
 	for (int32 i = 0; i < getData().player.getHands().size(); i++)
 	{
 		const Vec2 center{ 575 + i * 90, 1050 };
 		getData().pack(getData().cards[getData().player.getHands()[i]]).drawAt(center);
+	}
+
+	//CPUのHandsカード描画
+	for (int32 i = 0; i < getData().cpu.getHands().size(); i++)
+	{
+		const Vec2 center{ 575 + i * 90, 1050 };
+		getData().pack(getData().cards[getData().cpu.getHands()[i]]).drawAt(center);
 	}
 
 	
