@@ -6,7 +6,25 @@ Person::Person(String name) : FlipPair(-1, -1), Chip(500), Name(name) {}
 //場からランダムにペアを選ぶ
 void Person::SelectRandomPair(HashSet<int32> usedCards, Array<PlayingCard::Card> cards)
 {
+	int32 first = Random<int32>(0, 51), second = Random<int32>(0, 51);
 
+	while (usedCards.contains(first))
+	{
+		first = Random<int32>(0, 51);
+	}
+
+	while (usedCards.contains(second) || first == second || cards[first].rank != cards[second].rank)
+	{
+		second = Random<int32>(0, 51);
+	}
+
+	if (first > second)
+	{
+		std::swap(first, second);
+	}
+
+	FlipPair.first = first;
+	FlipPair.second = second;
 }
 
 //初期状態に戻す(再スタート時など)

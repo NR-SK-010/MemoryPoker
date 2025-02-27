@@ -23,7 +23,8 @@ void Memory::update()
 		changeScene(State::Config, getData().changeSec);
 	}
 
-	if (getData().Memory_PlayerTurn)
+	//どちらかが6枚(3ペア)揃えるまで神経衰弱
+	if (getData().Memory_PlayerTurn && getData().player.getHands().size() < 6 && getData().cpu.getHands().size() < 6)
 	{
 		//Playerの手番
 
@@ -127,7 +128,7 @@ void Memory::update()
 
 		}
 	}
-	else
+	else if(getData().player.getHands().size() < 6 && getData().cpu.getHands().size() < 6)
 	{
 		//CPUの手番
 
@@ -205,6 +206,10 @@ void Memory::update()
 
 		}
 		
+	}
+	else
+	{
+		//どちらかが6枚(3ペア)揃えた
 	}
 
 }
