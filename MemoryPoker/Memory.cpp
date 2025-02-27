@@ -28,6 +28,9 @@ void Memory::update()
 		//UsedCards(使用済み)に含まれている場合は無視
 		if (getData().UsedCards.contains(i)) continue;
 
+		//すでにめくられているカードは無視(FlipPair1枚目はまだUsedCardsに入っていない状態)
+		if (getData().player.getFlipPair().first == i) continue;
+
 		//カードの座標
 		const Vec2 center{ 260 + i % 13 * 90, 405 + (i / 13) * 130 };
 		if (getData().player.getFlipPair().first == -1 || getData().player.getFlipPair().second == -1)
@@ -48,7 +51,8 @@ void Memory::update()
 					//1枚目
 					getData().player.setFlipPair(i, -1);
 				}
-				else
+				//同じカードのクリックを防ぐ
+				else if(getData().player.getFlipPair().first != i)
 				{
 					//2枚目
 					getData().player.setFlipPair(getData().player.getFlipPair().first, i);
@@ -185,9 +189,6 @@ void Memory::draw() const
 		//2枚目
 		pos = CardMove(Vec2{ 260 + getData().player.getFlipPair().second % 13 * 90, 405 + (getData().player.getFlipPair().second / 13) * 130 }, Vec2{ 575 + (getData().player.getHands().size() + 1) * 90, 1050 }, e);
 		getData().pack(getData().cards[getData().player.getFlipPair().second]).drawAt(pos);
-
-
-		
 	}
 
 	//PlayerのHandsカード描画
