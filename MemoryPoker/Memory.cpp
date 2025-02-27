@@ -60,7 +60,8 @@ void Memory::update()
 		}
 		else
 		{
-			//2枚めくられた状態を0.5s維持
+			//2枚めくられている状態
+			//この状態を0.5s維持
 			if (getData().stopwatch.sF() < 0.5) continue;
 
 			//2枚めくった->そろっているかの判定
@@ -68,31 +69,49 @@ void Memory::update()
 			{
 				//揃っている場合
 
-				//UsedCardsに情報を保存
-				getData().UsedCards.insert(getData().player.getFlipPair().first);
-				getData().UsedCards.insert(getData().player.getFlipPair().second);
+				if (!getData().UsedCards.contains(getData().player.getFlipPair().first))
+				{
+					//UsedCardsに情報を保存
+					getData().UsedCards.insert(getData().player.getFlipPair().first);
+					getData().UsedCards.insert(getData().player.getFlipPair().second);
+				}
+				else
+				{
+					if (getData().stopwatch.sF() > 2.0)
+					{
+						//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
 
-				//手札に揃えた2枚を追加
-				getData().player.push_back_Hands(getData().player.getFlipPair().first);
-				getData().player.push_back_Hands(getData().player.getFlipPair().second);
+						//手札に揃えた2枚を追加
+						getData().player.push_back_Hands(getData().player.getFlipPair().first);
+						getData().player.push_back_Hands(getData().player.getFlipPair().second);
 
-				getData().player.setFlipPair(-1, -1);
+						//めくったカードの情報をリセット
+						getData().player.setFlipPair(-1, -1);
+
+						//ストップウォッチ停止
+						getData().stopwatch.pause();
+					}
+				}
 				
 			}
 			else
 			{
 				//揃っていない場合
-				//2枚めくられた状態を0.5s維持
+
+				//元に戻す
 				AudioPlay(U"Flip");
 				getData().cards[getData().player.getFlipPair().first].flip();
 				getData().cards[getData().player.getFlipPair().second].flip();
 
 				//めくったカードの情報をリセット
 				getData().player.setFlipPair(-1, -1);
+
+				//揃っていない場合はそのままストップウォッチ停止
+				getData().stopwatch.pause();
 			}
 
-			//ストップウォッチを停止
-			getData().stopwatch.pause();
+
+			
 		}
 
 	}
@@ -150,6 +169,27 @@ void Memory::draw() const
 		
 	}
 
+	//揃えたカードの移動(Player側)
+	if (getData().UsedCards.contains(getData().player.getFlipPair().first) && getData().stopwatch.sF() < 2.0)
+	{
+		//イージング
+
+		//UsedCardsに追加されるのは0.5s後(update()側で記述)
+		const double t = Min(getData().stopwatch.sF() - 0.5, 1.0);
+		const double e = EaseInOutExpo(t);
+
+		//1枚目
+		Vec2 pos = CardMove(Vec2{ 260 + getData().player.getFlipPair().first % 13 * 90, 405 + (getData().player.getFlipPair().first / 13) * 130 }, Vec2{ 575 + (getData().player.getHands().size()) * 90, 1050 }, e);
+		getData().pack(getData().cards[getData().player.getFlipPair().first]).drawAt(pos);
+
+		//2枚目
+		pos = CardMove(Vec2{ 260 + getData().player.getFlipPair().second % 13 * 90, 405 + (getData().player.getFlipPair().second / 13) * 130 }, Vec2{ 575 + (getData().player.getHands().size() + 1) * 90, 1050 }, e);
+		getData().pack(getData().cards[getData().player.getFlipPair().second]).drawAt(pos);
+
+
+		
+	}
+
 	//PlayerのHandsカード描画
 	for (int32 i = 0; i < getData().player.getHands().size(); i++)
 	{
@@ -158,4 +198,10 @@ void Memory::draw() const
 	}
 
 	
+}
+
+//イージングの際に使用
+Vec2 Memory::CardMove(const Vec2 from, const Vec2 to, const double e) const
+{
+	return from.lerp(to, e);
 }

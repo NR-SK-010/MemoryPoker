@@ -13,6 +13,9 @@ public:
 	void draw() const override;
 
 private:
+	//イージングの際に使用
+	Vec2 CardMove(const Vec2 from, const Vec2 to, const double e) const;
+
 	//Player側情報表示
 	RoundRect PlayerCardsFrame{ Arg::center(800, 1050), 600, 200, 7 };
 	RoundRect PlayerNameFrame{ Arg::center(1250, 995), 180, 70 , 7 };
