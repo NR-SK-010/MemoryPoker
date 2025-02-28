@@ -16,6 +16,8 @@ public:
 	void AllClear();
 
 	Array<int32> getSelectCards();
+	void insertSelectCards(int32 insert_value);
+	void removeFromSelectCards(int32 remove_value);
 
 	void insertRoleCards(PlayingCard::Card card);
 	Array<PlayingCard::Card> getRoleCards();
@@ -27,8 +29,10 @@ public:
 	void setMaxSuit(int32 suit);
 	String getName();
 	int32 getChip();
+
 	std::pair<int32, int32> getFlipPair();
 	void setFlipPair(int32 first, int32 second);
+
 	Array<int32> getHands();
 	void push_back_Hands(int32 card);
 

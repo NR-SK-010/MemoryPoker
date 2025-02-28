@@ -45,6 +45,18 @@ Array<int32> Person::getSelectCards()
 	return SelectCards;
 }
 
+void Person::insertSelectCards(int32 insert_value)
+{
+	SelectCards << insert_value;
+}
+
+//指定した値(remove_value)の削除
+void Person::removeFromSelectCards(int32 remove_value)
+{
+	//ラムダ式内で変数を用いるためキャプチャリスト(ラムダ式の[]内)に引数のremove_valueを追加しておく
+	SelectCards.remove_if([remove_value](int32 n) { return n == remove_value; });
+}
+
 void Person::insertRoleCards(PlayingCard::Card card)
 {
 	RoleCards << card;
