@@ -106,6 +106,10 @@ void Config::update()
 			{
 				changeScene(State::Memory, getData().changeSec);
 			}
+			else if (getData().NowScene = U"SelectCard")
+			{
+				changeScene(State::SelectCard, getData().changeSec);
+			}
 			
 		}
 		else if (SoundTestButton.leftClicked())

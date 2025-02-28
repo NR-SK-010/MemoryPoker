@@ -31,7 +31,7 @@ void Title::update()
 			getData().stopwatch.restart();
 
 			//カードシャッフル
-			getData().cards.shuffle();
+			//getData().cards.shuffle();
 
 			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
 			getData().Memory_PlayerTurn = true;
@@ -51,7 +51,7 @@ void Title::update()
 			getData().stopwatch.restart();
 
 			//カードシャッフル
-			getData().cards.shuffle();
+			//getData().cards.shuffle();
 
 			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
 			getData().Memory_PlayerTurn = false;

@@ -9,6 +9,25 @@ SelectCard::SelectCard(const InitData& init)
 
 void SelectCard::update()
 {
+	if (MenuButton.mouseOver() || RecommendButton.mouseOver() || (OkButton.mouseOver() && getData().player.getSelectCards().size() == 3))
+	{
+		Cursor::RequestStyle(CursorStyle::Hand);
+	}
+
+	if (MenuButton.leftClicked())
+	{
+		AudioPlay(U"Button");
+		getData().NowScene = U"SelectCard";
+		changeScene(State::Config, getData().changeSec);
+	}
+	else if (RecommendButton.leftClicked())
+	{
+		AudioPlay(U"Button");
+	}
+	else if (OkButton.leftClicked() && getData().player.getSelectCards().size() == 3)
+	{
+		AudioPlay(U"Button");
+	}
 
 }
 
@@ -26,7 +45,7 @@ void SelectCard::draw() const
 	for (int i = 0; i < getData().player.getHands().size(); i++)
 	{
 		const Vec2 center{ 575 + i * 90, 1050 };
-		getData().pack(getData().cards[i]).drawAt(center);
+		getData().pack(getData().cards[getData().player.getHands()[i]]).drawAt(center);
 	}
 
 	//選択したカードの表示
@@ -41,7 +60,7 @@ void SelectCard::draw() const
 	for (int i = 0; i < getData().cpu.getHands().size(); i++)
 	{
 		const Vec2 center{ 575 + i * 90, 220 };
-		getData().pack(getData().cards[i]).drawAt(center);
+		getData().pack(getData().cards[getData().cpu.getHands()[i]]).drawAt(center);
 	}
 
 	Button(RecommendButton, FontAsset(U"Button"), U"おすすめ", Palette::Black);
