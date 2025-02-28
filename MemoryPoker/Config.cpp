@@ -29,6 +29,9 @@ void Config::update()
 			getData().player.AllClear();
 			getData().cpu.AllClear();
 
+			//Betシーンのフラグリセット
+			getData().RaiseMenu = false;
+
 			changeScene(State::Title, getData().changeSec);
 		}
 

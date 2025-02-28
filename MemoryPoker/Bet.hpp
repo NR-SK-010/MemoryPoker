@@ -39,8 +39,7 @@ private:
 	Triangle upButton{ 800, 480, 70 }; //上(+1)
 	Triangle downButton{ 800, 620, 70, 180_deg }; //下(-1)
 	Rect RaiseButton{ Arg::center(640, 740), 250, 100 }; //レイズ額確定ボタン
+	Rect RaiseCancelButton{ Arg::center(960, 740), 250, 100 }; //レイズキャンセル
 
 	ColorF ButtonColor{ 0, 0.8, 1.0 }; //ボタンの色
-
-	bool RaiseMenu = false; //レイズ額決定メニューが表示されているか
 };

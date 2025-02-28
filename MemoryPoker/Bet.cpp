@@ -20,6 +20,34 @@ void Bet::update()
 		getData().NowScene = U"Bet";
 		changeScene(State::Config, getData().changeSec);
 	}
+
+	if (getData().RaiseMenu)
+	{
+		//レイズ額決定時
+	}
+	else
+	{
+		//通常
+
+		if (CallButton.mouseOver() || ToRaiseButton.mouseOver() || FoldButton.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+
+		if (CallButton.leftClicked())
+		{
+			AudioPlay(U"Button");
+		}
+		else if (ToRaiseButton.leftClicked())
+		{
+			AudioPlay(U"Button");
+			getData().RaiseMenu = true;
+		}
+		else if(FoldButton.leftClicked())
+		{
+			AudioPlay(U"Button");
+		}
+	}
 }
 
 //描画関数
@@ -58,9 +86,9 @@ void Bet::draw() const
 	FontAsset(U"Text")(getData().player.getBet()).drawAt(1450, 970, Palette::Black);
 
 	//ボタン表示
-	Button(CallButton, FontAsset(U"Button"), U"コール", ButtonColor, !RaiseMenu);
-	Button(ToRaiseButton, FontAsset(U"Button"), U"レイズ", ButtonColor, !RaiseMenu);
-	Button(FoldButton, FontAsset(U"Button"), U"フォールド", ButtonColor, !RaiseMenu);
+	Button(CallButton, FontAsset(U"Button"), U"コール", ButtonColor, !getData().RaiseMenu);
+	Button(ToRaiseButton, FontAsset(U"Button"), U"レイズ", ButtonColor, !getData().RaiseMenu);
+	Button(FoldButton, FontAsset(U"Button"), U"フォールド", ButtonColor, !getData().RaiseMenu);
 
 	//CPU選択カード表示
 	CpuSelectCardArea.draw(Palette::White);
@@ -91,4 +119,18 @@ void Bet::draw() const
 	CpuBetArea.drawFrame(2, 2, Palette::Black);
 	FontAsset(U"Text")(U"BET").drawAt(150, 195, Palette::Black);
 	FontAsset(U"Text")(getData().cpu.getBet()).drawAt(350, 195, Palette::Black);
+
+	if (getData().RaiseMenu)
+	{
+		//レイズ額決定時
+		RaiseArea.draw(Palette::White);
+		RaiseArea.drawFrame(2, 2, Palette::Black);
+		Button(RaiseButton, FontAsset(U"Button"), U"レイズ", Palette::Black);
+		Button(RaiseCancelButton, FontAsset(U"Button"), U"キャンセル", Palette::Black);
+
+		TriangleButton(leftButton);
+		TriangleButton(rightButton);
+		TriangleButton(upButton);
+		TriangleButton(downButton);
+	}
 }
