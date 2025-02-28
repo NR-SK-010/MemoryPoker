@@ -23,6 +23,7 @@ void SelectCard::update()
 	else if (RecommendButton.leftClicked())
 	{
 		AudioPlay(U"Button");
+		getData().player.RecommendRole(getData().cards);
 	}
 	else if (OkButton.leftClicked() && getData().player.getSelectCards().size() == 3)
 	{
@@ -86,6 +87,9 @@ void SelectCard::draw() const
 	RoleNameArea.drawFrame(2, 2, Palette::Black);
 	SelectCardArea.draw(Palette::White);
 	SelectCardArea.drawFrame(2, 2, Palette::Black);
+	FontAsset(U"Text")(U"選択したカード").drawAt(800, 710, Palette::Black);
+	getData().player.setRoleText(getData().cards);
+	FontAsset(U"Text")(getData().player.getRoleText()).drawAt(800, 600, Palette::Black);
 
 	for (int i = 0; i < getData().player.getSelectCards().size(); i++)
 	{

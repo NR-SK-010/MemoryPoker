@@ -15,6 +15,14 @@ public:
 	//初期状態に戻す(再スタート時など)
 	void AllClear();
 
+	//自分の手札から最も強い役を作成
+	void RecommendRole(Array<PlayingCard::Card> cards);
+
+	//役の名前をセット
+	void setRoleText(Array<PlayingCard::Card> cards);
+
+	String getRoleText();
+
 	Array<int32> getSelectCards();
 	void insertSelectCards(int32 insert_value);
 	void removeFromSelectCards(int32 remove_value);

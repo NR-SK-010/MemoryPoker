@@ -1,4 +1,5 @@
 ﻿#include "Person.hpp"
+#include "HandEvaluator.hpp"
 
 //コンストラクタ
 Person::Person(String name) : FlipPair(-1, -1), Chip(500), Name(name) {}
@@ -38,6 +39,121 @@ void Person::AllClear()
 	FlipPair.first = FlipPair.second = -1;
 	Chip = 500;
 	RoleText = U"";
+}
+
+//自分の手札から最も強い役を作成
+void Person::RecommendRole(Array<PlayingCard::Card> cards)
+{
+	Person tmp = Person(U"");
+
+	for (int32 idx : this->Hands)
+	{
+		tmp.Hands << idx;
+	}
+	tmp.SelectCards << tmp.Hands[0];
+	tmp.SelectCards << tmp.Hands[1];
+	tmp.SelectCards << tmp.Hands[2];
+	tmp.Role = judge(cards, tmp);
+
+	this->SelectCards.clear();
+	this->Role = tmp.Role;
+	this->SelectCards << tmp.SelectCards[0];
+	this->SelectCards << tmp.SelectCards[1];
+	this->SelectCards << tmp.SelectCards[2];
+	this->MaxNumber = tmp.MaxNumber;
+	this->MaxSuit = tmp.MaxSuit;
+
+	for (int i = 0; i < tmp.Hands.size(); i++)
+	{
+		for (int j = i + 1; j < tmp.Hands.size(); j++)
+		{
+			for (int k = j + 1; k < tmp.Hands.size(); k++)
+			{
+				tmp.SelectCards.clear();
+				tmp.SelectCards << tmp.Hands[i];
+				tmp.SelectCards << tmp.Hands[j];
+				tmp.SelectCards << tmp.Hands[k];
+				tmp.Role = judge(cards, tmp);
+				if (tmp.Role > this->Role)
+				{
+					//更新
+					this->SelectCards.clear();
+					this->Role = tmp.Role;
+					this->SelectCards << tmp.SelectCards[0];
+					this->SelectCards << tmp.SelectCards[1];
+					this->SelectCards << tmp.SelectCards[2];
+					this->MaxNumber = tmp.MaxNumber;
+					this->MaxSuit = tmp.MaxSuit;
+				}
+				else if (tmp.Role == this->Role)
+				{
+					//役が同じ場合は最大の数字、それも同じ場合はスートで判断
+					if (tmp.MaxNumber > this->MaxNumber || (tmp.MaxNumber == this->MaxNumber && tmp.MaxSuit > this->MaxSuit))
+					{
+						//更新
+						this->SelectCards.clear();
+						this->Role = tmp.Role;
+						this->SelectCards << tmp.SelectCards[0];
+						this->SelectCards << tmp.SelectCards[1];
+						this->SelectCards << tmp.SelectCards[2];
+						this->MaxNumber = tmp.MaxNumber;
+						this->MaxSuit = tmp.MaxSuit;
+					}
+				}
+			}
+		}
+	}
+}
+
+//役の名前をセット(SelectCard内に3枚ない場合は何もしない)
+void Person::setRoleText(Array<PlayingCard::Card> cards)
+{
+	if (this->SelectCards.size() < 3)
+	{
+		this->RoleText = U"";
+		return;
+	}
+		
+
+	Person tmp = Person(U"tmp");
+	tmp.SelectCards << this->SelectCards[0];
+	tmp.SelectCards << this->SelectCards[1];
+	tmp.SelectCards << this->SelectCards[2];
+	this->Role = judge(cards, tmp);
+	this->MaxNumber = tmp.MaxNumber;
+	this->MaxSuit = tmp.MaxSuit;
+
+	switch (this->Role)
+	{
+	case 0:
+		this->RoleText = U"ハイカード";
+		break;
+	case 1:
+		this->RoleText = U"ワンペア";
+		break;
+	case 2:
+		this->RoleText = U"フラッシュ";
+		break;
+	case 3:
+		this->RoleText = U"ストレート";
+		break;
+	case 4:
+		this->RoleText = U"スリーカード";
+		break;
+	case 5:
+		this->RoleText = U"ストレートフラッシュ";
+		break;
+	case 6:
+		this->RoleText = U"ロイヤルストレートフラッシュ";
+		break;
+	default:
+		break;
+	}
+}
+
+String Person::getRoleText()
+{
+	return RoleText;
 }
 
 Array<int32> Person::getSelectCards()
