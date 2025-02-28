@@ -106,9 +106,13 @@ void Config::update()
 			{
 				changeScene(State::Memory, getData().changeSec);
 			}
-			else if (getData().NowScene = U"SelectCard")
+			else if (getData().NowScene == U"SelectCard")
 			{
 				changeScene(State::SelectCard, getData().changeSec);
+			}
+			else if (getData().NowScene == U"Bet")
+			{
+				changeScene(State::Bet, getData().changeSec);
 			}
 			
 		}

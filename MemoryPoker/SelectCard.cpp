@@ -27,7 +27,13 @@ void SelectCard::update()
 	}
 	else if (OkButton.leftClicked() && getData().player.getSelectCards().size() == 3)
 	{
+		//次のシーン(Betシーン)へ
 		AudioPlay(U"Button");
+
+		//CPUは自動で一番強い役を作成させる
+		getData().cpu.RecommendRole(getData().cards);
+
+		changeScene(State::Bet, getData().changeSec);
 	}
 
 	//カード選択
