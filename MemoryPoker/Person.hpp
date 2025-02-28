@@ -37,6 +37,8 @@ public:
 	void setMaxSuit(int32 suit);
 	String getName();
 	int32 getChip();
+	int32 getBet();
+	void setBet(int32 value);
 
 	std::pair<int32, int32> getFlipPair();
 	void setFlipPair(int32 first, int32 second);
@@ -56,4 +58,5 @@ protected:
 	std::pair<int32, int32> FlipPair; //めくったカードのcardsにおけるインデックスの組
 	int32 Chip = 500; //チップ(最初は500)
 	String RoleText; //役の名前
+	int32 Bet = 0;
 };

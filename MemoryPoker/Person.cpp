@@ -229,6 +229,16 @@ void Person::setFlipPair(int32 first, int32 second)
 	FlipPair.second = second;
 }
 
+int32 Person::getBet()
+{
+	return Bet;
+}
+
+void Person::setBet(int32 value)
+{
+	Bet = value;
+}
+
 Array<int32> Person::getHands()
 {
 	return Hands;
