@@ -46,6 +46,7 @@ void Cpu::BetAction(int32 player_Totalbet)
 {
 	//コールのみ(具体的な行動は後で)
 	Bet = player_Totalbet - TotalBet;
+	ActionText = U"コール";
 }
 
 //最初のベット
@@ -53,4 +54,5 @@ void Cpu::FirstBet()
 {
 	//いったん固定
 	TotalBet = 20;
+	ActionText = U"ベット";
 }

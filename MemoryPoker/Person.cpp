@@ -267,6 +267,16 @@ void Person::setBet(int32 value)
 	Bet = value;
 }
 
+String Person::getActionText()
+{
+	return ActionText;
+}
+
+void Person::setActionText(String text)
+{
+	ActionText = text;
+}
+
 Array<int32> Person::getHands()
 {
 	return Hands;

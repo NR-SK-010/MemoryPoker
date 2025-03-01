@@ -66,6 +66,7 @@ void Bet::update()
 			{
 				AudioPlay(U"Button");
 				getData().player.setTotalBet(getData().player.getBet());
+				getData().player.setActionText(U"ベット");
 			}
 		}
 		else
@@ -192,6 +193,21 @@ void Bet::draw() const
 	CpuBetArea.drawFrame(2, 2, Palette::Black);
 	FontAsset(U"Text")(U"BET").drawAt(150, 195, Palette::Black);
 	FontAsset(U"Text")(getData().cpu.getInitChip() - getData().cpu.getChip()).drawAt(350, 195, Palette::Black);
+
+	if ((getData().player.getInitChip() != getData().player.getChip() + getData().player.getTotalBet()))
+	{
+		//チップ増減時(Playe側)
+		PlayerActionArea.draw(Palette::White);
+		PlayerActionArea.drawFrame(2, 2, Palette::Black);
+		FontAsset(U"Text")(getData().player.getActionText()).drawAt(1350, 700, Palette::Black);
+	}
+	else if (getData().cpu.getInitChip() != getData().cpu.getChip() + getData().cpu.getTotalBet())
+	{
+		//チップ増減時(Playe側)
+		CpuActionArea.draw(Palette::White);
+		CpuActionArea.drawFrame(2, 2, Palette::Black);
+		FontAsset(U"Text")(getData().cpu.getActionText()).drawAt(250, 500, Palette::Black);
+	}
 
 	if (getData().player.getTotalBet() == 0 && getData().cpu.getTotalBet() == 0 && getData().Bet_PlayerFirst)
 	{

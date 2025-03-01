@@ -40,6 +40,8 @@ public:
 	void setChip(int32 value);
 	int32 getInitChip();
 	void setInitChip(int32 value);
+	String getActionText();
+	void setActionText(String text);
 
 	int32 getTotalBet();
 	void setTotalBet(int32 value);
@@ -68,4 +70,5 @@ protected:
 	int32 TotalBet = 0; //合計のベット額
 	int32 Bet = 0; //一回のベット額
 	int32 InitChip = 500; //Betシーン時、最初に持っているチップ
+	String ActionText = U""; //「ベット」のように行動を表示
 };
