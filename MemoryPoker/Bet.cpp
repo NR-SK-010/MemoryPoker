@@ -44,26 +44,31 @@ void Bet::update()
 
 			if (leftButton.leftClicked() && getData().player.getBet() - 1 >= 0)
 			{
+				//-10
 				AudioPlay(U"Button");
 				getData().player.setBet(Max(0, getData().player.getBet() - 10));
 			}
 			else if (rightButton.leftClicked() && getData().player.getBet() + 1 <= 100)
 			{
+				//+10
 				AudioPlay(U"Button");
 				getData().player.setBet(Min(100, getData().player.getBet() + 10));
 			}
 			else if (upButton.leftClicked() && getData().player.getBet() + 1 <= 100)
 			{
+				//+1
 				AudioPlay(U"Button");
 				getData().player.setBet(getData().player.getBet() + 1);
 			}
 			else if (downButton.leftClicked() && getData().player.getBet() - 1 >= 0)
 			{
+				//-1
 				AudioPlay(U"Button");
 				getData().player.setBet(getData().player.getBet() - 1);
 			}
 			else if (BetButton.leftClicked() && getData().player.getBet() > 0)
 			{
+				//ベット確定
 				AudioPlay(U"Button");
 				getData().player.setTotalBet(getData().player.getBet());
 				getData().player.setActionText(U"ベット");
@@ -78,7 +83,57 @@ void Bet::update()
 	else if (getData().RaiseMenu)
 	{
 		//レイズ額決定時
+		if ((leftButton.mouseOver() && getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet())  ||
+			(rightButton.mouseOver() && getData().player.getBet() + 1 <= getData().player.getChip()) ||
+			(upButton.mouseOver() && getData().player.getBet() + 1 <= getData().player.getChip())    ||
+			(downButton.mouseOver() && getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet())  ||
+			(RaiseButton.mouseOver() && getData().player.getTotalBet() + getData().player.getBet() > getData().cpu.getTotalBet())     ||
+			(RaiseCancelButton.mouseOver())
+		)
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
 
+		if (leftButton.leftClicked() && getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet())
+		{
+			//-10
+			AudioPlay(U"Button");
+			getData().player.setBet(Max(getData().cpu.getTotalBet() - getData().player.getTotalBet() + 1, getData().player.getBet() - 10));
+		}
+		else if (rightButton.leftClicked() && getData().player.getBet() + 1 <= getData().player.getChip())
+		{
+			//+10
+			AudioPlay(U"Button");
+			getData().player.setBet(Min(getData().player.getChip(), getData().player.getBet() + 10));
+		}
+		else if (upButton.leftClicked() && getData().player.getBet() + 1 <= getData().player.getChip())
+		{
+			//+1
+			AudioPlay(U"Button");
+			getData().player.setBet(getData().player.getBet() + 1);
+
+		}
+		else if (downButton.leftClicked() && getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet())
+		{
+			//-1
+			AudioPlay(U"Button");
+			getData().player.setBet(getData().player.getBet() - 1);
+		}
+		else if (RaiseButton.leftClicked() && getData().player.getTotalBet() + getData().player.getBet() > getData().cpu.getTotalBet())
+		{
+			//レイズ決定
+			AudioPlay(U"Button");
+			getData().player.setTotalBet(getData().player.getBet());
+			getData().player.setActionText(U"レイズ");
+			getData().RaiseMenu = false;
+		}
+		else if (RaiseCancelButton.leftClicked())
+		{
+			//レイズキャンセル
+			AudioPlay(U"Cancel");
+			getData().player.setBet(0);
+			getData().RaiseMenu = false;
+		}
 	}
 	else if ( (getData().player.getInitChip() != getData().player.getChip() + getData().player.getTotalBet()) ||
 		      (getData().cpu.getInitChip() != getData().cpu.getChip() + getData().cpu.getTotalBet())
@@ -110,15 +165,22 @@ void Bet::update()
 
 		if (CallButton.leftClicked())
 		{
+			//コール
 			AudioPlay(U"Button");
+
 		}
 		else if (ToRaiseButton.leftClicked())
 		{
+			//レイズ
 			AudioPlay(U"Button");
 			getData().RaiseMenu = true;
+
+			//レイズ最低額の設定
+			getData().player.setBet(getData().cpu.getTotalBet() - getData().player.getTotalBet() + 1);
 		}
 		else if(FoldButton.leftClicked())
 		{
+			//フォールド
 			AudioPlay(U"Button");
 		}
 	}
@@ -232,9 +294,9 @@ void Bet::draw() const
 		FontAsset(U"Text")(getData().player.getBet()).drawAt(800, 550, Palette::Black);
 
 		//レイズは相手の合計ベット額よりも多くベットする必要がある
-		TriangleButton(leftButton, getData().player.getTotalBet() + getData().player.getBet() - 10 > getData().cpu.getTotalBet());
-		TriangleButton(rightButton, getData().player.getTotalBet() + getData().player.getBet() + 10 <= getData().player.getTotalBet() + 100);
-		TriangleButton(upButton, getData().player.getTotalBet() + getData().player.getBet() + 1 <= getData().player.getTotalBet() + 100);
+		TriangleButton(leftButton, getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet());
+		TriangleButton(rightButton, getData().player.getBet() + 1 <= getData().player.getChip());
+		TriangleButton(upButton, getData().player.getBet() + 1 <= getData().player.getChip());
 		TriangleButton(downButton, getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet());
 	}
 }
