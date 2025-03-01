@@ -21,9 +21,25 @@ void Bet::update()
 		changeScene(State::Config, getData().changeSec);
 	}
 
-	if (getData().RaiseMenu)
+	if (getData().player.getTotalBet() == 0 && getData().cpu.getTotalBet() == 0)
+	{
+		//最初のベット
+
+		if (getData().Bet_PlayerFirst)
+		{
+			//Player
+
+		}
+		else
+		{
+			//CPU
+
+		}
+	}
+	else if (getData().RaiseMenu)
 	{
 		//レイズ額決定時
+
 	}
 	else
 	{
@@ -120,17 +136,32 @@ void Bet::draw() const
 	FontAsset(U"Text")(U"BET").drawAt(150, 195, Palette::Black);
 	FontAsset(U"Text")(getData().cpu.getBet()).drawAt(350, 195, Palette::Black);
 
-	if (getData().RaiseMenu)
+	if (getData().player.getTotalBet() == 0 && getData().cpu.getTotalBet() == 0 && getData().Bet_PlayerFirst)
+	{
+		//Player側の最初のベット時の表示
+		BetRaiseArea.draw(Palette::White);
+		BetRaiseArea.drawFrame(2, 2, Palette::Black);
+		Button(BetButton, FontAsset(U"Button"), U"ベット", Palette::Black);
+		
+		FontAsset(U"Text")(getData().player.getBet()).drawAt(800, 550, Palette::Black);
+		TriangleButton(leftButton, getData().player.getBet() - 10 >= 0);
+		TriangleButton(rightButton, getData().player.getBet() + 10 <= 100);
+		TriangleButton(upButton, getData().player.getBet() + 1 <= 100);
+		TriangleButton(downButton, getData().player.getBet() - 1 >= 0);
+	}
+	else if (getData().RaiseMenu)
 	{
 		//レイズ額決定時
-		RaiseArea.draw(Palette::White);
-		RaiseArea.drawFrame(2, 2, Palette::Black);
+		BetRaiseArea.draw(Palette::White);
+		BetRaiseArea.drawFrame(2, 2, Palette::Black);
 		Button(RaiseButton, FontAsset(U"Button"), U"レイズ", Palette::Black);
 		Button(RaiseCancelButton, FontAsset(U"Button"), U"キャンセル", Palette::Black);
+		FontAsset(U"Text")(getData().player.getBet()).drawAt(800, 550, Palette::Black);
 
-		TriangleButton(leftButton);
-		TriangleButton(rightButton);
-		TriangleButton(upButton);
-		TriangleButton(downButton);
+		//レイズは相手の合計ベット額よりも多くベットする必要がある
+		TriangleButton(leftButton, getData().player.getTotalBet() + getData().player.getBet() - 10 > getData().cpu.getTotalBet());
+		TriangleButton(rightButton, getData().player.getTotalBet() + getData().player.getBet() + 10 <= getData().player.getTotalBet() + 100);
+		TriangleButton(upButton, getData().player.getTotalBet() + getData().player.getBet() + 1 <= getData().player.getTotalBet() + 100);
+		TriangleButton(downButton, getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet());
 	}
 }

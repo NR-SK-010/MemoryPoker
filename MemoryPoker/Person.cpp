@@ -39,6 +39,8 @@ void Person::AllClear()
 	FlipPair.first = FlipPair.second = -1;
 	Chip = 500;
 	RoleText = U"";
+	TotalBet = 0;
+	Bet = 0;
 }
 
 //自分の手札から最も強い役を作成
@@ -227,6 +229,16 @@ void Person::setFlipPair(int32 first, int32 second)
 {
 	FlipPair.first = first;
 	FlipPair.second = second;
+}
+
+int32 Person::getTotalBet()
+{
+	return TotalBet;
+}
+
+void Person::setTotalBet(int32 value)
+{
+	TotalBet = value;
 }
 
 int32 Person::getBet()

@@ -30,16 +30,20 @@ private:
 	RoundRect PlayerActionArea{ Arg::center(1350, 700), 400, 100, 7 }; //「コール」or「レイズ」or「フォールド」(Playerが選択した行動)の表示
 	RoundRect CpuActionArea{ Arg::center(250, 550), 400, 100, 7 }; //「コール」or「レイズ」or「フォールド」(CPUが選択した行動)の表示
 
-	
+	RoundRect BetRaiseArea{ Arg::center(800, 600), 600, 400, 7 }; //ベット、レイズ額決定時のエリア
+
+	//最初のベット時
+	Rect BetButton{ Arg::center(800, 740), 250, 100 }; //ベット額決定ボタン
 
 	//レイズ時のBet額決定に使う
-	RoundRect RaiseArea{ Arg::center(800, 600), 600, 400, 7 }; //レイズ額決定時のエリア
-	Triangle leftButton{ 700, 550, 70, 270_deg }; //左(-10)
-	Triangle rightButton{ 900, 550, 70, 90_deg }; //右(+10)
-	Triangle upButton{ 800, 480, 70 }; //上(+1)
-	Triangle downButton{ 800, 620, 70, 180_deg }; //下(-1)
 	Rect RaiseButton{ Arg::center(640, 740), 250, 100 }; //レイズ額確定ボタン
 	Rect RaiseCancelButton{ Arg::center(960, 740), 250, 100 }; //レイズキャンセル
 
 	ColorF ButtonColor{ 0, 0.8, 1.0 }; //ボタンの色
+
+	//ベット額決定時のボタン(最初のベット、レイズ時使用)
+	Triangle leftButton{ 700, 550, 70, 270_deg }; //左(-10)
+	Triangle rightButton{ 900, 550, 70, 90_deg }; //右(+10)
+	Triangle upButton{ 800, 480, 70 }; //上(+1)
+	Triangle downButton{ 800, 620, 70, 180_deg }; //下(-1)
 };

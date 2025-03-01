@@ -37,6 +37,10 @@ public:
 	void setMaxSuit(int32 suit);
 	String getName();
 	int32 getChip();
+
+	int32 getTotalBet();
+	void setTotalBet(int32 value);
+
 	int32 getBet();
 	void setBet(int32 value);
 
@@ -58,5 +62,6 @@ protected:
 	std::pair<int32, int32> FlipPair; //めくったカードのcardsにおけるインデックスの組
 	int32 Chip = 500; //チップ(最初は500)
 	String RoleText; //役の名前
-	int32 Bet = 0;
+	int32 TotalBet = 0; //合計のベット額
+	int32 Bet = 0; //一回のベット額
 };
