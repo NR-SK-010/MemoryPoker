@@ -41,6 +41,7 @@ void Person::AllClear()
 	RoleText = U"";
 	TotalBet = 0;
 	Bet = 0;
+	InitChip = 500;
 }
 
 //自分の手札から最も強い役を作成
@@ -218,6 +219,21 @@ String Person::getName()
 int32 Person::getChip()
 {
 	return Chip;
+}
+
+void Person::setChip(int32 value)
+{
+	Chip = value;
+}
+
+int32 Person::getInitChip()
+{
+	return InitChip;
+}
+
+void Person::setInitChip(int32 value)
+{
+	InitChip = value;
 }
 
 std::pair<int32, int32> Person::getFlipPair()

@@ -17,6 +17,10 @@ public:
 	//記憶の更新(新しくカードを記憶、forgetRateに基づいた記憶の削除)
 	void UpdateMemory();
 
+	//Betシーンでの行動選択
+	void FirstBet(); //最初のベット
+	void BetAction(int32 player_Totalbet); //コール、レイズ、フォールドの選択
+
 
 private:
 	Array<int32> Memory; //めくったカードのインデックス格納(記憶)

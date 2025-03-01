@@ -40,3 +40,17 @@ void Cpu::UpdateMemory()
 {
 	//未実装
 }
+
+//Betシーンでの行動選択
+void Cpu::BetAction(int32 player_Totalbet)
+{
+	//コールのみ(具体的な行動は後で)
+	Bet = player_Totalbet - TotalBet;
+}
+
+//最初のベット
+void Cpu::FirstBet()
+{
+	//いったん固定
+	TotalBet = 20;
+}

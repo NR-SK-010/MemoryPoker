@@ -28,18 +28,66 @@ void Bet::update()
 		if (getData().Bet_PlayerFirst)
 		{
 			//Player
+			if ( (leftButton.mouseOver() && getData().player.getBet() - 10 >= 0)    ||
+				 (rightButton.mouseOver() && getData().player.getBet() + 10 <= 100) ||
+				 (upButton.mouseOver() && getData().player.getBet() + 1 <= 100)     ||
+				 (downButton.mouseOver() && getData().player.getBet() - 1 >= 0)     ||
+				 (BetButton.mouseOver() && getData().player.getBet() > 0)
+			)
+			{
+				Cursor::RequestStyle(CursorStyle::Hand);
+			}
 
+			if (leftButton.leftClicked() && getData().player.getBet() - 10 >= 0)
+			{
+				AudioPlay(U"Button");
+				getData().player.setBet(getData().player.getBet() - 10);
+			}
+			else if (rightButton.leftClicked() && getData().player.getBet() + 10 <= 100)
+			{
+				AudioPlay(U"Button");
+				getData().player.setBet(getData().player.getBet() + 10);
+			}
+			else if (upButton.leftClicked() && getData().player.getBet() + 1 <= 100)
+			{
+				AudioPlay(U"Button");
+				getData().player.setBet(getData().player.getBet() + 1);
+			}
+			else if (downButton.leftClicked() && getData().player.getBet() - 1 >= 0)
+			{
+				AudioPlay(U"Button");
+				getData().player.setBet(getData().player.getBet() - 1);
+			}
+			else if (BetButton.leftClicked() && getData().player.getBet() > 0)
+			{
+				AudioPlay(U"Button");
+				getData().player.setTotalBet(getData().player.getBet());
+			}
 		}
 		else
 		{
 			//CPU
-
+			getData().cpu.FirstBet();
 		}
 	}
 	else if (getData().RaiseMenu)
 	{
 		//レイズ額決定時
 
+	}
+	else if ( (getData().player.getInitChip() != getData().player.getChip() + getData().player.getTotalBet()) ||
+		      (getData().cpu.getInitChip() != getData().cpu.getChip() + getData().cpu.getTotalBet())
+	)
+	{
+		//チップの増減
+		if (getData().player.getInitChip() < getData().player.getChip() + getData().player.getTotalBet())
+		{
+			getData().player.setChip(getData().player.getChip() - 1);
+		}
+		else if (getData().cpu.getInitChip() < getData().cpu.getChip() + getData().cpu.getTotalBet())
+		{
+			getData().cpu.setChip(getData().cpu.getChip() - 1);
+		}
 	}
 	else
 	{
@@ -99,7 +147,7 @@ void Bet::draw() const
 	PlayerBetArea.draw(Palette::White);
 	PlayerBetArea.drawFrame(2, 2, Palette::Black);
 	FontAsset(U"Text")(U"BET").drawAt(1250, 970, Palette::Black);
-	FontAsset(U"Text")(getData().player.getBet()).drawAt(1450, 970, Palette::Black);
+	FontAsset(U"Text")(getData().player.getInitChip() - getData().player.getChip()).drawAt(1450, 970, Palette::Black);
 
 	//ボタン表示
 	Button(CallButton, FontAsset(U"Button"), U"コール", ButtonColor, !getData().RaiseMenu);
@@ -134,14 +182,14 @@ void Bet::draw() const
 	CpuBetArea.draw(Palette::White);
 	CpuBetArea.drawFrame(2, 2, Palette::Black);
 	FontAsset(U"Text")(U"BET").drawAt(150, 195, Palette::Black);
-	FontAsset(U"Text")(getData().cpu.getBet()).drawAt(350, 195, Palette::Black);
+	FontAsset(U"Text")(getData().cpu.getInitChip() - getData().cpu.getChip()).drawAt(350, 195, Palette::Black);
 
 	if (getData().player.getTotalBet() == 0 && getData().cpu.getTotalBet() == 0 && getData().Bet_PlayerFirst)
 	{
 		//Player側の最初のベット時の表示
 		BetRaiseArea.draw(Palette::White);
 		BetRaiseArea.drawFrame(2, 2, Palette::Black);
-		Button(BetButton, FontAsset(U"Button"), U"ベット", Palette::Black);
+		Button(BetButton, FontAsset(U"Button"), U"ベット", Palette::Black, getData().player.getBet() > 0);
 		
 		FontAsset(U"Text")(getData().player.getBet()).drawAt(800, 550, Palette::Black);
 		TriangleButton(leftButton, getData().player.getBet() - 10 >= 0);
@@ -154,7 +202,7 @@ void Bet::draw() const
 		//レイズ額決定時
 		BetRaiseArea.draw(Palette::White);
 		BetRaiseArea.drawFrame(2, 2, Palette::Black);
-		Button(RaiseButton, FontAsset(U"Button"), U"レイズ", Palette::Black);
+		Button(RaiseButton, FontAsset(U"Button"), U"レイズ", Palette::Black, getData().player.getTotalBet() + getData().player.getBet() > getData().cpu.getTotalBet());
 		Button(RaiseCancelButton, FontAsset(U"Button"), U"キャンセル", Palette::Black);
 		FontAsset(U"Text")(getData().player.getBet()).drawAt(800, 550, Palette::Black);
 
