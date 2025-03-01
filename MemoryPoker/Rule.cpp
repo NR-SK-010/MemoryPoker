@@ -94,8 +94,8 @@ void Rule::draw() const
 		TextureAsset(U"CallRaise").fitted(ImageArea.size).drawAt(ImageArea.center());
 		FontAsset(U"Text")(U"ベット後は交互にコール、レイズ、フォールドのどれを行うかを選択します。").drawBase(60, 1010, Palette::Black);
 		FontAsset(U"Text")(U"どちらかがコール、またはフォールドするまでこのフェーズは続きます。").drawBase(60, 1060, Palette::Black);
-		FontAsset(U"Text")(U"レイズする際は相手のベット額の2倍以上のチップをベットする必要があります。").drawBase(60, 1110, Palette::Black);
-		FontAsset(U"Text")(U"また、レイズの最高額は最低額からプラス100枚までです。").drawBase(60, 1160, Palette::Black);
+		FontAsset(U"Text")(U"レイズする際は相手の合計ベット額よりも多くチップをベットする必要があります。").drawBase(60, 1110, Palette::Black);
+		FontAsset(U"Text")(U"また、レイズ時のチップの上限は現在所持しているチップの枚数までです。").drawBase(60, 1160, Palette::Black);
 		break;
 	case 6:
 		TextureAsset(U"ShowDown").fitted(ImageArea.size).drawAt(ImageArea.center());

@@ -117,6 +117,10 @@ void Config::update()
 			{
 				changeScene(State::Bet, getData().changeSec);
 			}
+			else if (getData().NowScene == U"ShowDown")
+			{
+				changeScene(State::ShowDown, getData().changeSec);
+			}
 			
 		}
 		else if (SoundTestButton.leftClicked())

@@ -6,6 +6,7 @@
 #include "Memory.hpp"
 #include "SelectCard.hpp"
 #include "Bet.hpp"
+#include "ShowDown.hpp"
 
 void Main()
 {
@@ -63,6 +64,7 @@ void Main()
 	manager.add<Memory>(State::Memory);
 	manager.add<SelectCard>(State::SelectCard);
 	manager.add<Bet>(State::Bet);
+	manager.add<ShowDown>(State::ShowDown);
 	
 
 	AudioAsset(U"BGM").setVolume(0.2);

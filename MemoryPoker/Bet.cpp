@@ -72,12 +72,18 @@ void Bet::update()
 				AudioPlay(U"Button");
 				getData().player.setTotalBet(getData().player.getBet());
 				getData().player.setActionText(U"ベット");
+
+				//CPUに回す
+				getData().Bet_PlayerTurn = false;
 			}
 		}
 		else
 		{
 			//CPU
 			getData().cpu.FirstBet();
+
+			//Playerに回す
+			getData().Bet_PlayerTurn = true;
 		}
 	}
 	else if (getData().RaiseMenu)
@@ -123,9 +129,12 @@ void Bet::update()
 		{
 			//レイズ決定
 			AudioPlay(U"Button");
-			getData().player.setTotalBet(getData().player.getBet());
+			getData().player.setTotalBet(getData().player.getTotalBet() + getData().player.getBet());
 			getData().player.setActionText(U"レイズ");
 			getData().RaiseMenu = false;
+
+			//手番交代
+			getData().Bet_PlayerTurn = false;
 		}
 		else if (RaiseCancelButton.leftClicked())
 		{
@@ -151,7 +160,13 @@ void Bet::update()
 			getData().cpu.setChip(getData().cpu.getChip() - 1);
 		}
 	}
-	else
+	else if (getData().player.getTotalBet() == getData().cpu.getTotalBet())
+	{
+		//TotalBetが同じ かつ ベット額表示等も完了(ひとつ上の分岐を抜けているので)しているとき
+		//どちらもレイズしていないのでShowDownシーンへ遷移
+		changeScene(State::ShowDown, getData().changeSec);
+	}
+	else if(getData().Bet_PlayerTurn)
 	{
 		//通常
 
@@ -167,7 +182,11 @@ void Bet::update()
 		{
 			//コール
 			AudioPlay(U"Button");
+			getData().player.setActionText(U"コール");
+			getData().player.setTotalBet(getData().cpu.getTotalBet());
 
+			//手番交代
+			getData().Bet_PlayerTurn = false;
 		}
 		else if (ToRaiseButton.leftClicked())
 		{
@@ -183,6 +202,11 @@ void Bet::update()
 			//フォールド
 			AudioPlay(U"Button");
 		}
+	}
+	else
+	{
+		//CPUの行動
+		getData().cpu.BetAction(getData().player.getTotalBet());
 	}
 }
 
