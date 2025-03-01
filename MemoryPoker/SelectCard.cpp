@@ -33,6 +33,9 @@ void SelectCard::update()
 		//CPUは自動で一番強い役を作成させる
 		getData().cpu.RecommendRole(getData().cards);
 
+		//ストップウォッチリスタート
+		getData().stopwatch.restart();
+
 		changeScene(State::Bet, getData().changeSec);
 	}
 

@@ -32,10 +32,10 @@ void Bet::update()
 		if (getData().Bet_PlayerFirst)
 		{
 			//Player
-			if ( (leftButton.mouseOver() && getData().player.getBet() - 10 >= 0)    ||
+			if ((leftButton.mouseOver() && getData().player.getBet() - 10 >= 0) ||
 				 (rightButton.mouseOver() && getData().player.getBet() + 10 <= 100) ||
-				 (upButton.mouseOver() && getData().player.getBet() + 1 <= 100)     ||
-				 (downButton.mouseOver() && getData().player.getBet() - 1 >= 0)     ||
+				 (upButton.mouseOver() && getData().player.getBet() + 1 <= 100) ||
+				 (downButton.mouseOver() && getData().player.getBet() - 1 >= 0) ||
 				 (BetButton.mouseOver() && getData().player.getBet() > 0)
 			)
 			{
@@ -77,7 +77,7 @@ void Bet::update()
 				getData().Bet_PlayerTurn = false;
 			}
 		}
-		else
+		else if (getData().stopwatch.sF() > 1.0) //1.0s待つ(シーン切り替えに0.5sかかるので実際は0.5s)
 		{
 			//CPU
 			getData().cpu.FirstBet();
@@ -159,14 +159,22 @@ void Bet::update()
 		{
 			getData().cpu.setChip(getData().cpu.getChip() - 1);
 		}
+
+		if ((getData().player.getInitChip() == getData().player.getChip() + getData().player.getTotalBet()) ||
+			(getData().cpu.getInitChip() < getData().cpu.getChip() + getData().cpu.getTotalBet()))
+		{
+			//チップ変動が終了
+			//ストップウォッチをリスタートしておく(待機時間のため)
+			getData().stopwatch.restart();
+		}
 	}
-	else if (getData().player.getTotalBet() == getData().cpu.getTotalBet())
+	else if (getData().player.getTotalBet() == getData().cpu.getTotalBet() && getData().stopwatch.sF() > 0.5)
 	{
 		//TotalBetが同じ かつ ベット額表示等も完了(ひとつ上の分岐を抜けているので)しているとき
 		//どちらもレイズしていないのでShowDownシーンへ遷移
 		changeScene(State::ShowDown, getData().changeSec);
 	}
-	else if(getData().Bet_PlayerTurn)
+	else if(getData().Bet_PlayerTurn && getData().player.getTotalBet() != getData().cpu.getTotalBet())
 	{
 		//通常
 
@@ -203,7 +211,7 @@ void Bet::update()
 			AudioPlay(U"Button");
 		}
 	}
-	else
+	else if(getData().stopwatch.sF() > 0.5) //0.5s待つ
 	{
 		//CPUの行動
 		getData().cpu.BetAction(getData().player.getTotalBet());
