@@ -21,6 +21,17 @@ void ShowDown::update()
 		changeScene(State::Config, getData().changeSec);
 	}
 
+	if (!CpuSelectCardFlip())
+	{
+		//CPUのカードめくり中
+		
+	}
+	else
+	{
+		//完了
+
+	}
+
 }
 
 //描画関数
@@ -58,7 +69,7 @@ void ShowDown::draw() const
 	FontAsset(U"Text")(getData().player.getInitChip() - getData().player.getChip()).drawAt(1450, 970, Palette::Black);
 
 	//PlayerRoleText表示
-	PlayerRoleArea.draw(Palette::White);
+	PlayerRoleArea.draw(PlayerRoleAreaColor);
 	PlayerRoleArea.drawFrame(2, 2, Palette::Black);
 
 
@@ -68,9 +79,6 @@ void ShowDown::draw() const
 	for (int i = 0; i < getData().cpu.getSelectCards().size(); i++)
 	{
 		const Vec2 center{ 710 + i * 90, 250 };
-
-		//表向きの場合は裏返しておく
-		if (getData().cards[getData().cpu.getSelectCards()[i]].isFaceSide) getData().cards[getData().cpu.getSelectCards()[i]].flip();
 
 		getData().pack(getData().cards[getData().cpu.getSelectCards()[i]]).drawAt(center);
 	}
@@ -93,6 +101,43 @@ void ShowDown::draw() const
 	FontAsset(U"Text")(getData().cpu.getInitChip() - getData().cpu.getChip()).drawAt(350, 195, Palette::Black);
 
 	//CpuRoletext表示
-	CpuRoleArea.draw(Palette::White);
+	CpuRoleArea.draw(CpuRoleAreaColor);
 	CpuRoleArea.drawFrame(2, 2, Palette::Black);
+}
+
+//CpuのSelectCardを順に表にする
+//全部表になっていればtrue,それ以外はfalseを返す
+bool ShowDown::CpuSelectCardFlip()
+{
+	bool result = true;
+
+	//0.5sは待機
+	if (getData().stopwatch.sF() < 0.5) return false;
+
+	for (int i = 0; i < getData().cpu.getSelectCards().size(); i++)
+	{
+		if (!getData().cards[getData().cpu.getSelectCards()[i]].isFaceSide)
+		{
+			if (i == 0 && getData().stopwatch.sF() < 1.0)
+			{
+				//0枚目(1枚目)のみシーン遷移に0.5sかかっているので1.0s待機
+				//ShowDownシーンでの待機時間は実質0.5s
+				result = false;
+				break;
+			}
+
+			//表向きでない場合は裏返す
+			AudioPlay(U"Flip");
+			getData().cards[getData().cpu.getSelectCards()[i]].flip();
+
+			//裏返したらストップウォッチはリスタート
+			getData().stopwatch.restart();
+
+			//1枚ずつ裏返す
+			result = false;
+			break;
+		}
+	}
+
+	return result;
 }
