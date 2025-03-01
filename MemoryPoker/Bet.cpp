@@ -21,6 +21,10 @@ void Bet::update()
 		changeScene(State::Config, getData().changeSec);
 	}
 
+	//「コール」、「レイズ」、「フォールド」ボタン設定
+	//通常時の条件分岐でのみtrueに
+	CanPress = false;
+
 	if (getData().player.getTotalBet() == 0 && getData().cpu.getTotalBet() == 0)
 	{
 		//最初のベット
@@ -38,15 +42,15 @@ void Bet::update()
 				Cursor::RequestStyle(CursorStyle::Hand);
 			}
 
-			if (leftButton.leftClicked() && getData().player.getBet() - 10 >= 0)
+			if (leftButton.leftClicked() && getData().player.getBet() - 1 >= 0)
 			{
 				AudioPlay(U"Button");
-				getData().player.setBet(getData().player.getBet() - 10);
+				getData().player.setBet(Max(0, getData().player.getBet() - 10));
 			}
-			else if (rightButton.leftClicked() && getData().player.getBet() + 10 <= 100)
+			else if (rightButton.leftClicked() && getData().player.getBet() + 1 <= 100)
 			{
 				AudioPlay(U"Button");
-				getData().player.setBet(getData().player.getBet() + 10);
+				getData().player.setBet(Min(100, getData().player.getBet() + 10));
 			}
 			else if (upButton.leftClicked() && getData().player.getBet() + 1 <= 100)
 			{
@@ -80,6 +84,8 @@ void Bet::update()
 	)
 	{
 		//チップの増減
+		AudioPlay(U"Coin");
+
 		if (getData().player.getInitChip() < getData().player.getChip() + getData().player.getTotalBet())
 		{
 			getData().player.setChip(getData().player.getChip() - 1);
@@ -92,6 +98,9 @@ void Bet::update()
 	else
 	{
 		//通常
+
+		//「コール」、「レイズ」、「フォールド」ボタンはこの時だけ押せる
+		CanPress = true;
 
 		if (CallButton.mouseOver() || ToRaiseButton.mouseOver() || FoldButton.mouseOver())
 		{
@@ -150,9 +159,9 @@ void Bet::draw() const
 	FontAsset(U"Text")(getData().player.getInitChip() - getData().player.getChip()).drawAt(1450, 970, Palette::Black);
 
 	//ボタン表示
-	Button(CallButton, FontAsset(U"Button"), U"コール", ButtonColor, !getData().RaiseMenu);
-	Button(ToRaiseButton, FontAsset(U"Button"), U"レイズ", ButtonColor, !getData().RaiseMenu);
-	Button(FoldButton, FontAsset(U"Button"), U"フォールド", ButtonColor, !getData().RaiseMenu);
+	Button(CallButton, FontAsset(U"Button"), U"コール", ButtonColor, CanPress);
+	Button(ToRaiseButton, FontAsset(U"Button"), U"レイズ", ButtonColor, CanPress);
+	Button(FoldButton, FontAsset(U"Button"), U"フォールド", ButtonColor, CanPress);
 
 	//CPU選択カード表示
 	CpuSelectCardArea.draw(Palette::White);
@@ -192,8 +201,8 @@ void Bet::draw() const
 		Button(BetButton, FontAsset(U"Button"), U"ベット", Palette::Black, getData().player.getBet() > 0);
 		
 		FontAsset(U"Text")(getData().player.getBet()).drawAt(800, 550, Palette::Black);
-		TriangleButton(leftButton, getData().player.getBet() - 10 >= 0);
-		TriangleButton(rightButton, getData().player.getBet() + 10 <= 100);
+		TriangleButton(leftButton, getData().player.getBet() - 1 >= 0);
+		TriangleButton(rightButton, getData().player.getBet() + 1 <= 100);
 		TriangleButton(upButton, getData().player.getBet() + 1 <= 100);
 		TriangleButton(downButton, getData().player.getBet() - 1 >= 0);
 	}

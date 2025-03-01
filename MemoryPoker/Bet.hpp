@@ -39,7 +39,9 @@ private:
 	Rect RaiseButton{ Arg::center(640, 740), 250, 100 }; //レイズ額確定ボタン
 	Rect RaiseCancelButton{ Arg::center(960, 740), 250, 100 }; //レイズキャンセル
 
+	//「コール」、「レイズ」、「フォールド」ボタンの設定
 	ColorF ButtonColor{ 0, 0.8, 1.0 }; //ボタンの色
+	bool CanPress = false; //「コール」、「レイズ」、「フォールド」ボタンが押せるかどうか
 
 	//ベット額決定時のボタン(最初のベット、レイズ時使用)
 	Triangle leftButton{ 700, 550, 70, 270_deg }; //左(-10)
