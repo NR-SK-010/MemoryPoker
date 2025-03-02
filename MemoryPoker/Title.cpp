@@ -154,10 +154,15 @@ void Title::draw() const
 		selectFrame.draw(Palette::White);
 		selectFrame.drawFrame(2, 2, Palette::Black);
 
-		FontAsset(U"Text")(U"先攻/後攻の選択").drawAt(800, 450, Palette::Black);
-
+		FontAsset(U"Text")(U"先攻/後攻の選択").drawAt(800, 380, Palette::Black);
 		Button(firstButton, FontAsset(U"Button"), U"先攻", Palette::Black);
 		Button(lastbutton, FontAsset(U"Button"), U"後攻", Palette::Black);
+
+		FontAsset(U"Text")(U"CPUの強さ").drawAt(800, 600, Palette::Black);
+		Button(easyButton, FontAsset(U"Text"), U"弱い", Palette::Black);
+		Button(normalButton, FontAsset(U"Text"), U"普通", Palette::Black);
+		Button(hardButton, FontAsset(U"Text"), U"強い", Palette::Black);
+		Button(okButton, FontAsset(U"Button"), U"OK", Palette::Black);
 		Button(cancelButton, FontAsset(U"Button"), U"キャンセル", Palette::Black);
 	}
 }
