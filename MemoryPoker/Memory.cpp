@@ -20,6 +20,10 @@ void Memory::update()
 	{
 		AudioPlay(U"Button");
 		getData().NowScene = U"Memory";
+
+		//メニュー画面遷移時はストップウォッチを止めておく
+		getData().stopwatch.pause();
+
 		changeScene(State::Config, getData().changeSec);
 	}
 

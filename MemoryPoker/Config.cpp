@@ -110,6 +110,9 @@ void Config::update()
 			}
 			else if (getData().NowScene == U"Memory")
 			{
+				//ストップウォッチ再開
+				getData().stopwatch.resume();
+
 				changeScene(State::Memory, getData().changeSec);
 			}
 			else if (getData().NowScene == U"SelectCard")
@@ -126,6 +129,10 @@ void Config::update()
 				getData().stopwatch.resume();
 
 				changeScene(State::ShowDown, getData().changeSec);
+			}
+			else if (getData().NowScene == U"Result")
+			{
+				changeScene(State::Result, getData().changeSec);
 			}
 			
 		}
