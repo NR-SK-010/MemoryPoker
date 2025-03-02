@@ -370,7 +370,7 @@ void Memory::draw() const
 	}
 
 	//揃えたカードの移動(Player側)
-	if (getData().UsedCards.contains(getData().player.getFlipPair().first) && getData().stopwatch.sF() <= 2.0)
+	if (getData().UsedCards.contains(getData().player.getFlipPair().first) && !getData().player.getHands().contains(getData().player.getFlipPair().first))
 	{
 		//イージング
 
@@ -388,7 +388,7 @@ void Memory::draw() const
 	}
 
 	//揃えたカードの移動(CPU側)
-	if (getData().UsedCards.contains(getData().cpu.getFlipPair().first) && getData().stopwatch.sF() <= 2.0)
+	if (getData().UsedCards.contains(getData().cpu.getFlipPair().first) && !getData().cpu.getHands().contains(getData().cpu.getFlipPair().first))
 	{
 		//イージング
 
