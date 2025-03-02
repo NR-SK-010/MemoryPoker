@@ -22,8 +22,9 @@ void Main()
 	//アセット登録
 	FontAsset::Register(U"Title", 70, Typeface::Regular);
 	FontAsset::Register(U"Result", FontMethod::MSDF, 100, Typeface::Bold);
-	FontAsset::Register(U"Button", FontMethod::MSDF, 48, Typeface::Bold);
-	FontAsset::Register(U"Text", 30);
+	FontAsset::Register(U"Button", FontMethod::MSDF, 40, Typeface::Bold);
+	FontAsset::Register(U"Text", 35, Typeface::Bold);
+	FontAsset::Register(U"RuleText", 30);
 
 	AudioAsset::Register(U"BGM", U"Sounds/Night_View.mp3", Loop::Yes);
 	AudioAsset::Register(U"Button", U"Sounds/button.mp3");
@@ -44,6 +45,7 @@ void Main()
 	FontAsset::Load(U"Result");
 	FontAsset::Load(U"Button");
 	FontAsset::Load(U"Text");
+	FontAsset::Load(U"RuleText");
 
 	AudioAsset::Load(U"BGM");
 	AudioAsset::Load(U"Button");
