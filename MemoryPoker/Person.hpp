@@ -41,6 +41,7 @@ public:
 	void setMaxSuit(int32 suit);
 
 	String getName();
+	void setName(String value);
 
 	int32 getChip();
 	void setChip(int32 value);

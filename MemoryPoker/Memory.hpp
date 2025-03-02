@@ -18,12 +18,12 @@ private:
 
 	//Player側情報表示
 	RoundRect PlayerCardsFrame{ Arg::center(800, 1050), 600, 200, 7 };
-	RoundRect PlayerNameFrame{ Arg::center(1250, 995), 180, 70 , 7 };
+	RoundRect PlayerNameFrame{ Arg::center(1250, 995), 200, 70 , 7 };
 	RoundRect PlayerChipFrame{ Arg::center(1350, 1100), 400, 100, 7 };
 
 	//CPU側情報表示
 	RoundRect CpuCardsFrame{ Arg::center(800, 150), 600, 200, 7 };
-	RoundRect CpuNameFrame{ Arg::center(150, 90), 180, 70, 7 };
+	RoundRect CpuNameFrame{ Arg::center(150, 90), 200, 70, 7 };
 	RoundRect CpuChipFrame{ Arg::center(250, 195), 400, 100, 7 };
 
 	//メニュー(設定)ボタン

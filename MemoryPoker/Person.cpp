@@ -232,6 +232,11 @@ String Person::getName()
 	return Name;
 }
 
+void Person::setName(String value)
+{
+	Name = value;
+}
+
 int32 Person::getChip()
 {
 	return Chip;

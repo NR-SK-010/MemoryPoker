@@ -56,3 +56,13 @@ void Cpu::FirstBet()
 	TotalBet = 20;
 	ActionText = U"ベット";
 }
+
+int32 Cpu::getStrength()
+{
+	return strength;
+}
+
+void Cpu::setStrength(int32 value)
+{
+	strength = value;
+}

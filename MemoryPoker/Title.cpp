@@ -16,7 +16,8 @@ void Title::update()
 	if (SelectFlg)
 	{
 		//先攻後攻選択画面
-		if (firstButton.mouseOver() || lastbutton.mouseOver() || cancelButton.mouseOver())
+		if (firstButton.mouseOver() || lastbutton.mouseOver() || cancelButton.mouseOver() || easyButton.mouseOver() ||
+			normalButton.mouseOver() || hardButton.mouseOver() || okButton.mouseOver() )
 		{
 			Cursor::RequestStyle(CursorStyle::Hand);
 		}
@@ -25,41 +26,58 @@ void Title::update()
 		{
 			//先攻
 			AudioPlay(U"Button");
-			SelectFlg = false;
-
-			//アニメーション用ストップウォッチ
-			getData().stopwatch.restart();
-
-			//カードシャッフル
-			//getData().cards.shuffle();
 
 			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
 			getData().Memory_PlayerTurn = true;
 			getData().Bet_PlayerFirst = true;
 
-			//カード情報リセット
-			CardsReset(getData().cards);
-			getData().UsedCards.clear();
-
-			//Player,CPU情報リセット
-			getData().player.AllClear();
-			getData().cpu.AllClear();
-
-			//Betシーンのフラグリセット
-			getData().RaiseMenu = false;
-
-			//ラウンドリセット
-			getData().Round = 1;
-
-
-			//神経衰弱画面(Memory)へ
-			changeScene(State::Memory, getData().changeSec);
+			//ボタン状態設定
+			first = true;
+			last = false;
 		}
 		else if(lastbutton.leftClicked())
 		{
 			//後攻
 			AudioPlay(U"Button");
-			SelectFlg = false;
+
+			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
+			getData().Memory_PlayerTurn = false;
+			getData().Bet_PlayerFirst = false;
+
+			//ボタン状態設定
+			first = false;
+			last = true;
+		}
+		else if (easyButton.leftClicked())
+		{
+			AudioPlay(U"Button");
+
+			//ボタン状態設定
+			easy = true;
+			normal = false;
+			hard = false;
+		}
+		else if (normalButton.leftClicked())
+		{
+			AudioPlay(U"Button");
+
+			//ボタン状態設定
+			easy = false;
+			normal = true;
+			hard = false;
+		}
+		else if (hardButton.leftClicked())
+		{
+			AudioPlay(U"Button");
+
+			//ボタン状態設定
+			easy = false;
+			normal = false;
+			hard = true;
+		}
+		else if (okButton.leftClicked())
+		{
+			AudioPlay(U"Button");
 
 			//アニメーション用ストップウォッチ
 			getData().stopwatch.restart();
@@ -67,10 +85,6 @@ void Title::update()
 			//カードシャッフル
 			//getData().cards.shuffle();
 
-			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
-			getData().Memory_PlayerTurn = false;
-			getData().Bet_PlayerFirst = false;
-
 			//カード情報リセット
 			CardsReset(getData().cards);
 			getData().UsedCards.clear();
@@ -78,6 +92,23 @@ void Title::update()
 			//Player,CPU情報リセット
 			getData().player.AllClear();
 			getData().cpu.AllClear();
+
+			//CPUの強さ,名前設定
+			if (easy)
+			{
+				getData().cpu.setStrength(1);
+				getData().cpu.setName(U"CPU(弱い)");
+			}
+			else if (normal)
+			{
+				getData().cpu.setStrength(2);
+				getData().cpu.setName(U"CPU(普通)");
+			}
+			else if (hard)
+			{
+				getData().cpu.setStrength(3);
+				getData().cpu.setName(U"CPU(強い)");
+			}
 
 			//Betシーンのフラグリセット
 			getData().RaiseMenu = false;
@@ -155,13 +186,13 @@ void Title::draw() const
 		selectFrame.drawFrame(2, 2, Palette::Black);
 
 		FontAsset(U"Text")(U"先攻/後攻の選択").drawAt(800, 380, Palette::Black);
-		Button(firstButton, FontAsset(U"Button"), U"先攻", Palette::Black);
-		Button(lastbutton, FontAsset(U"Button"), U"後攻", Palette::Black);
+		Button(firstButton, FontAsset(U"Button"), U"先攻", Palette::Black, first);
+		Button(lastbutton, FontAsset(U"Button"), U"後攻", Palette::Black, last);
 
 		FontAsset(U"Text")(U"CPUの強さ").drawAt(800, 600, Palette::Black);
-		Button(easyButton, FontAsset(U"Text"), U"弱い", Palette::Black);
-		Button(normalButton, FontAsset(U"Text"), U"普通", Palette::Black);
-		Button(hardButton, FontAsset(U"Text"), U"強い", Palette::Black);
+		Button(easyButton, FontAsset(U"Text"), U"弱い", Palette::Black, easy);
+		Button(normalButton, FontAsset(U"Text"), U"普通", Palette::Black, normal);
+		Button(hardButton, FontAsset(U"Text"), U"強い", Palette::Black, hard);
 		Button(okButton, FontAsset(U"Button"), U"OK", Palette::Black);
 		Button(cancelButton, FontAsset(U"Button"), U"キャンセル", Palette::Black);
 	}

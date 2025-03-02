@@ -21,8 +21,10 @@ public:
 	void FirstBet(); //最初のベット
 	void BetAction(int32 player_Totalbet); //コール、レイズ、フォールドの選択
 
-
+	int32 getStrength();
+	void setStrength(int32 value);
 private:
 	Array<int32> Memory; //めくったカードのインデックス格納(記憶)
 	double forgetRate = 0.5; //忘れる確率
+	int32 strength = 2; //CPUの強さ(1:弱い、2:普通、3:強い)
 };

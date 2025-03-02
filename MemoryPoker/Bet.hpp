@@ -16,7 +16,7 @@ private:
 	//通常の表示
 	Rect MenuButton{ Arg::center(1480, 70), 200, 80 }; //メニューボタン
 	RoundRect PlayerSelectCardArea{ Arg::center(800, 950), 400, 200, 7 }; //Player選択カード表示エリア
-	RoundRect PlayerNameArea{ Arg::center(1250, 865), 180, 70, 7 }; //PlayerName表示エリア
+	RoundRect PlayerNameArea{ Arg::center(1250, 865), 200, 70, 7 }; //PlayerName表示エリア
 	RoundRect PlayerChipArea{ Arg::center(1350, 1100), 400, 100, 7 }; //PlayerChip表示エリア
 	RoundRect PlayerBetArea{ Arg::center(1350, 970), 400, 100, 7 }; //PlayerBet額表示エリア
 	RoundRect PlayerActionArea{ Arg::center(1350, 700), 400, 100, 7 }; //「コール」or「レイズ」or「フォールド」(Playerが選択した行動)の表示
@@ -26,7 +26,7 @@ private:
 	Rect FoldButton{ Arg::center(300, 1100), 550, 100 }; //「フォールド」ボタン
 
 	RoundRect CpuSelectCardArea{ Arg::center(800, 250), 400, 200, 7 }; //CPU選択カード表示エリア
-	RoundRect CpuNameArea{ Arg::center(150, 90), 180, 70, 7 }; //CPUName表示エリア
+	RoundRect CpuNameArea{ Arg::center(150, 90), 200, 70, 7 }; //CPUName表示エリア
 	RoundRect CpuChipArea{ Arg::center(250, 315), 400, 100, 7 }; //CpuChip表示エリア
 	RoundRect CpuBetArea{ Arg::center(250, 195), 400, 100, 7 }; //CpuBet額表示エリア
 	RoundRect CpuActionArea{ Arg::center(250, 500), 400, 100, 7 }; //「コール」or「レイズ」or「フォールド」(CPUが選択した行動)の表示
