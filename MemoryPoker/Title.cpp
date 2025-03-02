@@ -37,6 +37,20 @@ void Title::update()
 			getData().Memory_PlayerTurn = true;
 			getData().Bet_PlayerFirst = true;
 
+			//カード情報リセット
+			CardsReset(getData().cards);
+			getData().UsedCards.clear();
+
+			//Player,CPU情報リセット
+			getData().player.AllClear();
+			getData().cpu.AllClear();
+
+			//Betシーンのフラグリセット
+			getData().RaiseMenu = false;
+
+			//ラウンドリセット
+			getData().Round = 1;
+
 
 			//神経衰弱画面(Memory)へ
 			changeScene(State::Memory, getData().changeSec);
@@ -56,6 +70,20 @@ void Title::update()
 			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
 			getData().Memory_PlayerTurn = false;
 			getData().Bet_PlayerFirst = false;
+
+			//カード情報リセット
+			CardsReset(getData().cards);
+			getData().UsedCards.clear();
+
+			//Player,CPU情報リセット
+			getData().player.AllClear();
+			getData().cpu.AllClear();
+
+			//Betシーンのフラグリセット
+			getData().RaiseMenu = false;
+
+			//ラウンドリセット
+			getData().Round = 1;
 
 			//神経衰弱画面(Memory)へ
 			changeScene(State::Memory, getData().changeSec);

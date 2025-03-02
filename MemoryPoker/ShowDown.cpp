@@ -65,8 +65,16 @@ void ShowDown::update()
 			//神経衰弱の最初の手番設定(Bet_PlayerTurnと一致)
 			getData().Memory_PlayerTurn = getData().Bet_PlayerFirst;
 
-			//次ラウンドへ
-			changeScene(State::Memory, getData().changeSec);
+			if (getData().Round == 5 || getData().player.getChip() == 0 || getData().cpu.getChip() == 0)
+			{
+				//4ラウンド終了,またはどちらかのチップが0枚になるとリザルト画面へ遷移
+				changeScene(State::Result, getData().changeSec);
+			}
+			else
+			{
+				//次ラウンドへ
+				changeScene(State::Memory, getData().changeSec);
+			}
 		}
 
 	}

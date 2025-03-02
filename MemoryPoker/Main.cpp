@@ -7,6 +7,7 @@
 #include "SelectCard.hpp"
 #include "Bet.hpp"
 #include "ShowDown.hpp"
+#include "Result.hpp"
 
 void Main()
 {
@@ -20,6 +21,7 @@ void Main()
 
 	//アセット登録
 	FontAsset::Register(U"Title", 70, Typeface::Regular);
+	FontAsset::Register(U"Result", FontMethod::MSDF, 100, Typeface::Bold);
 	FontAsset::Register(U"Button", FontMethod::MSDF, 48, Typeface::Bold);
 	FontAsset::Register(U"Text", 30);
 
@@ -39,6 +41,7 @@ void Main()
 
 	//アセット事前ロード
 	FontAsset::Load(U"Title");
+	FontAsset::Load(U"Result");
 	FontAsset::Load(U"Button");
 	FontAsset::Load(U"Text");
 
@@ -65,6 +68,7 @@ void Main()
 	manager.add<SelectCard>(State::SelectCard);
 	manager.add<Bet>(State::Bet);
 	manager.add<ShowDown>(State::ShowDown);
+	manager.add<Result>(State::Result);
 
 	//最初のシーンのフェードイン時間指定
 	manager.init(State::Title, 0.5s);

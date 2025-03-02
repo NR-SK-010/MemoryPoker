@@ -183,6 +183,9 @@
     <ClCompile Include="ShowDown.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Result.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -885,6 +888,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShowDown.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

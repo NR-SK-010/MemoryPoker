@@ -125,6 +125,7 @@
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Result.cpp" />
     <ClCompile Include="Rule.cpp" />
     <ClCompile Include="SelectCard.cpp" />
     <ClCompile Include="ShowDown.cpp" />
@@ -347,6 +348,7 @@
     <ClInclude Include="Memory.hpp" />
     <ClInclude Include="Person.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="Result.hpp" />
     <ClInclude Include="Rule.hpp" />
     <ClInclude Include="SelectCard.hpp" />
     <ClInclude Include="ShowDown.hpp" />
