@@ -307,3 +307,13 @@ int32 Person::getRole()
 {
 	return Role;
 }
+
+bool Person::getFold()
+{
+	return Fold;
+}
+
+void Person::setFold(bool value)
+{
+	Fold = value;
+}

@@ -168,13 +168,13 @@ void Bet::update()
 			getData().stopwatch.restart();
 		}
 	}
-	else if (getData().player.getTotalBet() == getData().cpu.getTotalBet() && getData().stopwatch.sF() > 0.5)
+	else if ( (getData().player.getFold() || getData().cpu.getFold() || getData().player.getTotalBet() == getData().cpu.getTotalBet() ) && getData().stopwatch.sF() > 0.5)
 	{
 		//TotalBetが同じ かつ ベット額表示等も完了(ひとつ上の分岐を抜けているので)しているとき
 		//どちらもレイズしていないのでShowDownシーンへ遷移
 		changeScene(State::ShowDown, getData().changeSec);
 	}
-	else if(getData().Bet_PlayerTurn && getData().player.getTotalBet() != getData().cpu.getTotalBet())
+	else if(getData().Bet_PlayerTurn && getData().player.getTotalBet() != getData().cpu.getTotalBet() && !getData().player.getFold())
 	{
 		//通常
 
@@ -209,6 +209,12 @@ void Bet::update()
 		{
 			//フォールド
 			AudioPlay(U"Button");
+			getData().player.setFold(true);
+
+			getData().player.setActionText(U"フォールド");
+
+			//ストップウォッチをリスタートしておく(待機時間のため)
+			getData().stopwatch.restart();
 		}
 	}
 	else if(getData().stopwatch.sF() > 0.5) //0.5s待つ
@@ -288,14 +294,14 @@ void Bet::draw() const
 	FontAsset(U"Text")(U"BET").drawAt(150, 195, Palette::Black);
 	FontAsset(U"Text")(getData().cpu.getInitChip() - getData().cpu.getChip()).drawAt(350, 195, Palette::Black);
 
-	if ((getData().player.getInitChip() != getData().player.getChip() + getData().player.getTotalBet()))
+	if ( (getData().player.getInitChip() != getData().player.getChip() + getData().player.getTotalBet()) || getData().player.getFold() )
 	{
 		//チップ増減時(Playe側)
 		PlayerActionArea.draw(Palette::White);
 		PlayerActionArea.drawFrame(2, 2, Palette::Black);
 		FontAsset(U"Text")(getData().player.getActionText()).drawAt(1350, 700, Palette::Black);
 	}
-	else if (getData().cpu.getInitChip() != getData().cpu.getChip() + getData().cpu.getTotalBet())
+	else if ( (getData().cpu.getInitChip() != getData().cpu.getChip() + getData().cpu.getTotalBet()) || getData().cpu.getFold() )
 	{
 		//チップ増減時(Playe側)
 		CpuActionArea.draw(Palette::White);

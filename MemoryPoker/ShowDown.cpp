@@ -106,7 +106,10 @@ void ShowDown::draw() const
 	Button(MenuButton, FontAsset(U"Button"), U"メニュー", Palette::Black);
 
 	//Player選択カード表示
-	PlayerSelectCardArea.draw(Palette::White);
+	//フォールド時は灰色背景にしておく
+	if(getData().player.getFold())PlayerSelectCardArea.draw(Palette::Gray);
+	else PlayerSelectCardArea.draw(Palette::White);
+
 	PlayerSelectCardArea.drawFrame(2, 2, Palette::Black);
 	drawPlayerSelectCards();
 
@@ -134,7 +137,10 @@ void ShowDown::draw() const
 	drawPlayerRoleText();
 
 	//CPU選択カード表示
-	CpuSelectCardArea.draw(Palette::White);
+	//フォールド時は灰色背景にしておく
+	if(getData().cpu.getFold()) CpuSelectCardArea.draw(Palette::Gray);
+	else CpuSelectCardArea.draw(Palette::White);
+
 	CpuSelectCardArea.drawFrame(2, 2, Palette::Black);
 	drawCpuSelectCards();
 
@@ -207,6 +213,10 @@ bool ShowDown::CpuSelectCardFlip()
 //Player勝利でtrue,CPU勝利でfalseを返す
 bool ShowDown::CompRole(Player player, Cpu cpu)
 {
+	//どちらかがフォールドしていた場合
+	if (player.getFold()) return false;
+	else if (cpu.getFold()) return true;
+
 	bool result = false;
 
 	if (player.getRole() > cpu.getRole())

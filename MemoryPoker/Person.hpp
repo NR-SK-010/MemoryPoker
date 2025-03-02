@@ -65,6 +65,9 @@ public:
 
 	int32 getRole();
 
+	bool getFold();
+	void setFold(bool value);
+
 protected:
 	//intN -> Nbit符号付き整数
 	Array<int32> Hands; //手札
@@ -80,5 +83,6 @@ protected:
 	int32 TotalBet = 0; //合計のベット額
 	int32 Bet = 0; //一回のベット額
 	int32 InitChip = 500; //Betシーン時、最初に持っているチップ
+	bool Fold = false; //Betシーン時、フォールドしたかどうか
 	String ActionText = U""; //「ベット」のように行動を表示
 };
