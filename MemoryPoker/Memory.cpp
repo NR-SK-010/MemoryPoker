@@ -351,6 +351,20 @@ void Memory::draw() const
 		
 	}
 
+	//PlayerのHandsカード描画
+	for (int32 i = 0; i < getData().player.getHands().size(); i++)
+	{
+		const Vec2 center{ 575 + i * 90, 1050 };
+		getData().pack(getData().cards[getData().player.getHands()[i]]).drawAt(center);
+	}
+
+	//CPUのHandsカード描画
+	for (int32 i = 0; i < getData().cpu.getHands().size(); i++)
+	{
+		const Vec2 center{ 575 + i * 90, 150 };
+		getData().pack(getData().cards[getData().cpu.getHands()[i]]).drawAt(center);
+	}
+
 	//揃えたカードの移動(Player側)
 	if (getData().UsedCards.contains(getData().player.getFlipPair().first) && getData().stopwatch.sF() <= 2.0)
 	{
@@ -386,22 +400,6 @@ void Memory::draw() const
 		pos = CardMove(Vec2{ 260 + getData().cpu.getFlipPair().second % 13 * 90, 405 + (getData().cpu.getFlipPair().second / 13) * 130 }, Vec2{ 575 + (getData().cpu.getHands().size() + 1) * 90, 150 }, e);
 		getData().pack(getData().cards[getData().cpu.getFlipPair().second]).drawAt(pos);
 	}
-
-	//PlayerのHandsカード描画
-	for (int32 i = 0; i < getData().player.getHands().size(); i++)
-	{
-		const Vec2 center{ 575 + i * 90, 1050 };
-		getData().pack(getData().cards[getData().player.getHands()[i]]).drawAt(center);
-	}
-
-	//CPUのHandsカード描画
-	for (int32 i = 0; i < getData().cpu.getHands().size(); i++)
-	{
-		const Vec2 center{ 575 + i * 90, 150 };
-		getData().pack(getData().cards[getData().cpu.getHands()[i]]).drawAt(center);
-	}
-
-	
 }
 
 //イージングの際に使用
