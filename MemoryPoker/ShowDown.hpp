@@ -13,7 +13,11 @@ public:
 private:
 	//CpuのSelectCardを順に表にする
 	//全部表になっていればtrue,それ以外はfalseを返す
-	bool CpuSelectCardFlip();
+	bool CpuSelectCardFlip() const;
+
+	//PlayerとCPUの役の比較
+	//Player勝利でtrue,CPU勝利でfalseを返す
+	bool CompRole(Player player, Cpu cpu);
 
 	Rect MenuButton{ Arg::center(1480, 70), 200, 80 };//メニューボタン
 

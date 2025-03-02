@@ -286,3 +286,8 @@ void Person::push_back_Hands(int32 card)
 {
 	Hands.push_back(card);
 }
+
+int32 Person::getRole()
+{
+	return Role;
+}

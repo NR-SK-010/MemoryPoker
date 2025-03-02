@@ -26,10 +26,19 @@ void ShowDown::update()
 		//CPUのカードめくり中
 		
 	}
+	else if(CompRole(getData().player, getData().cpu))
+	{
+		//完了(Player勝利)
+
+		//色変更
+		PlayerRoleAreaColor = Palette::Yellow;
+	}
 	else
 	{
-		//完了
+		//完了(CPU勝利)
 
+		//色変更
+		CpuRoleAreaColor = Palette::Yellow;
 	}
 
 }
@@ -71,7 +80,8 @@ void ShowDown::draw() const
 	//PlayerRoleText表示
 	PlayerRoleArea.draw(PlayerRoleAreaColor);
 	PlayerRoleArea.drawFrame(2, 2, Palette::Black);
-
+	//カードがすべてめくられた状態でのみ役を表示
+	if (CpuSelectCardFlip()) FontAsset(U"Text")(getData().player.getRoleText()).drawAt(800, 750, Palette::Black);
 
 	//CPU選択カード表示
 	CpuSelectCardArea.draw(Palette::White);
@@ -103,11 +113,14 @@ void ShowDown::draw() const
 	//CpuRoletext表示
 	CpuRoleArea.draw(CpuRoleAreaColor);
 	CpuRoleArea.drawFrame(2, 2, Palette::Black);
+	//カードがすべてめくられた状態でのみ役を表示
+	if (CpuSelectCardFlip()) FontAsset(U"Text")(getData().cpu.getRoleText()).drawAt(800, 450, Palette::Black);
 }
 
 //CpuのSelectCardを順に表にする
 //全部表になっていればtrue,それ以外はfalseを返す
-bool ShowDown::CpuSelectCardFlip()
+//draw関数内でも使用するためconstに(メンバ変数の読み書きはしていない)
+bool ShowDown::CpuSelectCardFlip() const
 {
 	bool result = true;
 
@@ -136,6 +149,31 @@ bool ShowDown::CpuSelectCardFlip()
 			//1枚ずつ裏返す
 			result = false;
 			break;
+		}
+	}
+
+	return result;
+}
+
+//PlayerとCPUの役の比較
+//Player勝利でtrue,CPU勝利でfalseを返す
+bool ShowDown::CompRole(Player player, Cpu cpu)
+{
+	bool result = false;
+
+	if (player.getRole() > cpu.getRole())
+	{
+		result = true;
+	}
+	else if(player.getRole() == cpu.getRole())
+	{
+		if (player.getManNumber() > cpu.getManNumber())
+		{
+			result = true;
+		}
+		else if (player.getManNumber() == cpu.getManNumber() && player.getMaxSuit() > cpu.getMaxSuit())
+		{
+			result = true;
 		}
 	}
 

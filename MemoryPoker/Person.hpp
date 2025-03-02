@@ -33,13 +33,18 @@ public:
 
 	int32 getManNumber();
 	void setMaxNumber(int32 number);
+
 	int32 getMaxSuit();
 	void setMaxSuit(int32 suit);
+
 	String getName();
+
 	int32 getChip();
 	void setChip(int32 value);
+
 	int32 getInitChip();
 	void setInitChip(int32 value);
+
 	String getActionText();
 	void setActionText(String text);
 
@@ -54,6 +59,8 @@ public:
 
 	Array<int32> getHands();
 	void push_back_Hands(int32 card);
+
+	int32 getRole();
 
 protected:
 	//intN -> Nbit符号付き整数
