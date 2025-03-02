@@ -13,11 +13,22 @@ public:
 private:
 	//CpuのSelectCardを順に表にする
 	//全部表になっていればtrue,それ以外はfalseを返す
-	bool CpuSelectCardFlip() const;
+	bool CpuSelectCardFlip();
 
 	//PlayerとCPUの役の比較
 	//Player勝利でtrue,CPU勝利でfalseを返す
 	bool CompRole(Player player, Cpu cpu);
+
+	//チップの変動
+	void ChipFluctuation(bool PlayerWin);
+
+	//SelectCardsの描画
+	void drawPlayerSelectCards() const;
+	void drawCpuSelectCards() const;
+
+	//RoleTextの描画
+	void drawPlayerRoleText() const;
+	void drawCpuRoleText() const;
 
 	Rect MenuButton{ Arg::center(1480, 70), 200, 80 };//メニューボタン
 
@@ -28,10 +39,19 @@ private:
 	RoundRect PlayerRoleArea{ Arg::center(800, 750), 700, 100, 7 }; //PlayerRoleText表示エリア
 	Color PlayerRoleAreaColor = Palette::White; //PlayerRoleAreaの色(勝ったら黄色に変更)
 
+	//Player描画用
+	Array<int32> PlayerTmpSelectCards = {-1, -1, -1}; //描画用のカード
+	String PlayerTmpRoleText = U"";
+
+
 	RoundRect CpuSelectCardArea{ Arg::center(800, 250), 400, 200, 7 }; //CPU選択カード表示エリア
 	RoundRect CpuNameArea{ Arg::center(150, 90), 180, 70, 7 }; //CPUName表示エリア
 	RoundRect CpuChipArea{ Arg::center(250, 315), 400, 100, 7 }; //CpuChip表示エリア
 	RoundRect CpuBetArea{ Arg::center(250, 195), 400, 100, 7 }; //CpuBet額表示エリア
 	RoundRect CpuRoleArea{ Arg::center(800, 450), 700, 100, 7 }; //CpuRoleText表示エリア
 	Color CpuRoleAreaColor = Palette::White; //CPURoleAreaの色(勝ったら黄色に変更)
+
+	//CPU描画用
+	Array<int32> CpuTmpSelectCards = { -1, -1, -1 }; //描画用のカード
+	String CpuTmpRoleText = U"";
 };

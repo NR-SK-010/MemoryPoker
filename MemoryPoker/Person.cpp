@@ -44,6 +44,22 @@ void Person::AllClear()
 	InitChip = 500;
 }
 
+//次ラウンドのための準備
+void Person::ForNextRound()
+{
+	Hands.clear();
+	SelectCards.clear();
+	MaxSuit = 0;
+	MaxNumber = 0;
+	Role = 0;
+	RoleCards.clear();
+	FlipPair.first = FlipPair.second = -1;
+	RoleText = U"";
+	TotalBet = 0;
+	Bet = 0;
+	InitChip = Chip;
+}
+
 //自分の手札から最も強い役を作成
 void Person::RecommendRole(Array<PlayingCard::Card> cards)
 {

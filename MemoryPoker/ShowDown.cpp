@@ -18,20 +18,65 @@ void ShowDown::update()
 	{
 		AudioPlay(U"Button");
 		getData().NowScene = U"ShowDown";
+
+		//設定画面を開くときは一時停止
+		getData().stopwatch.pause();
+
 		changeScene(State::Config, getData().changeSec);
 	}
 
 	if (!CpuSelectCardFlip())
 	{
 		//CPUのカードめくり中
-		
+
+		//勝敗もセットしておく
+		getData().PlayerWin = CompRole(getData().player, getData().cpu);
+
+		//update -> drawの順で呼び出される
+		// また、フェードイン、アウト時はdrawのみが呼び出される
+		//そのため、次ラウンド準備でHands等をClear -> Clearされた状態で0画面が見えてしまう時間帯が生じる
+		//対策として、描画用のものを代わりに用意しておく(draw関数内の該当箇所もそれに応じて書き直す)
+		PlayerTmpSelectCards[0] = getData().player.getSelectCards()[0];
+		PlayerTmpSelectCards[1] = getData().player.getSelectCards()[1];
+		PlayerTmpSelectCards[2] = getData().player.getSelectCards()[2];
+		PlayerTmpRoleText = getData().player.getRoleText();
+
+		CpuTmpSelectCards[0] = getData().cpu.getSelectCards()[0];
+		CpuTmpSelectCards[1] = getData().cpu.getSelectCards()[1];
+		CpuTmpSelectCards[2] = getData().cpu.getSelectCards()[2];
+		CpuTmpRoleText = getData().cpu.getRoleText();
 	}
-	else if(CompRole(getData().player, getData().cpu))
+	else if (getData().player.getTotalBet() == 0 && getData().cpu.getTotalBet() == 0)
+	{
+		//チップ変動が終了
+		// 2.0s経過したら次ラウンド,または結果画面へ
+		if (getData().stopwatch.sF() > 2.0)
+		{
+			//Player,CPUの次ラウンド準備
+			getData().player.ForNextRound();
+			getData().cpu.ForNextRound();
+
+			//ラウンド加算
+			getData().Round++;
+
+			//最初のベット入れ替え
+			getData().Bet_PlayerFirst = !getData().Bet_PlayerFirst;
+
+			//神経衰弱の最初の手番設定(Bet_PlayerTurnと一致)
+			getData().Memory_PlayerTurn = getData().Bet_PlayerFirst;
+
+			//次ラウンドへ
+			changeScene(State::Memory, getData().changeSec);
+		}
+
+	}
+	else if(getData().PlayerWin)
 	{
 		//完了(Player勝利)
 
 		//色変更
 		PlayerRoleAreaColor = Palette::Yellow;
+		ChipFluctuation(getData().PlayerWin);
 	}
 	else
 	{
@@ -39,6 +84,7 @@ void ShowDown::update()
 
 		//色変更
 		CpuRoleAreaColor = Palette::Yellow;
+		ChipFluctuation(getData().PlayerWin);
 	}
 
 }
@@ -54,11 +100,7 @@ void ShowDown::draw() const
 	//Player選択カード表示
 	PlayerSelectCardArea.draw(Palette::White);
 	PlayerSelectCardArea.drawFrame(2, 2, Palette::Black);
-	for (int i = 0; i < getData().player.getSelectCards().size(); i++)
-	{
-		const Vec2 center{ 710 + i * 90, 950 };
-		getData().pack(getData().cards[getData().player.getSelectCards()[i]]).drawAt(center);
-	}
+	drawPlayerSelectCards();
 
 	//PlayerName表示
 	PlayerNameArea.draw(Palette::White);
@@ -75,23 +117,18 @@ void ShowDown::draw() const
 	PlayerBetArea.draw(Palette::White);
 	PlayerBetArea.drawFrame(2, 2, Palette::Black);
 	FontAsset(U"Text")(U"BET").drawAt(1250, 970, Palette::Black);
-	FontAsset(U"Text")(getData().player.getInitChip() - getData().player.getChip()).drawAt(1450, 970, Palette::Black);
+	FontAsset(U"Text")(getData().player.getTotalBet()).drawAt(1450, 970, Palette::Black);
 
 	//PlayerRoleText表示
 	PlayerRoleArea.draw(PlayerRoleAreaColor);
 	PlayerRoleArea.drawFrame(2, 2, Palette::Black);
 	//カードがすべてめくられた状態でのみ役を表示
-	if (CpuSelectCardFlip()) FontAsset(U"Text")(getData().player.getRoleText()).drawAt(800, 750, Palette::Black);
+	drawPlayerRoleText();
 
 	//CPU選択カード表示
 	CpuSelectCardArea.draw(Palette::White);
 	CpuSelectCardArea.drawFrame(2, 2, Palette::Black);
-	for (int i = 0; i < getData().cpu.getSelectCards().size(); i++)
-	{
-		const Vec2 center{ 710 + i * 90, 250 };
-
-		getData().pack(getData().cards[getData().cpu.getSelectCards()[i]]).drawAt(center);
-	}
+	drawCpuSelectCards();
 
 	//CpuName表示
 	CpuNameArea.draw(Palette::White);
@@ -108,19 +145,22 @@ void ShowDown::draw() const
 	CpuBetArea.draw(Palette::White);
 	CpuBetArea.drawFrame(2, 2, Palette::Black);
 	FontAsset(U"Text")(U"BET").drawAt(150, 195, Palette::Black);
-	FontAsset(U"Text")(getData().cpu.getInitChip() - getData().cpu.getChip()).drawAt(350, 195, Palette::Black);
+	FontAsset(U"Text")(getData().cpu.getTotalBet()).drawAt(350, 195, Palette::Black);
 
 	//CpuRoletext表示
 	CpuRoleArea.draw(CpuRoleAreaColor);
 	CpuRoleArea.drawFrame(2, 2, Palette::Black);
 	//カードがすべてめくられた状態でのみ役を表示
-	if (CpuSelectCardFlip()) FontAsset(U"Text")(getData().cpu.getRoleText()).drawAt(800, 450, Palette::Black);
+	drawCpuRoleText();
 }
+
+
+
 
 //CpuのSelectCardを順に表にする
 //全部表になっていればtrue,それ以外はfalseを返す
 //draw関数内でも使用するためconstに(メンバ変数の読み書きはしていない)
-bool ShowDown::CpuSelectCardFlip() const
+bool ShowDown::CpuSelectCardFlip()
 {
 	bool result = true;
 
@@ -178,4 +218,115 @@ bool ShowDown::CompRole(Player player, Cpu cpu)
 	}
 
 	return result;
+}
+
+//チップの変動
+void ShowDown::ChipFluctuation(bool PlayerWin)
+{
+	AudioPlay(U"Coin");
+	if (PlayerWin)
+	{
+		//Player勝利	
+		
+		if (getData().cpu.getTotalBet() > 0)
+		{
+			getData().cpu.setTotalBet(getData().cpu.getTotalBet() - 1);
+		}
+		else
+		{
+			getData().player.setTotalBet(getData().player.getTotalBet() - 1);
+		}
+		getData().player.setChip(getData().player.getChip() + 1);
+	}
+	else
+	{
+		//CPU勝利
+
+		if (getData().player.getTotalBet() > 0)
+		{
+			getData().player.setTotalBet(getData().player.getTotalBet() - 1);
+		}
+		else
+		{
+			getData().cpu.setTotalBet(getData().cpu.getTotalBet() - 1);
+		}
+		getData().cpu.setChip(getData().cpu.getChip() + 1);
+	}
+
+	if (getData().player.getTotalBet() == 0 && getData().cpu.getTotalBet() == 0)
+	{
+		//次のシーンへの遷移までの待機時間のためにリスタート
+		getData().stopwatch.restart();
+	}
+}
+
+//PlayerのSelectCardsの描画
+void ShowDown::drawPlayerSelectCards() const
+{
+	//SelectCardsの状態によって切り替える
+	if (getData().player.getSelectCards().empty())
+	{
+		for (int i = 0; i < PlayerTmpSelectCards.size() ; i++)
+		{
+			const Vec2 center{ 710 + i * 90, 950 };
+			getData().pack(getData().cards[PlayerTmpSelectCards[i]]).drawAt(center);
+		}
+	}
+	else
+	{
+		for (int i = 0; i < getData().player.getSelectCards().size(); i++)
+		{
+			const Vec2 center{ 710 + i * 90, 950 };
+			getData().pack(getData().cards[getData().player.getSelectCards()[i]]).drawAt(center);
+		}
+	}
+	
+}
+//CpuのSelectCardsの描画
+void ShowDown::drawCpuSelectCards() const
+{
+	//SelectCardsの状態によって切り替える
+	if (getData().cpu.getSelectCards().empty())
+	{
+		for (int i = 0; i < CpuTmpSelectCards.size(); i++)
+		{
+			const Vec2 center{ 710 + i * 90, 250 };
+			getData().pack(getData().cards[CpuTmpSelectCards[i]]).drawAt(center);
+		}
+	}
+	else
+	{
+		for (int i = 0; i < getData().cpu.getSelectCards().size(); i++)
+		{
+			const Vec2 center{ 710 + i * 90, 250 };
+			getData().pack(getData().cards[getData().cpu.getSelectCards()[i]]).drawAt(center);
+		}
+	}
+}
+
+//RoleTextの描画
+void ShowDown::drawPlayerRoleText() const
+{
+	//SelectCardsの状態によって切り替える
+	if (getData().player.getSelectCards().empty())
+	{
+		if(getData().cards[PlayerTmpSelectCards[2]].isFaceSide) FontAsset(U"Text")(PlayerTmpRoleText).drawAt(800, 750, Palette::Black);
+	}
+	else
+	{
+		if(getData().cards[getData().player.getSelectCards()[2]].isFaceSide) FontAsset(U"Text")(getData().player.getRoleText()).drawAt(800, 750, Palette::Black);
+	}
+}
+
+void ShowDown::drawCpuRoleText() const
+{
+	//SelectCardsの状態によって切り替える
+	if (getData().cpu.getSelectCards().empty())
+	{
+		if (getData().cards[CpuTmpSelectCards[2]].isFaceSide) FontAsset(U"Text")(CpuTmpRoleText).drawAt(800, 450, Palette::Black);
+	}
+	else
+	{
+		if (getData().cards[getData().cpu.getSelectCards()[2]].isFaceSide) FontAsset(U"Text")(getData().cpu.getRoleText()).drawAt(800, 450, Palette::Black);
+	}
 }

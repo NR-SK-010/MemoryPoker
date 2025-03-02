@@ -38,6 +38,8 @@ struct GameData
 	bool Bet_PlayerTurn; //Betシーン内でプレイヤーの手番かどうか
 	bool Bet_PlayerFirst; //Betシーン内において、プレイヤーがファーストベットを行うか否か(神経衰弱の先攻/後攻と一致する)
 	bool RaiseMenu = false; //Betシーンにおいてレイズ額決定メニューが表示されているか
+	bool PlayerWin; //Betシーン内において,Playerが勝ったかどうか
+	int32 Round = 1; //ラウンド数(全4ラウンド)
 };
 
 using App = SceneManager<State, GameData>;

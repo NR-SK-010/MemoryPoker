@@ -15,6 +15,9 @@ public:
 	//初期状態に戻す(再スタート時など)
 	void AllClear();
 
+	//次ラウンドのための準備
+	void ForNextRound();
+
 	//自分の手札から最も強い役を作成
 	void RecommendRole(Array<PlayingCard::Card> cards);
 

@@ -32,6 +32,9 @@ void Config::update()
 			//Betシーンのフラグリセット
 			getData().RaiseMenu = false;
 
+			//ラウンドリセット
+			getData().Round = 1;
+
 			changeScene(State::Title, getData().changeSec);
 		}
 
@@ -119,6 +122,9 @@ void Config::update()
 			}
 			else if (getData().NowScene == U"ShowDown")
 			{
+				//ストップウォッチ再開
+				getData().stopwatch.resume();
+
 				changeScene(State::ShowDown, getData().changeSec);
 			}
 			

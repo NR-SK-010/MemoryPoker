@@ -65,6 +65,9 @@ void Main()
 	manager.add<SelectCard>(State::SelectCard);
 	manager.add<Bet>(State::Bet);
 	manager.add<ShowDown>(State::ShowDown);
+
+	//最初のシーンのフェードイン時間指定
+	manager.init(State::Title, 0.5s);
 	
 
 	AudioAsset(U"BGM").setVolume(0.2);
