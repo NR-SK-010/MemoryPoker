@@ -2,7 +2,7 @@
 #include "HandEvaluator.hpp"
 
 //コンストラクタ
-Person::Person(String name) : FlipPair(-1, -1), Chip(500), Name(name) {}
+Person::Person(String name) : FlipPair(-1, -1), Chip(100), Name(name) {}
 
 //場からランダムにペアを選ぶ
 void Person::SelectRandomPair(HashSet<int32> usedCards, Array<PlayingCard::Card> cards)
@@ -37,11 +37,11 @@ void Person::AllClear()
 	Role = 0;
 	RoleCards.clear();
 	FlipPair.first = FlipPair.second = -1;
-	Chip = 500;
+	Chip = 100;
 	RoleText = U"";
 	TotalBet = 0;
 	Bet = 0;
-	InitChip = 500;
+	InitChip = 100;
 }
 
 //次ラウンドのための準備

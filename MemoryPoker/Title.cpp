@@ -120,6 +120,9 @@ void Title::update()
 			//ラウンドリセット
 			getData().Round = 1;
 
+			//CPUの攻めっ気設定
+			getData().cpu.setAggression(Random<double>(-0.3, 0.3));
+
 			//神経衰弱画面(Memory)へ
 			changeScene(State::Memory, getData().changeSec);
 		}

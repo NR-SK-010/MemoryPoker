@@ -146,8 +146,18 @@ void Cpu::BetAction(int32 player_Totalbet)
 //最初のベット
 void Cpu::FirstBet()
 {
-	//いったん固定
-	TotalBet = 20;
+	//計算用にRoleをdoubleに(0～1.0)
+	double RoleStrength = (double)Role / 6.0;
+	//ブラフ時に加算するチップ
+	double BluffChip = 0;
+
+	//役の強さ、攻めっ気、ブラフに基づく計算
+	if (Role < 3 && RandomBool(bluffRate[strength]))
+	{
+		//ブラフ
+		BluffChip = Random<double>(0, bluffRate[strength] * ((double)strength / 3.0));
+	}
+	TotalBet = Min(Chip, (int32)(20 * (RoleStrength + aggression + BluffChip)));
 	ActionText = U"ベット";
 }
 
@@ -159,4 +169,9 @@ int32 Cpu::getStrength()
 void Cpu::setStrength(int32 value)
 {
 	strength = value;
+}
+
+void Cpu::setAggression(double value)
+{
+	aggression = value;
 }

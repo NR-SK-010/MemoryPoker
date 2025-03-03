@@ -28,6 +28,8 @@ public:
 
 	int32 getStrength();
 	void setStrength(int32 value);
+
+	void setAggression(double value);
 private:
 
 	Array<int32> Memory; //めくったカードのインデックス格納(記憶)
@@ -36,7 +38,7 @@ private:
 	//忘れる確率(強さによって変わる)
 	HashTable<int32, double> forgetRate = { {1, 0.7}, {2, 0.4}, {3, 0.1} };
 
-	//忘れるカード枚数の最大値
+	//忘れるカード枚数の最大値(強さによって変わる)
 	HashTable<int32, int32> forgetNumber = { {1, 6}, {2, 4}, {3, 2} };
 
 	//スートをintに変換する
@@ -46,4 +48,11 @@ private:
 													  {PlayingCard::Suit::Club, 1}
 													};
 
+	//攻めっ気の設定(毎回ランダム)
+	double aggression = 0;
+	
+
+
+	//ブラフ設定(強さによって変わる)
+	HashTable<int32, int32> bluffRate = { {1, 0.1}, {2, 0.3}, {3, 0.5} };
 };

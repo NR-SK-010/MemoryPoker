@@ -79,11 +79,11 @@ protected:
 	Array<PlayingCard::Card> RoleCards; //役に含まれるカード
 	String Name; //名前
 	std::pair<int32, int32> FlipPair; //めくったカードのcardsにおけるインデックスの組
-	int32 Chip = 500; //チップ(最初は500)
+	int32 Chip = 100; //チップ(最初は100)
 	String RoleText; //役の名前
 	int32 TotalBet = 0; //合計のベット額
 	int32 Bet = 0; //一回のベット額
-	int32 InitChip = 500; //Betシーン時、最初に持っているチップ
+	int32 InitChip = 100; //Betシーン時、最初に持っているチップ
 	bool Fold = false; //Betシーン時、フォールドしたかどうか
 	String ActionText = U""; //「ベット」のように行動を表示
 };
