@@ -189,9 +189,18 @@ void Bet::update()
 
 		if (CallButton.leftClicked())
 		{
-			//コール
+			//コールまたはオールイン
 			AudioPlay(U"Button");
-			getData().player.setActionText(U"コール");
+
+			//オールイン判定
+			if (getData().player.getChip() + getData().player.getTotalBet() < getData().cpu.getTotalBet())
+			{
+				getData().player.setActionText(U"オールイン");
+			}
+			else
+			{
+				getData().player.setActionText(U"コール");
+			}
 			getData().player.setTotalBet(Min(getData().player.getInitChip(), getData().cpu.getTotalBet()));
 
 			//手番交代
@@ -261,7 +270,16 @@ void Bet::draw() const
 	FontAsset(U"Text")(getData().player.getInitChip() - getData().player.getChip()).drawAt(1450, 970, Palette::Black);
 
 	//ボタン表示
-	Button(CallButton, FontAsset(U"Button"), U"コール", ButtonColor, CanPress);
+
+	//オールイン判定
+	if (getData().player.getChip() + getData().player.getTotalBet() < getData().cpu.getTotalBet())
+	{
+		Button(CallButton, FontAsset(U"Button"), U"オールイン", ButtonColor, CanPress);
+	}
+	else
+	{
+		Button(CallButton, FontAsset(U"Button"), U"コール", ButtonColor, CanPress);
+	}
 	Button(ToRaiseButton, FontAsset(U"Button"), U"レイズ", ButtonColor, CanPress && CanRaise());
 	Button(FoldButton, FontAsset(U"Button"), U"フォールド", ButtonColor, CanPress);
 
