@@ -27,10 +27,6 @@ void Title::update()
 			//先攻
 			AudioPlay(U"Button");
 
-			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
-			getData().Memory_PlayerTurn = true;
-			getData().Bet_PlayerFirst = true;
-
 			//ボタン状態設定
 			first = true;
 			last = false;
@@ -39,10 +35,6 @@ void Title::update()
 		{
 			//後攻
 			AudioPlay(U"Button");
-
-			//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
-			getData().Memory_PlayerTurn = false;
-			getData().Bet_PlayerFirst = false;
 
 			//ボタン状態設定
 			first = false;
@@ -110,6 +102,18 @@ void Title::update()
 				getData().cpu.setName(U"CPU(強い)");
 			}
 
+			if (first)
+			{
+				//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
+				getData().Memory_PlayerTurn = true;
+				getData().Bet_PlayerFirst = true;
+			}
+			else if (last)
+			{
+				//Memoryシーンにおける先攻,Betシーンにおけるファーストベットの設定
+				getData().Memory_PlayerTurn = false;
+				getData().Bet_PlayerFirst = false;
+			}
 			//Betシーンのフラグリセット
 			getData().RaiseMenu = false;
 

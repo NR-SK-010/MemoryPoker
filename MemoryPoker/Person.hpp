@@ -13,7 +13,7 @@ public:
 	void SelectRandomPair(HashSet<int32> usedCards, Array<PlayingCard::Card> cards);
 
 	//初期状態に戻す(再スタート時など)
-	void AllClear();
+	virtual void AllClear();
 
 	//次ラウンドのための準備
 	void ForNextRound();

@@ -7,15 +7,20 @@ class Cpu : public Person
 public:
 	Cpu(String name);
 
+	void AllClear() override;
+
 	//Memoryシーン内でのカード選択
 	int32 SelectFirstCard(const Array<PlayingCard::Card> cards, HashSet<int32> UsedCards);
-	int32 SelectSecondCard(const Array<PlayingCard::Card> cards, HashSet<int32> UsedCards, const int32 firstcard);
+	int32 SelectSecondCard(const Array<PlayingCard::Card> cards, HashSet<int32> UsedCards, const int32 first);
 
 	//揃ったペアを記憶から削除
 	void DeleteMemory(int32 first, int32 second);
 
-	//記憶の更新(新しくカードを記憶、forgetRateに基づいた記憶の削除)
-	void UpdateMemory();
+	//揃わなかったカードのペアを記憶
+	void UpdateMemory(int32 first, int32 second);
+
+	//forgetRateに基づき記憶から削除
+	void ForgetMemory();
 
 	//Betシーンでの行動選択
 	void FirstBet(); //最初のベット
@@ -24,7 +29,21 @@ public:
 	int32 getStrength();
 	void setStrength(int32 value);
 private:
+
 	Array<int32> Memory; //めくったカードのインデックス格納(記憶)
-	double forgetRate = 0.5; //忘れる確率
 	int32 strength = 2; //CPUの強さ(1:弱い、2:普通、3:強い)
+
+	//忘れる確率(強さによって変わる)
+	HashTable<int32, double> forgetRate = { {1, 0.7}, {2, 0.4}, {3, 0.1} };
+
+	//忘れるカード枚数の最大値
+	HashTable<int32, int32> forgetNumber = { {1, 6}, {2, 4}, {3, 2} };
+
+	//スートをintに変換する
+	HashTable<PlayingCard::Suit, int32> suitToint = { {PlayingCard::Suit::Spade, 4},
+													  {PlayingCard::Suit::Heart, 3},
+													  {PlayingCard::Suit::Diamond, 2},
+													  {PlayingCard::Suit::Club, 1}
+													};
+
 };

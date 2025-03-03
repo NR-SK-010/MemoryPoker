@@ -88,25 +88,26 @@ void Memory::update()
 						getData().UsedCards.insert(getData().player.getFlipPair().first);
 						getData().UsedCards.insert(getData().player.getFlipPair().second);
 					}
-					else
+					else if (getData().stopwatch.sF() >= 2.0)
 					{
-						if (getData().stopwatch.sF() >= 2.0)
-						{
-							//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
+						//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
 
-							//手札に揃えた2枚を追加
-							getData().player.push_back_Hands(getData().player.getFlipPair().first);
-							getData().player.push_back_Hands(getData().player.getFlipPair().second);
+						//手札に揃えた2枚を追加
+						getData().player.push_back_Hands(getData().player.getFlipPair().first);
+						getData().player.push_back_Hands(getData().player.getFlipPair().second);
 
-							//めくったカードの情報をリセット
-							getData().player.setFlipPair(-1, -1);
+						//CPUの記憶から揃ったペアの場所を消去
+						getData().cpu.DeleteMemory(getData().player.getFlipPair().first, getData().player.getFlipPair().second);
 
-							//ストップウォッチリスタート
-							getData().stopwatch.restart();
+						//めくったカードの情報をリセット
+						getData().player.setFlipPair(-1, -1);
 
-							//CPUのターンに回す
-							getData().Memory_PlayerTurn = false;
-						}
+						//ストップウォッチリスタート
+						getData().stopwatch.restart();
+
+						//CPUのターンに回す
+						getData().Memory_PlayerTurn = false;
+					
 					}
 
 				}
@@ -172,31 +173,41 @@ void Memory::update()
 					getData().UsedCards.insert(getData().cpu.getFlipPair().first);
 					getData().UsedCards.insert(getData().cpu.getFlipPair().second);
 				}
-				else
-				{
-					if (getData().stopwatch.sF() >= 2.0)
-					{
-						//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
+				else if (getData().stopwatch.sF() >= 2.0)
+				{	
+				
+					//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
 
-						//手札に揃えた2枚を追加
-						getData().cpu.push_back_Hands(getData().cpu.getFlipPair().first);
-						getData().cpu.push_back_Hands(getData().cpu.getFlipPair().second);
+					//手札に揃えた2枚を追加
+					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().first);
+					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().second);
 
-						//めくったカードの情報をリセット
-						getData().cpu.setFlipPair(-1, -1);
+					//CPUの記憶から揃ったペアの場所を消去
+					getData().cpu.DeleteMemory(getData().cpu.getFlipPair().first, getData().cpu.getFlipPair().second);
 
-						//ストップウォッチリスタート
-						getData().stopwatch.restart();
+					//記憶からいくつか消去
+					getData().cpu.ForgetMemory();
 
-						//Playerのターンに回す
-						getData().Memory_PlayerTurn = true;
-					}
+					//めくったカードの情報をリセット
+					getData().cpu.setFlipPair(-1, -1);
+
+					//ストップウォッチリスタート
+					getData().stopwatch.restart();
+
+					//Playerのターンに回す
+					getData().Memory_PlayerTurn = true;
 				}
 
 			}
 			else
 			{
 				//揃っていない場合
+
+				//記憶に追加
+				getData().cpu.UpdateMemory(getData().cpu.getFlipPair().first, getData().cpu.getFlipPair().second);
+
+				//記憶からいくつか消去
+				getData().cpu.ForgetMemory();
 
 				//めくったカードの情報をリセット
 				getData().cpu.setFlipPair(-1, -1);
@@ -225,28 +236,29 @@ void Memory::update()
 				getData().cards[getData().player.getFlipPair().second].flip();
 			}
 		
-			if (!getData().UsedCards.contains(getData().cpu.getFlipPair().first))
+			if (!getData().UsedCards.contains(getData().player.getFlipPair().first))
 			{
 				//UsedCardsに情報を保存
-				getData().UsedCards.insert(getData().cpu.getFlipPair().first);
-				getData().UsedCards.insert(getData().cpu.getFlipPair().second);
+				getData().UsedCards.insert(getData().player.getFlipPair().first);
+				getData().UsedCards.insert(getData().player.getFlipPair().second);
 			}
-			else
+			else if (getData().stopwatch.sF() >= 2.0)
 			{
-				if (getData().stopwatch.sF() >= 2.0)
-				{
-					//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
+				//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
 
-					//手札に揃えた2枚を追加
-					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().first);
-					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().second);
+				//手札に揃えた2枚を追加
+				getData().player.push_back_Hands(getData().player.getFlipPair().first);
+				getData().player.push_back_Hands(getData().player.getFlipPair().second);
 
-					//めくったカードの情報をリセット
-					getData().cpu.setFlipPair(-1, -1);
+				//CPUの記憶から揃ったペアの場所を消去
+				getData().cpu.DeleteMemory(getData().player.getFlipPair().first, getData().player.getFlipPair().second);
 
-					//ストップウォッチリスタート
-					getData().stopwatch.restart();
-				}
+				//めくったカードの情報をリセット
+				getData().player.setFlipPair(-1, -1);
+
+				//ストップウォッチリスタート
+				getData().stopwatch.restart();
+			
 			}
 
 		}
@@ -269,22 +281,22 @@ void Memory::update()
 				getData().UsedCards.insert(getData().cpu.getFlipPair().first);
 				getData().UsedCards.insert(getData().cpu.getFlipPair().second);
 			}
-			else
+			else if (getData().stopwatch.sF() >= 2.0)
 			{
-				if (getData().stopwatch.sF() >= 2.0)
-				{
-					//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
+				//2.0s後(めくられた状態で0.5s,移動に1s,その後0.5s)に手札に入れる
 
-					//手札に揃えた2枚を追加
-					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().first);
-					getData().cpu.push_back_Hands(getData().cpu.getFlipPair().second);
+				//手札に揃えた2枚を追加
+				getData().cpu.push_back_Hands(getData().cpu.getFlipPair().first);
+				getData().cpu.push_back_Hands(getData().cpu.getFlipPair().second);
 
-					//めくったカードの情報をリセット
-					getData().cpu.setFlipPair(-1, -1);
+				//CPUの記憶から揃ったペアの場所を消去
+				getData().cpu.DeleteMemory(getData().cpu.getFlipPair().first, getData().cpu.getFlipPair().second);
 
-					//ストップウォッチリスタート
-					getData().stopwatch.restart();
-				}
+				//めくったカードの情報をリセット
+				getData().cpu.setFlipPair(-1, -1);
+
+				//ストップウォッチリスタート
+				getData().stopwatch.restart();
 			}
 		}
 
