@@ -231,6 +231,9 @@ void Bet::update()
 	{
 		//CPUの行動
 		getData().cpu.BetAction(getData().player.getTotalBet());
+
+		//ストップウォッチをリスタートしておく(待機時間のため)
+		getData().stopwatch.restart();
 	}
 }
 

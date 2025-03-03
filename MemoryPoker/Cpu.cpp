@@ -111,8 +111,8 @@ void Cpu::DeleteMemory(int32 first, int32 second)
 //揃わなかったカードのペアを記憶
 void Cpu::UpdateMemory(int32 first, int32 second)
 {
-	if(!Memory.contains(first)) Memory.push_back(first);
-	if(!Memory.contains(second)) Memory.push_back(second);
+	if (!Memory.contains(first)) Memory.push_back(first);
+	if (!Memory.contains(second)) Memory.push_back(second);
 }
 
 //forgetRateに基づき記憶から削除
@@ -138,9 +138,56 @@ void Cpu::ForgetMemory()
 //Betシーンでの行動選択
 void Cpu::BetAction(int32 player_Totalbet)
 {
-	//コールのみ(具体的な行動は後で)
-	TotalBet = Min(InitChip, player_Totalbet);
-	ActionText = U"コール";
+	//ポットオッズ計算
+	//(コールに必要な枚数) / (コールした後のポットの全体額)で求まる
+	double diff = (double)(player_Totalbet - TotalBet); //相手のBet額
+	double PotSize = (double)(player_Totalbet + TotalBet + diff);
+	double PotOdds = diff / PotSize;
+
+	//役の強さ(0～1.0)
+	double RoleStrength = (double)Role / 6.0;
+
+	//フォールドの閾値
+	//強気(aggression高)ならフォールドしにくく、弱気ならフォールドしやすい
+	double FoldBoundary = PotOdds - (double)aggression;
+
+	//ブラフかどうかの判定材料
+	double BluffProb;
+
+	if (TotalBet == 0)
+	{
+		//相手がファーストベットの場合
+		BluffProb = Min(1.0, (double)player_Totalbet / 3.0);
+	}
+	else
+	{
+		//通常
+		//増加前のサイズで計算(ブラフの場合は増額前のサイズによって影響が変わる)
+		BluffProb = Min(1.0, diff / (PotSize - diff*2));
+	}
+
+	//ブラフ等も考慮した最終的な役の強さの算出
+	//強気かどうかも考慮する
+	double FinalRoleStrength = RoleStrength + BluffProb * Min(0.0, aggression);
+
+	if (FinalRoleStrength > 0.7 && RandomBool(RaiseRate[strength] + aggression))
+	{
+		//レイズ
+		//現在の相手のベット額の1.2～2.0倍(厳密には1.9999...)範囲で調整
+		TotalBet = (int32)(player_Totalbet * Random<double>(1.2, 2.0));
+	}
+	else if (FinalRoleStrength > FoldBoundary)
+	{
+		//コール
+		TotalBet = Min(InitChip, player_Totalbet);
+		ActionText = U"コール";
+	}
+	else
+	{
+		//フォールド
+		Fold = true;
+		ActionText = U"フォールド";
+	}
 }
 
 //最初のベット
@@ -157,7 +204,7 @@ void Cpu::FirstBet()
 		//ブラフ
 		BluffChip = Random<double>(0, bluffRate[strength] * ((double)strength / 3.0));
 	}
-	TotalBet = Min(Chip, (int32)(20 * (RoleStrength + aggression + BluffChip)));
+	TotalBet = Min(Chip, (int32)(50 * (RoleStrength + aggression + BluffChip)));
 	ActionText = U"ベット";
 }
 

@@ -34,6 +34,13 @@ void SelectCard::update()
 		getData().cpu.RecommendRole(getData().cards);
 		getData().cpu.setRoleText(getData().cards);
 
+		//前ラウンドのBetシーンの状態をリセットしておく
+		//ForNextRoundでリセットFoldがtrueだった場合選択手札の背景が一瞬白色になってしまう
+		getData().cpu.setFold(false);
+		getData().cpu.setActionText(U"");
+		getData().player.setFold(false);
+		getData().player.setActionText(U"");
+
 		//ストップウォッチリスタート
 		getData().stopwatch.restart();
 

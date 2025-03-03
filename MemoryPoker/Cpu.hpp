@@ -48,11 +48,14 @@ private:
 													  {PlayingCard::Suit::Club, 1}
 													};
 
-	//攻めっ気の設定(毎回ランダム)
+	//攻めっ気(強気か弱気か)の設定(毎回ランダムで-0.1～0.1の間の値を取る)
 	double aggression = 0;
 	
 
 
 	//ブラフ設定(強さによって変わる)
 	HashTable<int32, int32> bluffRate = { {1, 0.1}, {2, 0.3}, {3, 0.5} };
+
+	//レイズする基本確率(強さと強気かどうかで変動)
+	HashTable<int32, double> RaiseRate = { {1, 0.1}, {2, 0.15}, {3, 0.2} };
 };
