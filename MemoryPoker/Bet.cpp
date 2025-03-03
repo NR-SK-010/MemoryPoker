@@ -168,9 +168,10 @@ void Bet::update()
 			getData().stopwatch.restart();
 		}
 	}
-	else if ( (getData().player.getFold() || getData().cpu.getFold() || getData().player.getTotalBet() == getData().cpu.getTotalBet() ) && getData().stopwatch.sF() > 0.5)
+	else if ( (getData().player.getFold() || getData().cpu.getFold() || getData().player.getTotalBet() == getData().cpu.getTotalBet() || getData().player.getChip() == 0 || getData().cpu.getChip() == 0) && getData().stopwatch.sF() > 0.5)
 	{
-		//TotalBetが同じ かつ ベット額表示等も完了(ひとつ上の分岐を抜けているので)しているとき
+		//TotalBetが同じorどちらかのチップが0枚(オールイン)orどちらかがフォールド
+		// かつ ベット額表示等も完了(ひとつ上の分岐を抜けているので)しているとき
 		//どちらもレイズしていないのでShowDownシーンへ遷移
 		changeScene(State::ShowDown, getData().changeSec);
 	}
@@ -191,7 +192,7 @@ void Bet::update()
 			//コール
 			AudioPlay(U"Button");
 			getData().player.setActionText(U"コール");
-			getData().player.setTotalBet(getData().cpu.getTotalBet());
+			getData().player.setTotalBet(Min(getData().player.getInitChip(), getData().cpu.getTotalBet()));
 
 			//手番交代
 			getData().Bet_PlayerTurn = false;

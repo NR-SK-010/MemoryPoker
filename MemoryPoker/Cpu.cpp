@@ -45,7 +45,7 @@ void Cpu::UpdateMemory()
 void Cpu::BetAction(int32 player_Totalbet)
 {
 	//コールのみ(具体的な行動は後で)
-	TotalBet = player_Totalbet;
+	TotalBet = Min(InitChip, player_Totalbet);
 	ActionText = U"コール";
 }
 

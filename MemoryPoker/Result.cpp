@@ -46,7 +46,7 @@ void Result::draw() const
 	//結果表示
 	if (getData().player.getChip() > getData().cpu.getChip())
 	{
-		FontAsset(U"Result")(U"Player WIN").drawAt(800, 300);
+		FontAsset(U"Result")(U"PLAYER WIN").drawAt(800, 300);
 	}
 	else if (getData().player.getChip() == getData().cpu.getChip())
 	{
