@@ -168,7 +168,7 @@ void Bet::update()
 			getData().stopwatch.restart();
 		}
 	}
-	else if ( (getData().player.getFold() || getData().cpu.getFold() || getData().player.getTotalBet() == getData().cpu.getTotalBet() || getData().player.getChip() == 0 || getData().cpu.getChip() == 0) && getData().stopwatch.sF() > 0.5)
+	else if (NextScene())
 	{
 		//TotalBetが同じorどちらかのチップが0枚(オールイン)orどちらかがフォールド
 		// かつ ベット額表示等も完了(ひとつ上の分岐を抜けているので)しているとき
@@ -182,7 +182,7 @@ void Bet::update()
 		//「コール」、「レイズ」、「フォールド」ボタンはこの時だけ押せる
 		CanPress = true;
 
-		if (CallButton.mouseOver() || ToRaiseButton.mouseOver() || FoldButton.mouseOver())
+		if (CallButton.mouseOver() || (ToRaiseButton.mouseOver() && CanRaise()) || FoldButton.mouseOver())
 		{
 			Cursor::RequestStyle(CursorStyle::Hand);
 		}
@@ -197,7 +197,7 @@ void Bet::update()
 			//手番交代
 			getData().Bet_PlayerTurn = false;
 		}
-		else if (ToRaiseButton.leftClicked())
+		else if (ToRaiseButton.leftClicked() && CanRaise())
 		{
 			//レイズ
 			AudioPlay(U"Button");
@@ -262,7 +262,7 @@ void Bet::draw() const
 
 	//ボタン表示
 	Button(CallButton, FontAsset(U"Button"), U"コール", ButtonColor, CanPress);
-	Button(ToRaiseButton, FontAsset(U"Button"), U"レイズ", ButtonColor, CanPress);
+	Button(ToRaiseButton, FontAsset(U"Button"), U"レイズ", ButtonColor, CanPress && CanRaise());
 	Button(FoldButton, FontAsset(U"Button"), U"フォールド", ButtonColor, CanPress);
 
 	//CPU選択カード表示
@@ -338,4 +338,27 @@ void Bet::draw() const
 		TriangleButton(upButton, getData().player.getBet() + 1 <= getData().player.getChip());
 		TriangleButton(downButton, getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet());
 	}
+}
+
+//次のシーンに行くかどうかの判定
+bool Bet::NextScene()
+{
+	//オールイン(チップ枚数が0枚かつ相手側のほうが総ベット額が高い状態)でのみtrue
+	bool PlayerAllIn = getData().player.getChip() == 0 && (getData().cpu.getTotalBet() > getData().player.getTotalBet());
+	bool CpuAllIn = getData().cpu.getChip() == 0 && (getData().cpu.getTotalBet() < getData().player.getTotalBet());
+
+	//フォールドしているか
+	bool FoldFlg = getData().player.getFold() || getData().cpu.getFold();
+
+	//総ベット額が同じ(レイズしていない)
+	bool CallFlg = getData().player.getTotalBet() == getData().cpu.getTotalBet();
+
+	//上記4つのどれかがtrueかつ0.5s以上経過している状態でのみtrue
+	return (FoldFlg || CallFlg || PlayerAllIn || CpuAllIn) && getData().stopwatch.sF() > 0.5;
+}
+
+//レイズ可能か
+bool Bet::CanRaise() const
+{
+	return getData().player.getTotalBet() + getData().player.getChip() > getData().cpu.getTotalBet();
 }

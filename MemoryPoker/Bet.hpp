@@ -13,6 +13,11 @@ public:
 	void draw() const override;
 
 private:
+	//次のシーンに行くかどうかの判定
+	bool NextScene();
+	//レイズ可能か
+	bool CanRaise() const;
+
 	//通常の表示
 	Rect MenuButton{ Arg::center(1480, 70), 200, 80 }; //メニューボタン
 	RoundRect PlayerSelectCardArea{ Arg::center(800, 950), 400, 200, 7 }; //Player選択カード表示エリア
