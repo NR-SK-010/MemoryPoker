@@ -232,6 +232,9 @@ void Bet::update()
 		//CPUの行動
 		getData().cpu.BetAction(getData().player.getTotalBet());
 
+		//Playerに手番を回す
+		getData().Bet_PlayerTurn = true;
+
 		//ストップウォッチをリスタートしておく(待機時間のため)
 		getData().stopwatch.restart();
 	}
@@ -325,7 +328,7 @@ void Bet::draw() const
 	}
 	else if ( (getData().cpu.getInitChip() != getData().cpu.getChip() + getData().cpu.getTotalBet()) || getData().cpu.getFold() )
 	{
-		//チップ増減時(Playe側)
+		//チップ増減時(CPU側)
 		CpuActionArea.draw(Palette::White);
 		CpuActionArea.drawFrame(2, 2, Palette::Black);
 		FontAsset(U"Text")(getData().cpu.getActionText()).drawAt(250, 500, Palette::Black);

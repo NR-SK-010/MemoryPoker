@@ -170,11 +170,12 @@ void Cpu::BetAction(int32 player_Totalbet)
 	//強気かどうかも考慮する
 	double FinalRoleStrength = RoleStrength + BluffProb * aggression * 10;
 
-	if (FinalRoleStrength >= 0.7 && RandomBool(RaiseRate[strength] + aggression))
+	//if (FinalRoleStrength >= 0.7 && RandomBool(RaiseRate[strength] + aggression))
+	if(true)
 	{
 		//レイズ
 		//現在の相手のベット額の1.2～2.0倍(厳密には1.9999...)範囲で調整
-		TotalBet = (int32)(player_Totalbet * Random<double>(1.2, 2.0));
+		TotalBet = Min(InitChip, static_cast<int32>(player_Totalbet * Random<double>(1.2, 2.0)));
 		ActionText = U"レイズ";
 	}
 	else if (FinalRoleStrength >= FoldBoundary)
