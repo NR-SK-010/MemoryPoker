@@ -37,11 +37,11 @@ void Person::AllClear()
 	Role = 0;
 	RoleCards.clear();
 	FlipPair.first = FlipPair.second = -1;
-	Chip = 100;
+	Chip = 50;
 	RoleText = U"";
 	TotalBet = 0;
 	Bet = 0;
-	InitChip = 100;
+	InitChip = 50;
 }
 
 //次ラウンドのための準備

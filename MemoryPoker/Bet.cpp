@@ -33,8 +33,8 @@ void Bet::update()
 		{
 			//Player
 			if ((leftButton.mouseOver() && getData().player.getBet() - 1 >= 0) ||
-				 (rightButton.mouseOver() && getData().player.getBet() + 1 <= Min(100, getData().player.getChip()) ) ||
-				 (upButton.mouseOver() && getData().player.getBet() + 1 <= Min(100, getData().player.getChip())) ||
+				 (rightButton.mouseOver() && getData().player.getBet() + 1 <= Min(50, getData().player.getChip()) ) ||
+				 (upButton.mouseOver() && getData().player.getBet() + 1 <= Min(50, getData().player.getChip())) ||
 				 (downButton.mouseOver() && getData().player.getBet() - 1 >= 0) ||
 				 (BetButton.mouseOver() && getData().player.getBet() > 0)
 			)
@@ -48,13 +48,13 @@ void Bet::update()
 				AudioPlay(U"Button");
 				getData().player.setBet(Max(0, getData().player.getBet() - 10));
 			}
-			else if (rightButton.leftClicked() && getData().player.getBet() + 1 <= Min(100, getData().player.getChip()))
+			else if (rightButton.leftClicked() && getData().player.getBet() + 1 <= Min(50, getData().player.getChip()))
 			{
 				//+10
 				AudioPlay(U"Button");
-				getData().player.setBet(Min( Min(100, getData().player.getChip()), getData().player.getBet() + 10));
+				getData().player.setBet(Min( Min(50, getData().player.getChip()), getData().player.getBet() + 10));
 			}
-			else if (upButton.leftClicked() && getData().player.getBet() + 1 <= Min(100, getData().player.getChip()))
+			else if (upButton.leftClicked() && getData().player.getBet() + 1 <= Min(50, getData().player.getChip()))
 			{
 				//+1
 				AudioPlay(U"Button");
@@ -340,8 +340,8 @@ void Bet::draw() const
 		
 		FontAsset(U"Text")(getData().player.getBet()).drawAt(800, 550, Palette::Black);
 		TriangleButton(leftButton, getData().player.getBet() - 1 >= 0);
-		TriangleButton(rightButton, getData().player.getBet() + 1 <= Min(100, getData().player.getChip()));
-		TriangleButton(upButton, getData().player.getBet() + 1 <= Min(100, getData().player.getChip()));
+		TriangleButton(rightButton, getData().player.getBet() + 1 <= Min(50, getData().player.getChip()));
+		TriangleButton(upButton, getData().player.getBet() + 1 <= Min(50, getData().player.getChip()));
 		TriangleButton(downButton, getData().player.getBet() - 1 >= 0);
 	}
 	else if (getData().RaiseMenu)

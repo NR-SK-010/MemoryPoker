@@ -54,7 +54,7 @@ private:
 
 
 	//ブラフ設定(強さによって変わる)
-	HashTable<int32, int32> bluffRate = { {1, 0.1}, {2, 0.3}, {3, 0.5} };
+	HashTable<int32, double> bluffRate = { {1, 0.1}, {2, 0.3}, {3, 0.5} };
 
 	//レイズする基本確率(強さと強気かどうかで変動)
 	HashTable<int32, double> RaiseRate = { {1, 0.1}, {2, 0.15}, {3, 0.2} };
