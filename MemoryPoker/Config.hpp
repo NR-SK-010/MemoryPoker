@@ -10,18 +10,16 @@ public:
 
 	void draw() const override;
 
-	bool getFlg();
-
 private:
 	RoundRect Frame{ 500, 250, 600, 600, 7 }; //外枠
 	Rect CancelButton{ Arg::center(1060, 290), 50, 50 }; //キャンセルボタン
-	Rect SoundTestButton{ Arg::center(650, 625), 200, 100 }; //サウンドテストボタン
-	Rect RuleButton{ Arg::center(950, 625), 200, 100 }; //遊び方ボタン
-	Rect ToExitButton{ Arg::center(800, 750), 400, 100 }; //タイトルに戻る
+	Rect SoundTestButton{ Arg::center(650, 625), 180, 80 }; //サウンドテストボタン
+	Rect RuleButton{ Arg::center(950, 625), 180, 80 }; //遊び方ボタン
+	Rect ToExitButton{ Arg::center(800, 750), 350, 80 }; //タイトルに戻る
 
 	//「タイトルに戻りますか」画面のボタン
-	Rect ExitButton{ Arg::center(650, 700), 250, 100 };
-	Rect ExitCancel{ Arg::center(950, 700), 250, 100 };
+	Rect ExitButton{ Arg::center(650, 700), 220, 80 };
+	Rect ExitCancel{ Arg::center(950, 700), 220, 80 };
 
 	//BGM調整用のボタン
 	Array<Rect> BGMButtons = {
