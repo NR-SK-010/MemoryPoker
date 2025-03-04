@@ -23,8 +23,8 @@ enum class State
 //共有データ
 struct GameData
 {
-	double BGMVolume = 0.2;  //BGM音量
-	double SoundVolume = 0.2; //効果音音量
+	double BGMVolume = 1.0;  //BGM音量
+	double SoundVolume = 1.0; //効果音音量
 	String NowScene = U""; //現在のシーン名を格納(Rule,Configから戻る際に使用)
 	Stopwatch stopwatch; //ストップウォッチ
 	bool ConfigFlg = false; //設定画面からルール説明に行くときのみtrue

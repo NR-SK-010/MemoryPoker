@@ -60,13 +60,13 @@ void Config::update()
 
 			if (BGMButtons[i].leftClicked())
 			{
-				if (getData().BGMVolume != 0.2 * (i + 1))
+				if (getData().BGMVolume != volumeLevels[i+1])
 				{
-					getData().BGMVolume = 0.2 * (i + 1);
+					getData().BGMVolume = volumeLevels[i+1];
 				}
 				else
 				{
-					getData().BGMVolume = 0.2 * i;
+					getData().BGMVolume = volumeLevels[i];
 				}
 
 				AudioAsset(U"BGM").setVolume(getData().BGMVolume);
@@ -83,13 +83,13 @@ void Config::update()
 
 			if (SoundButtons[i].leftClicked())
 			{
-				if (getData().SoundVolume != 0.2 * (i + 1))
+				if (getData().SoundVolume != volumeLevels[i+1])
 				{
-					getData().SoundVolume = 0.2 * (i + 1);
+					getData().SoundVolume = volumeLevels[i + 1];
 				}
 				else
 				{
-					getData().SoundVolume = 0.2 * i;
+					getData().SoundVolume = volumeLevels[i];
 				}
 
 				AudioAsset(U"Button").setVolume(getData().SoundVolume);
@@ -183,14 +183,14 @@ void Config::draw() const
 		//BGM音量調整ボタン
 		for (int i = 0; i < BGMButtons.size(); i++)
 		{
-			Button(BGMButtons[i], FontAsset(U"Button"), U"", Palette::Skyblue, getData().BGMVolume >= 0.2 * (i + 1));
+			Button(BGMButtons[i], FontAsset(U"Button"), U"", Palette::Skyblue, getData().BGMVolume >= volumeLevels[i + 1]);
 		}
 
 		//効果音音量調整ボタン
 		FontAsset(U"Text")(U"効果音").drawAt(650, 515, Palette::Black);
 		for (int i = 0; i < SoundButtons.size(); i++)
 		{
-			Button(SoundButtons[i], FontAsset(U"Button"), U"", Palette::Skyblue, getData().SoundVolume >= 0.2 * (i + 1));
+			Button(SoundButtons[i], FontAsset(U"Button"), U"", Palette::Skyblue, getData().SoundVolume >= volumeLevels[i + 1]);
 		}
 	}
 }

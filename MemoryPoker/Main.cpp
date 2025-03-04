@@ -74,13 +74,6 @@ void Main()
 
 	//最初のシーンのフェードイン時間指定
 	manager.init(State::Title, 0.5s);
-	
-
-	AudioAsset(U"BGM").setVolume(0.2);
-	AudioAsset(U"Button").setVolume(0.2);
-	AudioAsset(U"Cancel").setVolume(0.2);
-	AudioAsset(U"Flip").setVolume(0.2);
-	AudioAsset(U"Coin").setVolume(0.2);
 
 	//BGM再生
 	AudioAsset(U"BGM").play();

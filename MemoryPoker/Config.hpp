@@ -39,6 +39,9 @@ private:
 								Rect{ Arg::center(920, 515), 25, 70 },
 	};
 
+	//音量調整用
+	Array<double> volumeLevels = { 0.0, 0.04, 0.16, 0.36, 0.64, 1.0 };
+
 	bool ExitMenu = false; //「タイトルに戻りますか」画面
 	
 };
