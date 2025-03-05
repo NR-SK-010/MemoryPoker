@@ -231,7 +231,7 @@ void Memory::update()
 			if (getData().player.getFlipPair().first == -1 || getData().player.getFlipPair().second == -1)
 			{
 				getData().player.SelectRandomPair(getData().UsedCards, getData().cards);
-
+				AudioPlay(U"Flip");
 				getData().cards[getData().player.getFlipPair().first].flip();
 				getData().cards[getData().player.getFlipPair().second].flip();
 			}
@@ -269,6 +269,7 @@ void Memory::update()
 			{
 				getData().cpu.SelectRandomPair(getData().UsedCards, getData().cards);
 
+				AudioPlay(U"Flip");
 				//ランダムに追加されたペアはcpu側のものでも確認できる
 				getData().cards[getData().cpu.getFlipPair().first].flip();
 				getData().cards[getData().cpu.getFlipPair().second].flip();

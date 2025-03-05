@@ -149,7 +149,18 @@ void Bet::update()
 	)
 	{
 		//チップの増減
-		AudioPlay(U"Coin");
+
+		if (CoinTimer == 0.0)
+		{
+			AudioPlay(U"Coin");
+		}
+		else if (CoinTimer > 1.0)
+		{
+			CoinTimer = 0.0;
+		}
+		//経過時間加算
+		CoinTimer += Scene::DeltaTime();
+		
 
 		if (getData().player.getInitChip() < getData().player.getChip() + getData().player.getTotalBet())
 		{
@@ -166,12 +177,16 @@ void Bet::update()
 			//チップ変動が終了
 			//ストップウォッチをリスタートしておく(待機時間のため)
 			getData().stopwatch.restart();
+
+			//効果音用タイマーもリセット
+			CoinTimer = 0.0;
 		}
 	}
-	else if (NextScene())
+	else if (NextScene() && !AudioAsset(U"Coin").isPlaying())
 	{
 		//TotalBetが同じorどちらかのチップが0枚(オールイン)orどちらかがフォールド
 		// かつ ベット額表示等も完了(ひとつ上の分岐を抜けているので)しているとき
+		// また、効果音終了まで待っておく
 		//どちらもレイズしていないのでShowDownシーンへ遷移
 		changeScene(State::ShowDown, getData().changeSec);
 	}

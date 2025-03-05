@@ -65,12 +65,13 @@ void ShowDown::update()
 			//神経衰弱の最初の手番設定(Bet_PlayerTurnと一致)
 			getData().Memory_PlayerTurn = getData().Bet_PlayerFirst;
 
-			if (getData().Round == 5 || getData().player.getChip() == 0 || getData().cpu.getChip() == 0)
+			//効果音終了までは必ず待つ
+			if ((getData().Round == 5 || getData().player.getChip() == 0 || getData().cpu.getChip() == 0) && !AudioAsset(U"Coin").isPlaying())
 			{
 				//4ラウンド終了,またはどちらかのチップが0枚になるとリザルト画面へ遷移
 				changeScene(State::Result, getData().changeSec);
 			}
-			else
+			else if(!AudioAsset(U"Coin").isPlaying())
 			{
 				//次ラウンドへ
 				changeScene(State::Memory, getData().changeSec);
@@ -241,7 +242,17 @@ bool ShowDown::CompRole(Player player, Cpu cpu)
 //チップの変動
 void ShowDown::ChipFluctuation(bool PlayerWin)
 {
-	AudioPlay(U"Coin");
+	if (CoinTimer == 0.0)
+	{
+		AudioPlay(U"Coin");
+	}
+	else if (CoinTimer > 1.0)
+	{
+		CoinTimer = 0.0;
+	}
+	//経過時間加算
+	CoinTimer += Scene::DeltaTime();
+
 	if (PlayerWin)
 	{
 		//Player勝利	

@@ -35,8 +35,9 @@ private:
 	RoundRect CpuChipArea{ Arg::center(250, 315), 400, 100, 7 }; //CpuChip表示エリア
 	RoundRect CpuBetArea{ Arg::center(250, 195), 400, 100, 7 }; //CpuBet額表示エリア
 	RoundRect CpuActionArea{ Arg::center(250, 500), 400, 100, 7 }; //「コール」or「レイズ」or「フォールド」(CPUが選択した行動)の表示
-	
-	
+
+	//コイン効果音再生のタイミング用
+	double CoinTimer = 0.0;
 
 	RoundRect BetRaiseArea{ Arg::center(800, 600), 600, 400, 7 }; //ベット、レイズ額決定時のエリア
 

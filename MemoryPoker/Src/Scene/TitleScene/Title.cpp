@@ -75,7 +75,7 @@ void Title::update()
 			getData().stopwatch.restart();
 
 			//カードシャッフル
-			getData().cards.shuffle();
+			//getData().cards.shuffle();
 
 			//カード情報リセット
 			CardsReset(getData().cards);
