@@ -38,6 +38,7 @@ void Main()
 	TextureAsset::Register(U"Bet", U"../App/Images/Bet.png");
 	TextureAsset::Register(U"CallRaise", U"../App/Images/CallRaise.png");
 	TextureAsset::Register(U"ShowDown", U"../App/Images/ShowDown.png");
+	TextureAsset::Register(U"Result", U"../App/Images/Result.png");
 	TextureAsset::Register(U"Config", U"../App/Images/Config.png");
 
 	//アセット事前ロード
@@ -59,6 +60,7 @@ void Main()
 	TextureAsset::Load(U"Bet");
 	TextureAsset::Load(U"CallRaise");
 	TextureAsset::Load(U"ShowDown");
+	TextureAsset::Load(U"Result");
 	TextureAsset::Load(U"Config");
 
 	//シーン管理用

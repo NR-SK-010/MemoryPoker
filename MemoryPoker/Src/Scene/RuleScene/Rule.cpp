@@ -30,12 +30,12 @@ void Rule::update()
 		
 	}
 
-	if ((ToNextPageButton.mouseOver() && page + 1 <= 7) || (ToPrePageButton.mouseOver() && page - 1 >= 1))
+	if ((ToNextPageButton.mouseOver() && page + 1 <= 8) || (ToPrePageButton.mouseOver() && page - 1 >= 1))
 	{
 		Cursor::RequestStyle(CursorStyle::Hand);
 	}
 
-	if (ToNextPageButton.leftClicked() && page + 1 <= 7)
+	if (ToNextPageButton.leftClicked() && page + 1 <= 8)
 	{
 		AudioPlay(U"Flip");
 		page++;
@@ -59,15 +59,15 @@ void Rule::draw() const
 	TextArea.drawFrame(3, 3, Palette::Black);
 	Button(ExitButton, FontAsset(U"Button"), U"戻る", Palette::Black);
 
-	FontAsset(U"RuleText")(U"{} / 7"_fmt(page)).drawAt(1480, 1100, Palette::Black);
-	TriangleButton(ToNextPageButton, page + 1 <= 7);
+	FontAsset(U"RuleText")(U"{} / 8"_fmt(page)).drawAt(1480, 1100, Palette::Black);
+	TriangleButton(ToNextPageButton, page + 1 <= 8);
 	TriangleButton(ToPrePageButton, page - 1 >= 1);
 
 	switch (page)
 	{
 	case 1:
 		TextureAsset(U"Start").fitted(ImageArea.size).drawAt(ImageArea.center());
-		FontAsset(U"RuleText")(U"まず、神経衰弱を行う際の先攻、後攻を選びます。").drawBase(60, 1010, Palette::Black);
+		FontAsset(U"RuleText")(U"まず、神経衰弱を行う際の先攻、後攻とCPUの強さを選びます。").drawBase(60, 1010, Palette::Black);
 		FontAsset(U"RuleText")(U"1ラウンドごとに先攻、後攻は入れ替わります。").drawBase(60, 1060, Palette::Black);
 		break;
 	case 2:
@@ -88,7 +88,7 @@ void Rule::draw() const
 		TextureAsset(U"Bet").fitted(ImageArea.size).drawAt(ImageArea.center());
 		FontAsset(U"RuleText")(U"ベットするチップの枚数を決定します。").drawBase(60, 1010, Palette::Black);
 		FontAsset(U"RuleText")(U"神経衰弱で先攻だったほうが最初のベットを行います。").drawBase(60, 1060, Palette::Black);
-		FontAsset(U"RuleText")(U"ベットする際の最低額は1枚、最高額は100枚です。").drawBase(60, 1110, Palette::Black);
+		FontAsset(U"RuleText")(U"ベットする際の最低額は1枚、最高額は50枚です。").drawBase(60, 1110, Palette::Black);
 		break;
 	case 5:
 		TextureAsset(U"CallRaise").fitted(ImageArea.size).drawAt(ImageArea.center());
@@ -101,10 +101,15 @@ void Rule::draw() const
 		TextureAsset(U"ShowDown").fitted(ImageArea.size).drawAt(ImageArea.center());
 		FontAsset(U"RuleText")(U"ショーダウンを行います。").drawBase(60, 1010, Palette::Black);
 		FontAsset(U"RuleText")(U"画面上側にCPU、下側にPlayerの選んだカードと役が表示されます。").drawBase(60, 1060, Palette::Black);
-		FontAsset(U"RuleText")(U"ラウンドの勝者へチップが移動した後、「次へ」を押すと次のラウンドに移行します。").drawBase(60, 1110, Palette::Black);
+		FontAsset(U"RuleText")(U"ラウンドの勝者へチップが移動した後、自動的に次のラウンドに移行します。").drawBase(60, 1110, Palette::Black);
 		FontAsset(U"RuleText")(U"これを4ラウンド繰り返します。").drawBase(60, 1160, Palette::Black);
 		break;
 	case 7:
+		TextureAsset(U"Result").fitted(ImageArea.size).drawAt(ImageArea.center());
+		FontAsset(U"RuleText")(U"4ラウンド終えるかショーダウン後どちらかのチップ0枚になるとリザルト画面に移行します。").drawBase(60, 1010, Palette::Black);
+		FontAsset(U"RuleText")(U"画面下部の「タイトル」からタイトル画面に戻ることができます。").drawBase(60, 1060, Palette::Black);
+		break;
+	case 8:
 		TextureAsset(U"Config").fitted(ImageArea.size).drawAt(ImageArea.center());
 		FontAsset(U"RuleText")(U"プレイ中も画面右上の「メニュー」からメニューを開けます。").drawBase(60, 1010, Palette::Black);
 		FontAsset(U"RuleText")(U"メニューでは音量設定や遊び方が確認できます。「テスト」を押すと効果音のサウンドテストが行えます。").drawBase(60, 1060, Palette::Black);

@@ -138,7 +138,25 @@ void Config::update()
 		}
 		else if (SoundTestButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			//ランダムに効果音のどれかを再生
+			double rand = Random<double>(0.0, 1.0);
+			if (rand < 0.25)
+			{
+				AudioPlay(U"Button");
+			}
+			else if (rand < 0.50)
+			{
+				AudioPlay(U"Cancel");
+			}
+			else if (rand < 0.75)
+			{
+				AudioPlay(U"Flip");
+			}
+			else
+			{
+				AudioPlay(U"Coin");
+			}
+			
 		}
 		else if (RuleButton.leftClicked())
 		{
