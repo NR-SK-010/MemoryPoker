@@ -29,20 +29,20 @@ void Main()
 	FontAsset::Register(U"Text", 35, Typeface::Bold);
 	FontAsset::Register(U"RuleText", 30);
 
-	AudioAsset::Register(U"BGM", U"../App/Sounds/Night_View.mp3", Loop::Yes);
-	AudioAsset::Register(U"Button", U"../App/Sounds/button.mp3");
-	AudioAsset::Register(U"Cancel", U"../App/Sounds/cancel.mp3");
-	AudioAsset::Register(U"Flip", U"../App/Sounds/cardflip.mp3");
-	AudioAsset::Register(U"Coin", U"../App/Sounds/coin.mp3");
+	AudioAsset::Register(U"BGM", Resource(U"Sounds/Night_View.mp3"), Loop::Yes);
+	AudioAsset::Register(U"Button", Resource(U"Sounds/button.mp3"));
+	AudioAsset::Register(U"Cancel", Resource(U"Sounds/cancel.mp3"));
+	AudioAsset::Register(U"Flip", Resource(U"Sounds/cardflip.mp3"));
+	AudioAsset::Register(U"Coin", Resource(U"Sounds/coin.mp3"));
 
-	TextureAsset::Register(U"Start", U"../App/Images/Start.png");
-	TextureAsset::Register(U"MemoryGame", U"../App/Images/MemoryGame.png");
-	TextureAsset::Register(U"Select", U"../App/Images/Select.png");
-	TextureAsset::Register(U"Bet", U"../App/Images/Bet.png");
-	TextureAsset::Register(U"CallRaise", U"../App/Images/CallRaise.png");
-	TextureAsset::Register(U"ShowDown", U"../App/Images/ShowDown.png");
-	TextureAsset::Register(U"Result", U"../App/Images/Result.png");
-	TextureAsset::Register(U"Config", U"../App/Images/Config.png");
+	TextureAsset::Register(U"Start", Resource(U"Images/Start.png"));
+	TextureAsset::Register(U"MemoryGame", Resource(U"Images/MemoryGame.png"));
+	TextureAsset::Register(U"Select", Resource(U"Images/Select.png"));
+	TextureAsset::Register(U"Bet", Resource(U"Images/Bet.png"));
+	TextureAsset::Register(U"CallRaise", Resource(U"Images/CallRaise.png"));
+	TextureAsset::Register(U"ShowDown", Resource(U"Images/ShowDown.png"));
+	TextureAsset::Register(U"Result", Resource(U"Images/Result.png"));
+	TextureAsset::Register(U"Config", Resource(U"Images/Config.png"));
 
 	//アセット事前ロード
 	FontAsset::Load(U"Title");

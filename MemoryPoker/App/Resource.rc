@@ -126,7 +126,19 @@ Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 //	Siv3D App Resources (Your application resources here)
 //
 //////////////////////////////////////////////////////
-
+Resource(Sounds/coin.mp3)
+Resource(Sounds/cardflip.mp3)
+Resource(Sounds/button.mp3)
+Resource(Sounds/cancel.mp3)
+Resource(Sounds/Night_View.mp3)
+Resource(Images/Bet.png)
+Resource(Images/CallRaise.png)
+Resource(Images/Config.png)
+Resource(Images/MemoryGame.png)
+Resource(Images/Select.png)
+Resource(Images/ShowDown.png)
+Resource(Images/Start.png)
+Resource(Images/Result.png)
 
 
 /* examples 
