@@ -17,6 +17,9 @@ void Main()
 	Window::Resize(800, 600);
 	Scene::Resize(1600, 1200);
 
+	//ウィンドウタイトル
+	Window::SetTitle(U"神経衰弱ポーカー");
+
 
 
 	//アセット登録
