@@ -19,7 +19,7 @@ void Config::update()
 
 		if (ExitButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 
 			//カード情報リセット
 			CardsReset(getData().cards);
@@ -40,7 +40,7 @@ void Config::update()
 
 		if (ExitCancel.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			ExitMenu = false;
 		}
 	}
@@ -70,7 +70,7 @@ void Config::update()
 				}
 
 				AudioAsset(U"BGM").setVolume(getData().BGMVolume);
-				AudioPlay(U"Button");
+				AudioPlay(U"Button", getData().SoundVolume);
 			}
 		}
 
@@ -85,7 +85,7 @@ void Config::update()
 			{
 				if (getData().SoundVolume != volumeLevels[i+1])
 				{
-					getData().SoundVolume = volumeLevels[i + 1];
+					getData().SoundVolume = volumeLevels[i+1];
 				}
 				else
 				{
@@ -96,13 +96,13 @@ void Config::update()
 				AudioAsset(U"Cancel").setVolume(getData().SoundVolume);
 				AudioAsset(U"Flip").setVolume(getData().SoundVolume);
 				AudioAsset(U"Coin").setVolume(getData().SoundVolume);
-				AudioPlay(U"Button");
+				AudioPlay(U"Button", getData().SoundVolume);
 			}
 		}
 
 		if (CancelButton.leftClicked())
 		{
-			AudioPlay(U"Cancel");
+			AudioPlay(U"Cancel", getData().SoundVolume);
 			getData().ConfigFlg = false;
 			if (getData().NowScene == U"Title")
 			{
@@ -142,31 +142,31 @@ void Config::update()
 			double rand = Random<double>(0.0, 1.0);
 			if (rand < 0.25)
 			{
-				AudioPlay(U"Button");
+				AudioPlay(U"Button", getData().SoundVolume);
 			}
 			else if (rand < 0.50)
 			{
-				AudioPlay(U"Cancel");
+				AudioPlay(U"Cancel", getData().SoundVolume);
 			}
 			else if (rand < 0.75)
 			{
-				AudioPlay(U"Flip");
+				AudioPlay(U"Flip", getData().SoundVolume);
 			}
 			else
 			{
-				AudioPlay(U"Coin");
+				AudioPlay(U"Coin", getData().SoundVolume);
 			}
 			
 		}
 		else if (RuleButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			getData().ConfigFlg = true;
 			changeScene(State::Rule, getData().changeSec);
 		}
 		else if (ToExitButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			ExitMenu = true;
 		}
 	}

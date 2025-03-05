@@ -16,7 +16,7 @@ void Bet::update()
 
 	if (MenuButton.leftClicked())
 	{
-		AudioPlay(U"Button");
+		AudioPlay(U"Button", getData().SoundVolume);
 		getData().NowScene = U"Bet";
 		changeScene(State::Config, getData().changeSec);
 	}
@@ -45,31 +45,31 @@ void Bet::update()
 			if (leftButton.leftClicked() && getData().player.getBet() - 1 >= 0)
 			{
 				//-10
-				AudioPlay(U"Button");
+				AudioPlay(U"Button", getData().SoundVolume);
 				getData().player.setBet(Max(0, getData().player.getBet() - 10));
 			}
 			else if (rightButton.leftClicked() && getData().player.getBet() + 1 <= Min(50, getData().player.getChip()))
 			{
 				//+10
-				AudioPlay(U"Button");
+				AudioPlay(U"Button", getData().SoundVolume);
 				getData().player.setBet(Min( Min(50, getData().player.getChip()), getData().player.getBet() + 10));
 			}
 			else if (upButton.leftClicked() && getData().player.getBet() + 1 <= Min(50, getData().player.getChip()))
 			{
 				//+1
-				AudioPlay(U"Button");
+				AudioPlay(U"Button", getData().SoundVolume);
 				getData().player.setBet(getData().player.getBet() + 1);
 			}
 			else if (downButton.leftClicked() && getData().player.getBet() - 1 >= 0)
 			{
 				//-1
-				AudioPlay(U"Button");
+				AudioPlay(U"Button", getData().SoundVolume);
 				getData().player.setBet(getData().player.getBet() - 1);
 			}
 			else if (BetButton.leftClicked() && getData().player.getBet() > 0)
 			{
 				//ベット確定
-				AudioPlay(U"Button");
+				AudioPlay(U"Button", getData().SoundVolume);
 				getData().player.setTotalBet(getData().player.getBet());
 				getData().player.setActionText(U"ベット");
 
@@ -103,32 +103,32 @@ void Bet::update()
 		if (leftButton.leftClicked() && getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet())
 		{
 			//-10
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			getData().player.setBet(Max(getData().cpu.getTotalBet() - getData().player.getTotalBet() + 1, getData().player.getBet() - 10));
 		}
 		else if (rightButton.leftClicked() && getData().player.getBet() + 1 <= getData().player.getChip())
 		{
 			//+10
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			getData().player.setBet(Min(getData().player.getChip(), getData().player.getBet() + 10));
 		}
 		else if (upButton.leftClicked() && getData().player.getBet() + 1 <= getData().player.getChip())
 		{
 			//+1
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			getData().player.setBet(getData().player.getBet() + 1);
 
 		}
 		else if (downButton.leftClicked() && getData().player.getTotalBet() + getData().player.getBet() - 1 > getData().cpu.getTotalBet())
 		{
 			//-1
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			getData().player.setBet(getData().player.getBet() - 1);
 		}
 		else if (RaiseButton.leftClicked() && getData().player.getTotalBet() + getData().player.getBet() > getData().cpu.getTotalBet())
 		{
 			//レイズ決定
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			getData().player.setTotalBet(getData().player.getTotalBet() + getData().player.getBet());
 			getData().player.setActionText(U"レイズ");
 			getData().RaiseMenu = false;
@@ -139,7 +139,7 @@ void Bet::update()
 		else if (RaiseCancelButton.leftClicked())
 		{
 			//レイズキャンセル
-			AudioPlay(U"Cancel");
+			AudioPlay(U"Cancel", getData().SoundVolume);
 			getData().player.setBet(0);
 			getData().RaiseMenu = false;
 		}
@@ -152,9 +152,9 @@ void Bet::update()
 
 		if (CoinTimer == 0.0)
 		{
-			AudioPlay(U"Coin");
+			AudioPlay(U"Coin", getData().SoundVolume);
 		}
-		else if (CoinTimer > 1.0)
+		else if (CoinTimer > 1.5)
 		{
 			CoinTimer = 0.0;
 		}
@@ -205,7 +205,7 @@ void Bet::update()
 		if (CallButton.leftClicked())
 		{
 			//コールまたはオールイン
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 
 			//オールイン判定
 			if (getData().player.getChip() + getData().player.getTotalBet() < getData().cpu.getTotalBet())
@@ -224,7 +224,7 @@ void Bet::update()
 		else if (ToRaiseButton.leftClicked() && CanRaise())
 		{
 			//レイズ
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			getData().RaiseMenu = true;
 
 			//レイズ最低額の設定
@@ -233,7 +233,7 @@ void Bet::update()
 		else if(FoldButton.leftClicked())
 		{
 			//フォールド
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			getData().player.setFold(true);
 
 			getData().player.setActionText(U"フォールド");

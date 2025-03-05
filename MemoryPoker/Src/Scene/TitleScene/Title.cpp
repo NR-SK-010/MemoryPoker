@@ -25,7 +25,7 @@ void Title::update()
 		if (firstButton.leftClicked())
 		{
 			//先攻
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 
 			//ボタン状態設定
 			first = true;
@@ -34,7 +34,7 @@ void Title::update()
 		else if(lastbutton.leftClicked())
 		{
 			//後攻
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 
 			//ボタン状態設定
 			first = false;
@@ -42,7 +42,7 @@ void Title::update()
 		}
 		else if (easyButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 
 			//ボタン状態設定
 			easy = true;
@@ -51,7 +51,7 @@ void Title::update()
 		}
 		else if (normalButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 
 			//ボタン状態設定
 			easy = false;
@@ -60,7 +60,7 @@ void Title::update()
 		}
 		else if (hardButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 
 			//ボタン状態設定
 			easy = false;
@@ -69,7 +69,7 @@ void Title::update()
 		}
 		else if (okButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 
 			//アニメーション用ストップウォッチ
 			getData().stopwatch.restart();
@@ -129,7 +129,7 @@ void Title::update()
 		else if (cancelButton.leftClicked())
 		{
 			//キャンセル
-			AudioPlay(U"Cancel");
+			AudioPlay(U"Cancel", getData().SoundVolume);
 			SelectFlg = false;
 		}
 	}
@@ -143,27 +143,27 @@ void Title::update()
 
 		if (startButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			//先攻後攻選択画面へ
 			SelectFlg = true;
 		}
 		else if (ruleButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			//ルール説明へ
 			getData().NowScene = U"Title";
 			changeScene(State::Rule, getData().changeSec);
 		}
 		else if (configButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			//設定画面へ
 			getData().NowScene = U"Title";
 			changeScene(State::Config, getData().changeSec);
 		}
 		else if (exitButton.leftClicked())
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 			//終了
 			System::Exit();
 		}

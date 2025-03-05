@@ -37,13 +37,13 @@ void Rule::update()
 
 	if (ToNextPageButton.leftClicked() && page + 1 <= 8)
 	{
-		AudioPlay(U"Flip");
+		AudioPlay(U"Flip", getData().SoundVolume);
 		page++;
 	}
 
 	if (ToPrePageButton.leftClicked() && page - 1 >= 1)
 	{
-		AudioPlay(U"Flip");
+		AudioPlay(U"Flip", getData().SoundVolume);
 		page--;
 	}
 

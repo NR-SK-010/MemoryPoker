@@ -1,18 +1,19 @@
 ﻿#include <Siv3D.hpp>
+#include "Common.hpp"
 
 //効果音再生用関数
-//音量変更に対応するため、play()で再生
-//play()では音を重ねられないため要求時は効果音を一度止め、再び再生させる
-void AudioPlay(String name)
+//音量変更に対応するため、playOneShot()で再生
+//要求時は効果音を一度止め、再び再生させる
+void AudioPlay(String name, double volume)
 {
 	if (AudioAsset(name).isPlaying())
 	{
 		AudioAsset(name).stop();
-		AudioAsset(name).play();
+		AudioAsset(name).playOneShot(volume);
 	}
 	else
 	{
-		AudioAsset(name).play();
+		AudioAsset(name).playOneShot(volume);
 	}
 }
 

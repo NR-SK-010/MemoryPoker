@@ -18,7 +18,7 @@ void Memory::update()
 
 	if (MenuButton.leftClicked())
 	{
-		AudioPlay(U"Button");
+		AudioPlay(U"Button", getData().SoundVolume);
 		getData().NowScene = U"Memory";
 
 		//メニュー画面遷移時はストップウォッチを止めておく
@@ -53,7 +53,7 @@ void Memory::update()
 				if (getData().pack.regionAt(center).leftClicked())
 				{
 					getData().cards[i].flip();
-					AudioPlay(U"Flip");
+					AudioPlay(U"Flip", getData().SoundVolume);
 
 					if (getData().player.getFlipPair().first == -1)
 					{
@@ -143,7 +143,7 @@ void Memory::update()
 			//1枚目
 			getData().cpu.setFlipPair(getData().cpu.SelectFirstCard(getData().cards, getData().UsedCards), -1);
 
-			AudioPlay(U"Flip");
+			AudioPlay(U"Flip", getData().SoundVolume);
 
 			//ストップウォッチリスタート
 			getData().stopwatch.restart();
@@ -153,7 +153,7 @@ void Memory::update()
 			//2枚目
 			getData().cpu.setFlipPair(getData().cpu.getFlipPair().first, getData().cpu.SelectSecondCard(getData().cards, getData().UsedCards, getData().cpu.getFlipPair().first));
 
-			AudioPlay(U"Flip");
+			AudioPlay(U"Flip", getData().SoundVolume);
 
 			//ストップウォッチリスタート
 			getData().stopwatch.restart();
@@ -231,7 +231,7 @@ void Memory::update()
 			if (getData().player.getFlipPair().first == -1 || getData().player.getFlipPair().second == -1)
 			{
 				getData().player.SelectRandomPair(getData().UsedCards, getData().cards);
-				AudioPlay(U"Flip");
+				AudioPlay(U"Flip", getData().SoundVolume);
 				getData().cards[getData().player.getFlipPair().first].flip();
 				getData().cards[getData().player.getFlipPair().second].flip();
 			}
@@ -269,7 +269,7 @@ void Memory::update()
 			{
 				getData().cpu.SelectRandomPair(getData().UsedCards, getData().cards);
 
-				AudioPlay(U"Flip");
+				AudioPlay(U"Flip", getData().SoundVolume);
 				//ランダムに追加されたペアはcpu側のものでも確認できる
 				getData().cards[getData().cpu.getFlipPair().first].flip();
 				getData().cards[getData().cpu.getFlipPair().second].flip();

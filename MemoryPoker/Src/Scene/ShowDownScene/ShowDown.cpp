@@ -16,7 +16,7 @@ void ShowDown::update()
 
 	if (MenuButton.leftClicked())
 	{
-		AudioPlay(U"Button");
+		AudioPlay(U"Button", getData().SoundVolume);
 		getData().NowScene = U"ShowDown";
 
 		//設定画面を開くときは一時停止
@@ -195,7 +195,7 @@ bool ShowDown::CpuSelectCardFlip()
 			}
 
 			//表向きでない場合は裏返す
-			AudioPlay(U"Flip");
+			AudioPlay(U"Flip", getData().SoundVolume);
 			getData().cards[getData().cpu.getSelectCards()[i]].flip();
 
 			//裏返したらストップウォッチはリスタート
@@ -244,9 +244,9 @@ void ShowDown::ChipFluctuation(bool PlayerWin)
 {
 	if (CoinTimer == 0.0)
 	{
-		AudioPlay(U"Coin");
+		AudioPlay(U"Coin", getData().SoundVolume);
 	}
-	else if (CoinTimer > 1.0)
+	else if (CoinTimer > 1.5)
 	{
 		CoinTimer = 0.0;
 	}

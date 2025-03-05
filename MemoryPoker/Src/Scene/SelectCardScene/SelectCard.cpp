@@ -16,19 +16,19 @@ void SelectCard::update()
 
 	if (MenuButton.leftClicked())
 	{
-		AudioPlay(U"Button");
+		AudioPlay(U"Button", getData().SoundVolume);
 		getData().NowScene = U"SelectCard";
 		changeScene(State::Config, getData().changeSec);
 	}
 	else if (RecommendButton.leftClicked())
 	{
-		AudioPlay(U"Button");
+		AudioPlay(U"Button", getData().SoundVolume);
 		getData().player.RecommendRole(getData().cards);
 	}
 	else if (OkButton.leftClicked() && getData().player.getSelectCards().size() == 3)
 	{
 		//次のシーン(Betシーン)へ
-		AudioPlay(U"Button");
+		AudioPlay(U"Button", getData().SoundVolume);
 
 		//CPUは自動で一番強い役を作成させる
 		getData().cpu.RecommendRole(getData().cards);
@@ -59,7 +59,7 @@ void SelectCard::update()
 
 		if (getData().pack.regionAt(center).leftClicked() && (getData().player.getSelectCards().size() < 3 || getData().player.getSelectCards().contains(getData().player.getHands()[i])))
 		{
-			AudioPlay(U"Button");
+			AudioPlay(U"Button", getData().SoundVolume);
 
 			if (getData().player.getSelectCards().contains(getData().player.getHands()[i]))
 			{

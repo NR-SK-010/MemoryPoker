@@ -4,7 +4,7 @@
 #include "../Cpu/Cpu.hpp"
 
 //関数
-void AudioPlay(String name);
+void AudioPlay(String name, double volume);
 void CardsReset(Array<PlayingCard::Card>& cards);
 
 //シーン名

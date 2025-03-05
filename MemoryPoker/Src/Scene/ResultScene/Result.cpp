@@ -18,7 +18,7 @@ void Result::update()
 
 	if (MenuButton.leftClicked())
 	{
-		AudioPlay(U"Button");
+		AudioPlay(U"Button", getData().SoundVolume);
 		getData().NowScene = U"Result";
 
 		//設定画面を開くときは一時停止
@@ -28,7 +28,7 @@ void Result::update()
 	}
 	else if (TitleButton.leftClicked())
 	{
-		AudioPlay(U"Button");
+		AudioPlay(U"Button", getData().SoundVolume);
 
 		changeScene(State::Title, getData().changeSec);
 	}
