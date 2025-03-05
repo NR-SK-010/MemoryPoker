@@ -1,5 +1,5 @@
 ﻿#include "Person.hpp"
-#include "HandEvaluator.hpp"
+#include "../HandEvaluator/HandEvaluator.hpp"
 
 //コンストラクタ
 Person::Person(String name) : FlipPair(-1, -1), Chip(100), Name(name) {}

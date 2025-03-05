@@ -1,5 +1,5 @@
 ﻿#include "ShowDown.hpp"
-#include "Button.hpp"
+#include "../../Button/Button.hpp"
 
 //コンストラクタ
 ShowDown::ShowDown(const InitData& init)

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Common.hpp"
+#include "../../Common/Common.hpp"
 
 class Rule : public App::Scene
 {

@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <Siv3D.hpp>
 
 //ボタン類
 //enable(そのボタンが押せるか)は基本true

@@ -1,5 +1,5 @@
 ﻿#include "Memory.hpp"
-#include "Button.hpp"
+#include "../../Button/Button.hpp"
 
 //神経衰弱画面
 

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Common.hpp"
+#include "../../Common/Common.hpp"
 
 //手札から3枚選んで役を作る
 

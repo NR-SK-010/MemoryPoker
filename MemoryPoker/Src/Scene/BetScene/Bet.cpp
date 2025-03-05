@@ -1,5 +1,5 @@
 ﻿#include "Bet.hpp"
-#include "Button.hpp"
+#include "../../Button/Button.hpp"
 
 //コンストラクタ
 Bet::Bet(const InitData& init)

@@ -138,52 +138,52 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="Src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common.cpp">
+    <ClCompile Include="Src\Common\Common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Title.cpp">
+    <ClCompile Include="Src\Scene\TitleScene\Title.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
+    <ClCompile Include="Src\Button\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Config.cpp">
+    <ClCompile Include="Src\Scene\ConfigScene\Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rule.cpp">
+    <ClCompile Include="Src\Scene\RuleScene\Rule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Memory.cpp">
+    <ClCompile Include="Src\Scene\MemoryScene\Memory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Person.cpp">
+    <ClCompile Include="Src\Person\Person.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HandEvaluator.cpp">
+    <ClCompile Include="Src\HandEvaluator\HandEvaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="Src\Player\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Cpu.cpp">
+    <ClCompile Include="Src\Cpu\Cpu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SelectCard.cpp">
+    <ClCompile Include="Src\Scene\SelectCardScene\SelectCard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bet.cpp">
+    <ClCompile Include="Src\Scene\BetScene\Bet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShowDown.cpp">
+    <ClCompile Include="Src\Scene\ShowDownScene\ShowDown.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Result.cpp">
+    <ClCompile Include="Src\Scene\ResultScene\Result.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -851,46 +851,46 @@
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common.hpp">
+    <ClInclude Include="Src\Common\Common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Title.hpp">
+    <ClInclude Include="Src\Scene\TitleScene\Title.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Button.hpp">
+    <ClInclude Include="Src\Button\Button.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Config.hpp">
+    <ClInclude Include="Src\Scene\ConfigScene\Config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rule.hpp">
+    <ClInclude Include="Src\Scene\RuleScene\Rule.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Memory.hpp">
+    <ClInclude Include="Src\Scene\MemoryScene\Memory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Person.hpp">
+    <ClInclude Include="Src\Person\Person.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HandEvaluator.hpp">
+    <ClInclude Include="Src\HandEvaluator\HandEvaluator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.hpp">
+    <ClInclude Include="Src\Player\Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cpu.hpp">
+    <ClInclude Include="Src\Cpu\Cpu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SelectCard.hpp">
+    <ClInclude Include="Src\Scene\SelectCardScene\SelectCard.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bet.hpp">
+    <ClInclude Include="Src\Scene\BetScene\Bet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ShowDown.hpp">
+    <ClInclude Include="Src\Scene\ShowDownScene\ShowDown.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Result.hpp">
+    <ClInclude Include="Src\Scene\ResultScene\Result.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

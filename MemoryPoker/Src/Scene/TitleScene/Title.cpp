@@ -1,5 +1,5 @@
 ﻿#include "Title.hpp"
-#include "Button.hpp"
+#include "../../Button/Button.hpp"
 
 //タイトル画面
 

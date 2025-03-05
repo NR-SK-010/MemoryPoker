@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <Siv3D.hpp>
-#include "Player.hpp"
-#include "Cpu.hpp"
+#include "../Player/Player.hpp"
+#include "../Cpu/Cpu.hpp"
 
 //関数
 void AudioPlay(String name);

@@ -1,5 +1,5 @@
 ﻿#include "Config.hpp"
-#include "Button.hpp"
+#include "../../Button/Button.hpp"
 
 //コンストラクタ
 //メンバ初期化リストを使用

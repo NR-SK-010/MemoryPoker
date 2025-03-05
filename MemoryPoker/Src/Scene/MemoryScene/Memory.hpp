@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Common.hpp"
+#include "../../Common/Common.hpp"
 
 //神経衰弱画面
 

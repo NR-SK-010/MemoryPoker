@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <Siv3D.hpp>
-#include "Person.hpp"
+#include "../Person/Person.hpp"
 
 
 int CountSameRankCards(Array<PlayingCard::Card> cards, Person& person);

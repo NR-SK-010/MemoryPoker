@@ -1,5 +1,5 @@
 ﻿#include "Rule.hpp"
-#include "Button.hpp"
+#include "../../Button/Button.hpp"
 
 //ルール画面
 
