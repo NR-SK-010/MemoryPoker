@@ -6,15 +6,8 @@
 //要求時は効果音を一度止め、再び再生させる
 void AudioPlay(String name, double volume)
 {
-	if (AudioAsset(name).isPlaying())
-	{
-		AudioAsset(name).stop();
-		AudioAsset(name).playOneShot(volume);
-	}
-	else
-	{
-		AudioAsset(name).playOneShot(volume);
-	}
+	AudioAsset(name).stopAllShots();
+	AudioAsset(name).playOneShot(volume);
 }
 
 void CardsReset(Array<PlayingCard::Card>& cards)

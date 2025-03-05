@@ -72,7 +72,7 @@ void Bet::update()
 				AudioPlay(U"Button", getData().SoundVolume);
 				getData().player.setTotalBet(getData().player.getBet());
 				getData().player.setActionText(U"ベット");
-
+				AudioPlay(U"Coin", getData().SoundVolume);
 				//CPUに回す
 				getData().Bet_PlayerTurn = false;
 			}
@@ -81,6 +81,8 @@ void Bet::update()
 		{
 			//CPU
 			getData().cpu.FirstBet();
+
+			AudioPlay(U"Coin", getData().SoundVolume);
 
 			//Playerに回す
 			getData().Bet_PlayerTurn = true;
@@ -129,6 +131,7 @@ void Bet::update()
 		{
 			//レイズ決定
 			AudioPlay(U"Button", getData().SoundVolume);
+			AudioPlay(U"Coin", getData().SoundVolume);
 			getData().player.setTotalBet(getData().player.getTotalBet() + getData().player.getBet());
 			getData().player.setActionText(U"レイズ");
 			getData().RaiseMenu = false;
@@ -150,18 +153,6 @@ void Bet::update()
 	{
 		//チップの増減
 
-		if (CoinTimer == 0.0)
-		{
-			AudioPlay(U"Coin", getData().SoundVolume);
-		}
-		else if (CoinTimer > 1.5)
-		{
-			CoinTimer = 0.0;
-		}
-		//経過時間加算
-		CoinTimer += Scene::DeltaTime();
-		
-
 		if (getData().player.getInitChip() < getData().player.getChip() + getData().player.getTotalBet())
 		{
 			getData().player.setChip(getData().player.getChip() - 1);
@@ -177,9 +168,6 @@ void Bet::update()
 			//チップ変動が終了
 			//ストップウォッチをリスタートしておく(待機時間のため)
 			getData().stopwatch.restart();
-
-			//効果音用タイマーもリセット
-			CoinTimer = 0.0;
 		}
 	}
 	else if (NextScene() && !AudioAsset(U"Coin").isPlaying())
@@ -218,6 +206,7 @@ void Bet::update()
 			}
 			getData().player.setTotalBet(Min(getData().player.getInitChip(), getData().cpu.getTotalBet()));
 
+			AudioPlay(U"Coin", getData().SoundVolume);
 			//手番交代
 			getData().Bet_PlayerTurn = false;
 		}
@@ -225,6 +214,7 @@ void Bet::update()
 		{
 			//レイズ
 			AudioPlay(U"Button", getData().SoundVolume);
+			AudioPlay(U"Coin", getData().SoundVolume);
 			getData().RaiseMenu = true;
 
 			//レイズ最低額の設定
@@ -234,6 +224,7 @@ void Bet::update()
 		{
 			//フォールド
 			AudioPlay(U"Button", getData().SoundVolume);
+			AudioPlay(U"Coin", getData().SoundVolume);
 			getData().player.setFold(true);
 
 			getData().player.setActionText(U"フォールド");
@@ -246,6 +237,8 @@ void Bet::update()
 	{
 		//CPUの行動
 		getData().cpu.BetAction(getData().player.getTotalBet());
+
+		if(getData().cpu.getActionText() != U"フォールド") AudioPlay(U"Coin", getData().SoundVolume);
 
 		//Playerに手番を回す
 		getData().Bet_PlayerTurn = true;

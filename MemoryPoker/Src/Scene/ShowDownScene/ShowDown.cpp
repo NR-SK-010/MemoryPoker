@@ -242,21 +242,11 @@ bool ShowDown::CompRole(Player player, Cpu cpu)
 //チップの変動
 void ShowDown::ChipFluctuation(bool PlayerWin)
 {
-	if (CoinTimer == 0.0)
-	{
-		AudioPlay(U"Coin", getData().SoundVolume);
-	}
-	else if (CoinTimer > 1.5)
-	{
-		CoinTimer = 0.0;
-	}
-	//経過時間加算
-	CoinTimer += Scene::DeltaTime();
-
+	AudioPlay(U"Coin", getData().SoundVolume);
 	if (PlayerWin)
 	{
-		//Player勝利	
-		
+		//Player勝利
+
 		if (getData().cpu.getTotalBet() > 0)
 		{
 			getData().cpu.setTotalBet(getData().cpu.getTotalBet() - 1);
